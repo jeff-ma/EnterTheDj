@@ -1,0 +1,15 @@
+@import 'fonts';
+
+.nav-item {
+    display: list-item;
+    float: left;
+    list-style-type: none;
+    // max-height: 274px;
+    // max-width: 274px;
+}
+.category-art-image {
+    // background-size: cover;
+    // width: calc(20% - 24px - 1px);
+    height: 100%;
+    width: 100%;
+}

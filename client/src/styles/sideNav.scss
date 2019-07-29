@@ -1,0 +1,41 @@
+@import 'fonts';
+
+#side-nav {
+    color: #ffffff;
+    display: none;
+    height: 100%;
+    width: 180px;
+    background:rgb(21,27,36);
+    position: fixed;
+    top: 60px;
+    padding-top: 20px;
+    z-index: 9;
+        .side-nav-link {
+            color: rgb(108, 117, 125);
+        }
+        .side-nav-link:hover {
+            color:#a5a5a5;
+            text-decoration: none;
+        }
+        // .side-nav-link.active {
+        //     color: #ffffff;
+        // }
+        ul {
+            padding: 0px; 
+            .side-nav-item {
+                font-size: 16px;
+                list-style-type: none;
+                margin-bottom: 15px;
+                .fas, .far {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+            }
+        }
+}
+
+@media screen and (min-width: 576px) {
+    #side-nav {
+        display: block;
+    }
+}

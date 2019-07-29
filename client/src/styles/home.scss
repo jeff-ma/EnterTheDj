@@ -1,0 +1,108 @@
+@import 'fonts';
+#new-release-hero {
+    .swiper-container {
+        height: 300px;
+    }
+}
+
+#new-release-slides {
+    .swiper-container {
+        .swiper-slide-image {
+            padding: 1rem;
+        }
+    }
+}
+
+.swiper-slide-image {
+    filter: brightness(70%);
+    // max-height: 640px;
+    // min-width: 100%;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.swiper-slide-caption {
+    color: #ffffff;
+    position: absolute;
+    text-align: center;
+    bottom: 20px;
+    left: 10%;
+    right: 10%;
+}
+
+@media screen and (min-width: 576px) {
+    .swiper-container {
+        // height: 400px;
+    }
+    // section {
+        #new-release-hero {
+            .swiper-container {
+                height: 400px;
+            }
+        }
+    
+        #new-release-slides {
+            .swiper-container {
+                // height: 300px;
+            }
+        }
+    // }
+}
+
+@media screen and (min-width: 768px) {
+    .swiper-container {
+        // height: 500px;
+    }
+    // section {
+        #new-release-hero {
+            .swiper-container {
+                height: 500px;
+            }
+        }
+    
+        #new-release-slides {
+            .swiper-container {
+                // height: 300px;
+            }
+        }
+    // }
+}
+
+@media screen and (min-width: 992px) {
+    .swiper-container {
+        // height: 600px;
+    }
+    // section {
+        #new-release-hero {
+            .swiper-container {
+                height: 600px;
+            }
+        }
+    
+        #new-release-slides {
+            .swiper-container {
+                // height: 300px;
+            }
+        }
+    // }
+}
+
+@media screen and (min-width: 1200px) {
+    .swiper-container {
+        // height: 90vh;
+    }
+    // section {
+        #new-release-hero {
+            .swiper-container {
+                height: 90vh;
+            }
+        }
+    
+        #new-release-slides {
+            .swiper-container {
+                // height: 300px;
+            }
+        }
+    // }
+}
