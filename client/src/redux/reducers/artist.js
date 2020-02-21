@@ -7,9 +7,15 @@ import {
 const initialState = {
     artist: {},
     albums: [],
+    appearsOn: {},
     bio: "",
+    playlists: {},
+    latest: {},
     recommendations: [],
-    isLoading: false
+    relatedArtists: [],
+    singles: {},
+    topTracks: {},
+    isLoading: true
 };
 
 export default (state = initialState, action) => {
@@ -23,8 +29,14 @@ export default (state = initialState, action) => {
             isLoading: action.isLoading,
             artist: action.data.artist,
             albums: action.data.albums,
+            appearsOn: action.data.appearsOn,
             bio: action.data.bio,
-            recommendations: action.data.recommendations
+            latest: action.data.latest,
+            playlists: action.data.playlists,
+            recommendations: action.data.recommendations,
+            relatedArtists: action.data.relatedArtists,
+            singles: action.data.singles,
+            topTracks: action.data.topTracks
         });
         case GET_ARTIST_FAILURE: 
         return Object.assign({}, state, {
@@ -32,5 +44,5 @@ export default (state = initialState, action) => {
             error: action.error
         });
         default: return state;
-    };
+    }
 };

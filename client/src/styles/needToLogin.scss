@@ -1,0 +1,39 @@
+#need-to-login {
+    // min-height: 600px;
+    height: 100vh;
+    position: relative;    
+    width: 100%;
+    background-attachment: fixed;
+    // background-color: #FFFFFF;
+    background-image: url("/images/bruce.png");
+    // background-image: linear-gradient(135deg, rgb(27, 32, 45) 0%, rgb(22, 28, 37) 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center calc(50% + 60px);
+    z-index: 20;
+    top: 0;
+    left: 0;
+
+    button {
+        color: #FFFFFF;
+        border: solid 1px #FFFFFF;
+    }
+  }
+
+  #need-to-login-message {
+      position: absolute;
+      margin: auto;
+      top: 50%;
+      left:50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      ul {
+          text-align: left;
+      }
+  }
+
+  @media screen and (min-width: 576px) {
+    #need-to-login {
+      background-position: calc(50% + 160px) calc(50% + 60px);
+    }
+}

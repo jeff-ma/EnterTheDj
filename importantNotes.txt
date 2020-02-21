@@ -1,4 +1,0 @@
-in order for app to work the access token needs to be refreshed periodically. A refresh token is sent to spotify server through the API and a new access token is given back.
-
-Also in order to run on ubuntu server forever 
-type "forever start ./bin/www"

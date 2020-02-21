@@ -6,8 +6,7 @@ import axios from 'axios';
 export function* getPlaylistTracksRequest({playlistId}) {
     try {
         const data  = yield axios('/api/playlist/' + playlistId).then((response => response.data));
-        console.log("Done");
-        console.log(data);
+        // const data  = yield axios('/api/playlist/' + playlistId).then((response => response.data));
         yield put(playlistTracksActions.getPlaylistTracksSuccess(data));
     } catch(error) {
         yield put(playlistTracksActions.getPlaylistTracksFailure(error));

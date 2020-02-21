@@ -5,14 +5,14 @@ import {
 } from '../actions/category';
 
 const initialState = {
-    isLoading: false,
+    isLoading: true,
     playlists: {}
 };
 
 export default (state = initialState, action) => {
     switch(action.type) {
         case GET_CATEGORY_REQUEST:
-            return Object.assign({}, state, {isLoading: action.isLoading});
+            return Object.assign({}, state, {isLoading: action.isLoading, query: action.query});
         case GET_CATEGORY_SUCCESS: 
             return Object.assign({}, state, {isLoading: action.isLoading, playlists: action.data});
         case GET_CATEGORY_FAILURE:

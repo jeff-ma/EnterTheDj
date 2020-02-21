@@ -1,0 +1,13 @@
+#alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: 250px;
+    z-index: 101;
+    .alert {
+        padding: 10px;
+        button {
+            margin-left: 10px;
+        }
+    }
+}

@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.scss';
-import 'react-id-swiper/src/styles/scss/swiper.scss';
-import App from './components/App';
+// import 'react-id-swiper/src/styles/scss/swiper.scss';
+import 'react-id-swiper/lib/styles/scss/swiper.scss';
+import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { CookiesProvider } from 'react-cookie';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <App />
+            <CookiesProvider>
+                <App />
+            </CookiesProvider>
         </BrowserRouter>
     </Provider>, 
     document.getElementById('root')

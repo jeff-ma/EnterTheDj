@@ -1,6 +1,0 @@
-test1@acemail.info
-password
-const clientId = '0e6b8173420443949c114aa8a34de2ad';
-const clientSecret = '2709930d286b469e8850b96aae7180e8';
-const redirectUri = 'http://localhost:3000/callback';
-https://accounts.spotify.com/revoke_sessions/?continue=http%3A//http://localhost:3000/login/

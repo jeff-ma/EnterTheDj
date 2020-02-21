@@ -1,0 +1,24 @@
+#pagination-container {
+    display: flex;
+    justify-content: center;
+
+    .page-button {
+        background-color: transparent;
+        border: solid 1px#a6b2d1;
+        border-radius: 4px;
+        color: #a6b2d1;
+        height: 35px;
+        margin: 0 4px;
+        width: 35px;
+        
+        &.active {
+            background-color: #FFFFFF;
+            color: rgb(21, 27, 36);
+        }
+    }
+
+    // .page-button.active {
+    //     background-color: #FFFFFF;
+    //     color: rgb(21, 27, 36);
+    // }
+}

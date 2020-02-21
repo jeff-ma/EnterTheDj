@@ -5,13 +5,10 @@ import '../../styles/home.scss';
 
 // const Show = () => <h1>Show</h1>;
 class Show extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         const { showId } = this.props.match.params
         this.props.onload(showId);
+        console.log(this.props);
     }
 
     render() {

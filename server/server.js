@@ -1,3 +1,5 @@
+const http = require("http");
+const https = require("https");
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -8,21 +10,13 @@ const api = require('./routes/api');
 const authorize = require('./routes/authorize');
 const fs = require('fs');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
-app.use(session({
-    secret: "dragon",
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-        // secure: true,
-        expires: 600000
-    }
-}));
+
 // authorize first before serving
 app.use('/', authorize);
 app.use(express.static(path.join(__dirname, '../client/build')));

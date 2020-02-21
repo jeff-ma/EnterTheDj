@@ -5,14 +5,28 @@ footer {
     background-color: #000000;
     // padding-top: 80px;
     // padding-bottom: 80px;
-    padding: 80px 0 80px 180px;
+    // margin-top: 40px;
+    padding: 80px 0 80px 0;
+    #footer-section {
+        padding-left: 15px;
+    }
 
     #bruce-lee-image,
     #bruce-lee-signature {
         display: block;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 30px auto;
+        // margin-left: auto;
+        // margin-right: auto;
     }
+
+    // #credits {
+    //     align-items: flex-start;
+    //     display: flex;
+    //     justify-content: space-between;
+    //     p {
+    //         margin: 0;
+    //     }
+    // }
 
     #footer-heading {
         text-align: center;
@@ -31,6 +45,14 @@ footer {
     #footer-nav {
         list-style: none;
         padding-left: 0;
+
+        a {
+            color: #FFFFFF;
+
+            &:hover {
+                color: #a5a5a5;
+            }
+        }
     }
 
     #spotify-logo {
@@ -41,16 +63,77 @@ footer {
     #copyright {
         margin-bottom: 0; 
     }
-    #player {
-        position: fixed;
-        bottom: 0;
-        z-index: 90;
-        width: 100%;
-        height: 80px;
-        border-style: none;
-    }
+    // #player {
+    //     position: fixed;
+    //     bottom: 0;
+    //     z-index: 90;
+    //     width: 100%;
+    //     height: 80px;
+    //     border-style: none;
+    // }
 }
 
 @media screen and (min-width: 576px) {
-    padding-left: 0;
+    footer {
+        padding-left: 180px;
+    }
+    
 }
+
+@media screen and (min-width:768px) {
+    #footer-section {
+        display: grid;
+        grid-template-columns: 1.25fr 1fr 1fr;
+        padding-left: 0;
+    }
+}
+
+// @media screen and (min-width: 992px) {
+//     #footer-grid {
+//         display: grid;
+//         grid-template-columns: 1.5fr 1fr 1fr;
+//     }
+// }
+
+// @media screen and (min-width: 576px) {
+//     #app {
+//       // margin-left: 180px;
+//       // width: 100%;
+//       position: relative;
+//       // left: 180px;
+//       padding-left: 180px;
+//       // padding-right: 0px;
+//       #main-wrapper {
+//         padding-left: 30px;
+//         padding-right: 30px;
+//       }
+//     }
+//     .grid-container {
+//       grid-template-columns: repeat(2, 1fr);
+//       margin-bottom: 40px;
+//     }
+//   }
+  
+//   @media screen and (min-width:701px) {
+//     .grid-container {
+//       grid-template-columns: repeat(3, 1fr);
+//     }
+//   }
+  
+//   @media screen and (min-width:811px) {
+//     .grid-container {
+//       grid-template-columns: repeat(4, 1fr);
+//     }
+//   }
+  
+//   @media screen and (min-width:1021px) {
+//     .grid-container {
+//       grid-template-columns: repeat(5, 1fr);
+//     }
+//   }
+  
+//   @media screen and (min-width:1231px) {
+//     .grid-container {
+//       grid-template-columns: repeat(6, 1fr);
+//     }
+//   }

@@ -7,20 +7,21 @@ import { watchArtistRequest } from './artist';
 import album from './album';
 import browse from './browse';
 import category from './category';
-import login from './login';
+// import login from './login';
 import search from './search';
 import playlists from './playlists';
-import playlistTracks from './playlistTracks';
+import playlist from './playlist';
 import show from './show';
-import favorites from './favorites';
+import library from './library';
 import top from './top';
+import recent from './recent';
 
 export default function* rootSaga() {
     yield all([
         // watchBrowseSaga(),
         watchHomeSaga(),
         // watchLoginSaga(),
-        login(),
+        // login(),
         search(),
         watchArtistRequest(),
         // watchAlbumRequest(),
@@ -29,9 +30,10 @@ export default function* rootSaga() {
         browse(),
         category(),
         playlists(),
-        playlistTracks(),
+        playlist(),
         show(),
-        favorites(),
+        library(),
         top(),
+        recent()
     ]);
 }

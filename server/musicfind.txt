@@ -1,3 +1,0 @@
-Consumer Key :d9ce72e3bd7988e2c73b3d7e4843e5b5b8209a8f
-
-Consumer Secret :2b8c2651c81d50a2e7b61f1f9067e6aeda9aa8d2

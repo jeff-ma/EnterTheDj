@@ -119,5 +119,6 @@ typings/
 # access token
 accessToken.txt
 refreshToken.txt
+clientSecret.txt
 
 client/build

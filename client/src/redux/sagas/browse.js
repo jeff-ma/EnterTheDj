@@ -2,9 +2,9 @@ import { put, takeLatest } from 'redux-saga/effects';
 import * as browseActions from '../actions/browse';
 import axios from 'axios';
 
-export function* getBrowseRequest() {
+export function* getBrowseRequest({ query }) {
     try {
-        const data = yield axios('/api/browse').then((response) => response.data);
+        const data = yield axios('/api/browse' + query).then((response) => response.data);
         yield put(browseActions.getBrowseSuccess(data));
     } catch(error) {
         console.log(error);

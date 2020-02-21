@@ -3,9 +3,10 @@ export const GET_BROWSE_SUCCESS = 'GET_BROWSE_SUCCESS';
 export const GET_BROWSE_FAILURE = 'GET_BROWSE_FAILURE';
 
 
-export const getBrowseRequest = () => ({
+export const getBrowseRequest = (query) => ({
     type: GET_BROWSE_REQUEST,
-    isLoading: true
+    isLoading: true,
+    query
 });
 
 export const getBrowseSuccess = (data) => ({

@@ -1,0 +1,52 @@
+#login-modal {
+    color: #FFFFFF;
+    padding-right: 0 !important;
+    .modal-dialog {
+        background-color: #151b24;
+        box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.5);
+    }
+    &.show {
+        display: flex !important;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    .modal-body {
+        padding: 0;
+        button {
+            color: #FFFFFF;
+            border-color: #FFFFFF;
+        }
+        div {
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+
+        }
+        img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        section {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+    .modal-footer {
+        border: 0;
+        justify-content: center;
+        .btn {
+            color: #FFFFFF;
+            border-color: #FFFFFF;
+        }
+    }
+}
+
+@media screen and (min-width: 576px) {
+    #login-modal {
+        .modal-dialog{
+            width: 320px;
+            min-height: 550px;            
+        }
+    }
+}

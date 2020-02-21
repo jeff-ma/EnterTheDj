@@ -1,0 +1,91 @@
+@import 'fonts';
+
+// .art-image {
+//     height: 100%;
+//     width: 100%;
+// }
+
+.grid-container {
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.tile {
+    // position: relative;
+    // padding-bottom: 100%;
+}
+.tile-image-box {
+    position: relative;
+    padding-bottom: 100%;
+    img {
+        position: absolute;
+        object-fit: cover;
+    }
+    // .image-round {
+    //     border-radius: 50%;
+    // }
+
+}
+.tile-image {
+    height: 100%;
+    width: 100%;
+    box-shadow: 0px 0px 10px 2px #000000;
+    // position: absolute;
+    // padding-bottom: 100%;
+}
+
+// .tile-round {
+//     padding-bottom: 100%;
+// }
+// img {
+//     position: absolute;
+//     object-fit: cover;
+// }
+
+.tile-title {
+    color: #ffffff;
+    padding-top: 15px;
+    
+        a {
+            color: #FFFFFF;
+        }
+}
+.tile-subtitle {
+    color: #a6b2d1;
+    a {
+        color: #a6b2d1;
+    }
+}
+// @media screen and (min-width: 576px) {
+//     .grid-container {
+//         grid-template-columns: repeat(2, 1fr);
+//         margin-bottom: 40px;
+//     }
+// }
+
+@media screen and (min-width:701px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width:811px) {
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (min-width:1021px) {
+    .grid-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media screen and (min-width:1231px) {
+    .grid-container {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}

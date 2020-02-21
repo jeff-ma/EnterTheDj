@@ -1,73 +1,35 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+// import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Cookies from 'universal-cookie';
-// import '../../styles/top.scss';
+import Tiles from './Tiles';
+import TracksList from './TracksList';
+import '../../styles/top.scss';
 
-class Top extends Component {
-    constructor(props) {
-        super(props);
-
-        const cookies = new Cookies();
-        this.state = {
-            accessToken: cookies.get("access_token")
-        }
-    }
-
-    componentDidMount() {
-        // user needs an access token to get top artists and tracks
-        const {accessToken} = this.state; 
-        if(accessToken) {
-            this.props.onload(accessToken);
-        }
-    }
-
-    render() {
-        const { accessToken } = this.state;
-        let topArtists;
-        let topTracks;
-        let content;
-        if(accessToken) {
-            const { artists, tracks } = this.props;
-            if(artists.items && artists.items.length > 0) {
-                topArtists = artists.items.map((artist) => <div><Link to={`/artist/${artist.id}`}><img src={artist.images[0].url} height="150" width="150"/></Link><p>{artist.name}</p></div>)
-            } else {
-                topArtists = <p>You have no top artists.</p>;
-            }
-            if(tracks.items && tracks.items.length > 0) {
-                topTracks = tracks.items.map((track) => <div><Link to={`/album/${track.album.id}`}><img src={track.album.images[0].url} height="150" width="150"/></Link><p>{track.name}</p></div>)
-            } else {
-                topTracks = <p>You have no top tracks.</p>;
-            }
-        } else {
-            content = <p>Please <Link to="/login">login</Link> to view your top played.</p>;
-        }
-        return (
-            <React.Fragment>
-                <h1>Top Most Played</h1>
-                {content}
-                {
-                    topArtists &&
-                    <section>
-                    <h2>Artists</h2>
-                    {topArtists}
-                    </section>
-                }
-                {
-                    topTracks &&
-                    <section>
-                    <h2>Tracks</h2>
-                    {topTracks}
-                    </section>
-                }
-            </React.Fragment>
-        );
-    }
+const Top = (props) => {
+    const topViews = ["artists", "tracks"];
+    const { view = "artists" } = props.match.params;
+    const data = props[view];
+    const path = view.slice(0,-1);
+    const viewButtons = topViews.map((topView, index) => <Link key={index} className={view === topView ? "view-button active" : "view-button"} to={`/top/${topView}`}><span>{topView}</span></Link>)
+    console.log(props);
+    return (
+        <div id="main-wrapper" className="container">
+            <div id="top-header">
+                <h2 className="section-title">Top Most Played</h2>
+                <div id="view-buttons">
+                    {viewButtons}
+                </div>
+            </div>
+            {view === "tracks" ? <TracksList tracks={data}/> : <Tiles data={data} path={path}/>}
+        </div>
+    );
 };
 
-Top.propTypes = {
-    artists: PropTypes.object,
-    tracks: PropTypes.object
-};
+
+// Top.propTypes = {
+    // albums: PropTypes.object,
+    // tracks: PropTypes.object,
+    // onload: PropTypes.func
+// };
 
 export default Top;

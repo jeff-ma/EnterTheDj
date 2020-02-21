@@ -5,13 +5,8 @@ import {
 } from '../actions/search';
 
 const initialState = {
-    searchResults: {
-        albums: null,
-        artist: null,
-        playlists: null,
-        shows: null,
-        tracks: null
-    }
+    isLoading: true,
+    searchResults: {}
 }
 
 export default (state = initialState, action) => {

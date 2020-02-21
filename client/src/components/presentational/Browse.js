@@ -1,55 +1,30 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
-import '../../styles/browse.scss';
+import React from 'react';
+// import PropTypes from 'prop-types';
+// import {Link} from 'react-router-dom';
+import queryString from 'query-string';
+import Pagination from './Pagination';
+import Tiles from './Tiles';
+// import '../../styles/browse.scss';
 
-class Browse extends Component {
-    constructor(props) {
-        super(props);
-    }
+const Browse = (props) => {
+    const { query } = props;
+    const data = props.categories;
+    const { page } = queryString.parse(query);
 
-    componentDidMount() {
-        this.props.onload();
-    }
+    return (
+        <div id="main-wrapper" className="container">
+            <section> 
+                <h2 className="section-title">Browse</h2>
+                <Tiles data={data} path="category"/>
+                <Pagination page={page} limit={data.limit} total={data.total}/>
+            </section>
+        </div>
+    );
 
-    render() {
-        console.log(this.props);
-        const { categories, isLoading } = this.props;
-        const {categoryId} = this.props.match.params;
-  
-        if(isLoading) {
-            return (<h2>LOADING.....</h2>);
-        } else {
-        return <React.Fragment>
-            <h2 className="section-title">{categoryId}</h2>
-            {
-                categories && 
-                <div className="grid-container">
-                    {
-                        categories.items.map((category, index) => {
-                            return (
-                                <div className="tile">
-                                    <div className="tile-image">
-                                        <Link to={"/category/" + category.id}>
-                                            <img className="category-art-image" src={category.icons[0].url}/>
-                                        </Link>
-                                    </div>
-                                    <div className="tile-title">
-                                        <Link to={"/category/" + category.id}>{category.name}</Link>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    }
-                </div>
-            }
-        </React.Fragment>;
-        }
-    }
 };
 
-Browse.propTypes = {
-    categories: PropTypes.object
-};
+// Browse.propTypes = {
+//     categories: PropTypes.object
+// };
 
 export default Browse;

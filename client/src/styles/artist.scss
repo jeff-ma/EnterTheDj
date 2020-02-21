@@ -1,0 +1,46 @@
+#artist-grid {
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-gap: 30px;
+    margin-top: 40px;
+}
+
+#artist-button-grid {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 30px;
+    margin: 20px 0;
+    min-height: 40px;
+}
+
+#artist-cover {
+    height: 230px;
+    width: 230px;
+    position: relative;
+    padding-bottom: 100%;
+    img {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+}
+
+.artist-view-button {
+    background-color: transparent;
+    border: 0;
+    color: #a6b2d1;
+    padding: 10px;
+    // font-weight: bold;
+    text-transform: capitalize;
+    &.active {
+        span {
+            color: #FFFFFF;
+            border-bottom: 2px solid #ffffff;
+        }
+    }
+    &:focus {
+        outline: none;
+    }
+}

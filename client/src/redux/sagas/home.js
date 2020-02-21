@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export function* getHomeAlbumsRequest() {
     try {
-    const data = yield axios('/api/home').then((response) => response.data);
+        const data = yield axios('/api/home').then((response) => response.data);
        yield put(homeActions.getHomeAlbumsSuccess(data));
     } catch(error) {
         console.log(error);

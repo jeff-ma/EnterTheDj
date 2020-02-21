@@ -1,13 +1,11 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import {Redirect} from 'react-router-dom';
+import { withCookies } from 'react-cookie';
 import '../../styles/login.scss';
-import Cookies from 'universal-cookie';
 
-const login = (props) => {
-    // const { user } = props;
-    const cookies = new Cookies();
-    const accessToken = cookies.get("access_token");
+const Login = (props) => {
+    const accessToken = props.allCookies.access_token;
     const spotifyScopes = [
         "user-read-private", 
         "user-read-birthdate", 
@@ -15,28 +13,43 @@ const login = (props) => {
         "user-top-read",
         "user-library-modify",
         "user-library-read",
+        "user-read-recently-played",
+        "user-follow-read",
+        "user-follow-modify",
+        "user-read-playback-state",
+        "playlist-read-private",
+        "playlist-read-collaborative",
+        "playlist-modify-public",
+        "playlist-modify-private",
+        "ugc-image-upload"
     ];
-    const spotifyAuthorizeUrl = encodeURI(`https://accounts.spotify.com/authorize?client_id=2d6223f5a7d74315a03e819aee4e3934&response_type=code&redirect_uri=http://localhost:3000/authorize&scope=${spotifyScopes.join(" ")}&show_dialog=true`);
-
+    const location = window.location.origin.replace(process.env.REACT_APP_PORT, process.env.REACT_APP_NODE_PORT);
+    const spotifyAuthorizeUrl = encodeURI(`https://accounts.spotify.com/authorize?client_id=2d6223f5a7d74315a03e819aee4e3934&response_type=code&redirect_uri=${location}/authorize&state=${location}/authorize&scope=${spotifyScopes.join(" ")}&show_dialog=false`);
+    const defaultMessage = (<React.Fragment>                 
+<p>
+    By logging in you get additional features:
+</p>
+<ul>
+    <li>View your recent and top played tracks</li>
+    <li>Add to and modify playlists</li>
+    <li>Customize your library</li>
+    </ul></React.Fragment>);
     if(accessToken) {
         // if user is already logged in redirect to home
         return <Redirect to="/" />;
     } else {
-return <React.Fragment>
-        <div id="login-card">
-            <div>
-                <img src="/images/bruce-lee-dj.png" alt="bruce lee djing "/>
+
+        return (
+            <div id="need-to-login">
+                <div id="need-to-login-message">
+                    {props.children || defaultMessage}
+                <a id="login-link" href={spotifyAuthorizeUrl}>
+                    <button type="button" className="btn">Log in with Spotify <i className="fab fa-spotify"></i></button>
+                </a>
+                </div> 
             </div>
-            <h2>LOG IN</h2>
-            <p>
-                Log in to get more features
-            </p>
-            <a href={spotifyAuthorizeUrl}>
-        <button type="button" className="btn btn-outline-dark">Login</button>
-        </a>
-        </div>
-</React.Fragment>;
+        );
     }
 };
 
-export default login;
+export default withCookies(Login);

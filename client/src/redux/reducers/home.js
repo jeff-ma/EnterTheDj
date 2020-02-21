@@ -7,6 +7,12 @@ import {
 
 const initialState = {
     albums: [],
+    featured: [],
+    mostPopular: [],
+    newShows: [],
+    topSongs: [],
+    top50: [],
+    featuredPlaylists: [],
     isLoading: true,
 };
 
@@ -22,7 +28,9 @@ export default (state = initialState, action) => {
             categories: action.data.categories,
             topSongs: action.data.topSongs,
             newShows: action.data.newShows,
-            mostPopular: action.data.mostPopular
+            mostPopular: action.data.mostPopular,
+            top50: action.data.top50,
+            featuredPlaylists: action.data.featuredPlaylists,
             // data: action.data
         });
         case GET_HOME_ALBUMS_FAILURE: 

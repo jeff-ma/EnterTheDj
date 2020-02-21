@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { getShowRequest } from '../../redux/actions/show';
-import { updateAudio } from '../../redux/actions/footer';
+import { updatePlayer } from '../../redux/actions/player';
 import Show from '../presentational/Show';
 
 const mapStateToProps = (state) => {
@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     onload: (showId) => dispatch(getShowRequest(showId)),
-    updateAudio: (audioId, audioType) => dispatch(updateAudio(audioId, audioType))
+    updatePlayer: (audioId, audioType) => dispatch(updatePlayer(audioId, audioType))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Show);

@@ -7,7 +7,7 @@ import {
 const initialState = {
     artists: {},
     tracks: {},
-    isLoading: false
+    isLoading: true
 };
 
 export default (state = initialState, action) => {
