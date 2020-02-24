@@ -31,6 +31,7 @@ export default (state = initialState, action) => {
             mostPopular: action.data.mostPopular,
             top50: action.data.top50,
             featuredPlaylists: action.data.featuredPlaylists,
+            recommends: action.data.recommends,
             // data: action.data
         });
         case GET_HOME_ALBUMS_FAILURE: 

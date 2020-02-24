@@ -6,23 +6,23 @@ import Loader from './Loader';
 import '../../styles/home.scss';
 
 const Home = (props) => {
-    const { albums, featured, mostPopular, topSongs, newShows, top50, featuredPlaylists, isLoading } = props;
+    const { albums, featured, mostPopular, topSongs, newShows, top50, featuredPlaylists, recommends, isLoading } = props;
     const swiperParams = {
         breakpoints: {
             // 575: {
             //     slidesPerView: 1,
             // },
             700: {
-                slidesPerView: 2,
-            },
-            810: {
                 slidesPerView: 3,
             },
-            1020: {
+            810: {
                 slidesPerView: 4,
             },
-            1230: {
+            1020: {
                 slidesPerView: 5,
+            },
+            1230: {
+                slidesPerView: 6,
             }
         },
         containerClass: "swiper-container swiper-tiles-container",
@@ -35,7 +35,7 @@ const Home = (props) => {
             el: '.swiper-scrollbar',
             hide: false
         },
-        slidesPerView: 6,
+        slidesPerView: 2,
         spaceBetween: 30,
     }
     const tile = (key, link, tileImage, tileTitle, tileArtist) => (
@@ -107,6 +107,14 @@ const Home = (props) => {
                             tile(index, `/album/${top.track.album.id}`, top.track.album.images[0].url, top.track.album.name, top.track.artists[0].name)
                         )}
                     </Swiper> 
+                </section>
+                <section className="container">
+                    <h2 className="section-title swiper-title">Bruce Lee Picks</h2>
+                    <Swiper className="swiper-container" {...swiperParams}>
+                        {recommends.map((recommend, index) =>
+                            tile(index, `/album/${recommend.id}`, recommend.images[0].url, recommend.name, recommend.artists[0].name)
+                        )}
+                    </Swiper>  
                 </section>
                 <section className="container">
                     <h2 className="section-title swiper-title">Top Charts</h2>

@@ -93,7 +93,6 @@ async function addIsSavedToTracks(tracks, accessToken) {
     });
 };
 
-// async function addAudioFeaturesToTracks(tracks) {
 async function addAudioDataToTracks(tracks) {
     const accessToken = fs.readFileSync('accessToken.txt', 'utf8');
     let total = 0;
@@ -326,6 +325,8 @@ router.get('/embed/:audioType/:audioId', async (req,res)=> {
 });
 
 router.get('/home', async (req, res) => {
+    let genres = fs.readFileSync("genres.txt", "utf8");
+    genres = genres.split(" ").sort(() => 0.5 - Math.random()).slice(0,5);
     try {
         const responses = await axios.all([
             spotifyApiCall(newReleasesUrl),
@@ -333,7 +334,8 @@ router.get('/home', async (req, res) => {
             spotifyApiCall(topSongsUrl),
             spotifyApiCall(newShowsUrl),
             spotifyApiCall(top50Url),
-            spotifyApiCall(featuredPlaylistUrl)
+            spotifyApiCall(featuredPlaylistUrl),
+            spotifyApiCall(`https://api.spotify.com/v1/recommendations?seed_genres=${genres.join()}`),
         ]);
         const featured = [...responses[0].data.albums.items].sort(() => 0.5 - Math.random()).slice(0,7);
         const albums = responses[0].data.albums.items.splice(0, 16);
@@ -343,7 +345,8 @@ router.get('/home', async (req, res) => {
         const newShows = responses[3].data.shows.items;
         const top50 = responses[4].data.playlists.items.filter(item => item.name.includes("Top 50")).splice(0, 16);
         const featuredPlaylists = responses[5].data.playlists.items.splice(0, 16);
-        res.status(200).send({ featured, albums, mostPopular, topSongs, newShows, top50, featuredPlaylists});
+        const recommends = responses[6].data.tracks.map((track) => track.album).splice(0, 16);
+        res.status(200).send({ featured, albums, mostPopular, topSongs, newShows, top50, featuredPlaylists, recommends});
     } catch(error) {
         res.status(error.status).send(error);
     }
