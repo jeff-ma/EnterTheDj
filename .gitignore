@@ -121,4 +121,8 @@ accessToken.txt
 refreshToken.txt
 clientSecret.txt
 
+# build folder
 client/build
+
+# notes
+notes.txt
