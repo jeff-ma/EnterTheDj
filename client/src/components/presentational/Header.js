@@ -2,11 +2,12 @@ import React, { useRef, useState } from 'react';
 import { NavLink, Link, withRouter} from 'react-router-dom';
 // import { PropTypes } from 'prop-types';
 import '../../styles/header.scss';
+import defaultProfile from "../../images/default-profile.jpg";
 
 const Header = (props) => {
     const { isNavActive, toggleNav } = props;
     const displayName = props.cookies.display_name;
-    const imageUrl = props.cookies.image_url || "/images/default-profile.jpg";
+    const imageUrl = props.cookies.image_url || defaultProfile;
     const search = useRef();
     const [isSearchActive, setIsSearchActive] = useState(false);
     const handleSubmit = (event) => {

@@ -2,6 +2,7 @@ import React from 'react';
 // import { PropTypes } from 'prop-types';
 import Login from './Login';
 import '../../styles/profile.scss';
+import defaultProfile from "../../images/default-profile.jpg";
 
 const Profile = (props) => {
     if (props.cookies && props.cookies.display_name) {    
@@ -23,12 +24,13 @@ const Profile = (props) => {
         const year = birthdate[0];
         const month = months[parseInt(props.cookies.birthdate.split("-")[1]) - 1];
         const day = birthdate[2];
+        const imageUrl = props.cookies.image_url || defaultProfile;
         return (
             <div id="main-wrapper" className="container">
             <h2 className="section-title">Spotify Profile</h2>
                 <div id="profile-section">
                     <div>
-                        <img id="profile-image" src={props.cookies.image_url} alt="profile"/>
+                        <img id="profile-image" src={imageUrl} alt="profile"/>
                         <h3 id="spotify-display-name">{props.cookies.display_name}</h3>
                     </div>
                     <div>
