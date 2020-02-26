@@ -72,22 +72,6 @@ router.get('/callback', async (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
-    console.log("logging out");
-    res.clearCookie("access_token");
-    res.clearCookie("refresh_token");
-    res.clearCookie("birthdate");
-    res.clearCookie("country");
-    res.clearCookie("display_name");
-    res.clearCookie("email");
-    res.clearCookie("id");
-    res.clearCookie("followers");
-    res.clearCookie("image_url");
-    res.clearCookie("product");
-    res.clearCookie("spotify_url");
-    res.redirect('/');
-});
-
 // application needs to get access token or refresh access token
 router.get('*', async (req, res, next) => {
     // console.log(req.originalUrl);

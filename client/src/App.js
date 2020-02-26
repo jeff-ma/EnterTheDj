@@ -12,6 +12,7 @@ import Footer from './components/containers/Footer';
 import Search from './components/containers/SearchContainer';
 import Browse from './components/containers/BrowseContainer';
 import Login from './components/presentational/Login';
+import Logout from './components/presentational/Logout';
 import Home from './components/containers/HomeContainer';
 import Album from './components/containers/AlbumContainer';
 import Artist from './components/containers/ArtistContainer';
@@ -65,6 +66,7 @@ class App extends Component {
           <Route path="/browse" exact component={Browse} />
           <Route path="/category/:categoryId?" exact component={Category} />
           <Route path="/login" exact component={Login} />
+          <Route path="/logout" exact component={Logout}/>
           {/* <Route path="/login" exact render={(props) => <Login {...props} cookies={cookies} />} /> */}
           <Route path="/album/:albumId" render={(props) => <Album {...props} cookies={cookies} />} />
           <Route path="/artist/:artistId/:view?" render={(props) => <Artist {...props} cookies={cookies}/> } />
