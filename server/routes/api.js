@@ -151,8 +151,8 @@ router.post('/audio_data', async (req, res) => {
 router.get('/album/:albumId', async (req, res) => {
     try {
     const accessToken = req.cookies.access_token;
-    const response = await spotifyApiCall(albumUrl + req.params.albumId);
-    let album = response.data;
+    const album = await spotifyApiCall(albumUrl + req.params.albumId).then((response) => response.data);
+    const artist = await spotifyApiCall(artistUrl + album.artists[0].id).then((response => response.data));
     const featuredArtists = new Map();
     let next = album.tracks.next;
     while (next) {
@@ -162,14 +162,6 @@ router.get('/album/:albumId', async (req, res) => {
         next = tracks.next;
     }
     album.tracks.items.forEach((item) => {
-        // convert track duration from milliseconds to time
-        // const minutes = Math.floor(item.duration_ms / 60000);
-        // const seconds = Math.floor((item.duration_ms % 60000) / 1000).toFixed(0);
-        // if(seconds === 60) {
-        //     minutes = minutes + 1;
-        //     seconds = 0;
-        // }
-        // item.duration_time = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
         // iterate through each track and add each featured artist
         item.artists.forEach((artist) => {
             // add featured artist but not the album artist
@@ -178,15 +170,14 @@ router.get('/album/:albumId', async (req, res) => {
             }
         });
     });
-    // album.lyricsAvailable = false;
     album.featuredArtists = Array.from(featuredArtists.values());
-    // await addAudioDataToTracks(album.tracks.items);
+    album.artists[0] = artist;
     if (accessToken) {
         const response = await spotifyApiCall(checkUserSavedAlbumsUrl+req.params.albumId, accessToken);
         album.isSaved = response.data[0];
         await addIsSavedToTracks(album.tracks.items, accessToken);
     }
-    res.status(response.status).send(album);
+    res.status(200).send(album);
     } catch(error) {
         res.status(error.status).send(error);
     }

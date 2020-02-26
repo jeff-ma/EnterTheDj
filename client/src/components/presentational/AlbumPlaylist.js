@@ -10,10 +10,15 @@ const AlbumPlaylist = (props) => {
         const accessToken = props.cookies.access_token;
         // const updateLibraryAlbum = album.isSaved ? props.removeTrack : props.saveTrack;
         const heartIcon = collection.isSaved ? "fas fa-heart" : "far fa-heart";
-        let by, releaseYear, spotifyUrl, updateLibraryCollection;
+        let artistThumbnail, by, releaseYear, spotifyUrl, updateLibraryCollection;
         if (collection.type === "album") {
+            artistThumbnail = collection.artists[0].images[collection.artists[0].images.length - 1].url;
             updateLibraryCollection = collection.isSaved ? props.removeAlbum : props.saveAlbum;
-            by = <Link to={"/artist/" + collection.artists[0].id}>{collection.artists[0].name}</Link>;
+            by = <Link to={"/artist/" + collection.artists[0].id}>
+                <img className="album-artist-thumbnail" src={artistThumbnail} alt="artist"/>
+                &nbsp;
+                {collection.artists[0].name}
+            </Link>;
             releaseYear = collection.release_date.slice(0,4);
             spotifyUrl = collection.artists[0].external_urls.spotify;
         } else {
@@ -28,7 +33,9 @@ const AlbumPlaylist = (props) => {
                     <div className="collection-cover-art"><img src={collection.images[0].url} alt="cover art" /></div>
                     <div className="collection-info">
                         <h2>{collection.name}</h2>
-                        <h3>By {by}</h3>
+                        <h3>
+                            {by}
+                        </h3>
                         {releaseYear && <p className="tile-artist">{releaseYear}</p>}
                         {collection.description && 
                             <p className="tile-artist" dangerouslySetInnerHTML={{__html: collection.description}}></p>
