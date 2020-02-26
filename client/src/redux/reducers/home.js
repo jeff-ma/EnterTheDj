@@ -13,6 +13,7 @@ const initialState = {
     topSongs: [],
     top50: [],
     featuredPlaylists: [],
+    recommends: [],
     isLoading: true,
 };
 
