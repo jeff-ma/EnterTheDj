@@ -36,7 +36,7 @@ const TracksList = (props) => {
                     return (
                         <li className={props.type === "album" ? "album-list-item" : "list-item"} key={index}>
                             <div className="player-icon-box">
-                                <img src={ipod3} height="20" onClick={() => updatePlayer(item.id, "track")}/>
+                                <img src={ipod3} height="20" alt="player" onClick={() => updatePlayer(item.id, "track")}/>
                                 {/* <i className="fas fa-play list-player-icon" onClick={() => updatePlayer(item.id, "track")}></i> */}
                             </div>
                             {props.type !== "album" &&
