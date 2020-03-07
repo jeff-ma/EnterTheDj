@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {Cookies} from 'react-cookie';
 import PropTypes from 'prop-types';
 import {setTrackIndex} from '../../redux/actions/tracksList';
-import {saveTrackRequest, removeTrackRequest} from '../../redux/actions/library';
+import {saveTrackRequest, removeTrackRequest} from '../../redux/actions/tracksList';
 import { updatePlayer} from '../../redux/actions/player';
 import { formatDuration} from '../../utils';
 import CreatePlaylistModal from './CreatePlaylistModal';
@@ -21,7 +21,7 @@ const TracksList = (props) => {
     const cookies = new Cookies();
     const accessToken = cookies.get("access_token");
     const { tracks, trackIndex, setTrackIndex, removeTrack, saveTrack, updatePlayer} = props;
-    console.log(props);
+    // console.log(props);
 
     if (tracks && tracks.items && tracks.items.length > 0) {
         if (trackIndex >= tracks.items.length) {
@@ -94,8 +94,8 @@ const mapStateToProps = (state) => state.tracksList;
 
 const mapDispatchToProps = (dispatch) => ({
     setTrackIndex: (trackIndex) => dispatch(setTrackIndex(trackIndex)),
-    saveTrack: (trackId, accessToken) => dispatch(saveTrackRequest(trackId, accessToken)),
-    removeTrack: (trackId, accessToken) => dispatch(removeTrackRequest(trackId, accessToken)),
+    saveTrack: (trackId) => dispatch(saveTrackRequest(trackId)),
+    removeTrack: (trackId) => dispatch(removeTrackRequest(trackId)),
     updatePlayer: (audioId, audioType) => dispatch(updatePlayer(audioId, audioType))
 });
 

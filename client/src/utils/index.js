@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Cookies } from 'react-cookie';
+import {Cookies} from 'react-cookie';
 
 const cookies = new Cookies();
 const accessToken = cookies.get("access_token");
@@ -10,23 +10,273 @@ const headers = {
 };
 
 /* 
-Add Tracks to a Playlist 
-https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
+Get an Album
  */
-export const addTrackToPlaylist = (playlistId, trackUri) => {
+export const getAlbum = async (albumId) => {
+  const {data} = await axios.get(`/api/album/${albumId}`);
+  return data;
+};
+
+
+/* 
+Get an Artist
+ */
+export const getArtist = async (artistId) => {
+  const {data} = await axios.get(`/api/artist/${artistId}`);
+  return data;
+};
+
+/* 
+Browse a List of Categories
+ */
+export const getBrowse = async () => {
+  const {data} = await axios.get("/api/browse");
+  return data;
+};
+
+/* 
+Get a Category
+ */
+export const getCategory = async (categoryId) => {
+  const {data} = await axios.get(`/api/categoryId/${categoryId}`);
+  return data;
+};
+
+/* 
+Follow Artists or Users
+https://developer.spotify.com/documentation/web-api/reference/follow/follow-artists-users/
+ */
+export const saveArtist = (artistId) => {
   if (accessToken) {
-    // return axios({method: "post", url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`}, headers);
     return axios({
-      method: "post",
-      url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
-      headers: {'Authorization': 'Bearer ' + accessToken},
-      timeout: 20000
+      method: "put",
+      url: encodeURI(`https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`),
+      headers
     });
   } else {
     return null;
   }
 };
 
+/* 
+Follow a Playlist
+https://developer.spotify.com/documentation/web-api/reference/follow/follow-playlist/
+ */
+export const savePlaylist = async (playlistId) => {
+  if (accessToken) {
+    return axios({
+      method: "put",
+      url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/followers`),
+      headers
+    });
+  } else {
+    return null;
+  }
+};
+
+/* 
+Get User's Followed Artists
+https://developer.spotify.com/documentation/web-api/reference/follow/get-followed/
+ */
+export const getSavedArtists = async () => {
+  const {data} = await axios.get("https://api.spotify.com/v1/me/following?type=artist", {headers});
+  return data;
+};
+
+/* 
+Unfollow Artists or Users
+https://developer.spotify.com/documentation/web-api/reference/follow/unfollow-artists-users/
+ */
+export const removeArtist = (artistId) => {
+  // const {data} = await axios.delete(`https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`, {headers});
+  // return data;
+  if (accessToken) {
+    return axios({
+      method: "delete",
+      url: encodeURI(`https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`),
+      headers
+    });
+  } else {
+    return null;
+  }
+};
+
+/* 
+Unfollow a Playlist
+https://developer.spotify.com/documentation/web-api/reference/follow/unfollow-playlist/
+ */
+export const removePlaylist = async (playlistId) => {
+  if (accessToken) {
+    return axios({
+      method: "delete",
+      url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/followers`),
+      headers
+    });
+  } else {
+    return null;
+  }
+};
+
+/* 
+Get Home page albums/podcasts
+ */
+export const getHome = async () => {
+  const {data} = await axios.get("/api/home");
+  return data;
+};
+
+/* 
+Get Current User's Saved Albums
+https://developer.spotify.com/documentation/web-api/reference/library/get-users-saved-albums/
+ */
+export const getSavedAlbums = async () => {
+  if (accessToken) {
+    const {data} = await axios.get("https://api.spotify.com/v1/me/albums", {headers});
+    return data;
+  } else {
+    return null;
+  }
+};
+
+/* 
+Get a User's Saved Tracks
+https://developer.spotify.com/documentation/web-api/reference/library/get-users-saved-tracks/
+ */
+export const getSavedTracks = async () => {
+  if (accessToken) {
+    const {data} = await axios.get("https://api.spotify.com/v1/me/tracks", {headers});
+    return data;
+  } else {
+    return null;
+  }
+};
+
+/* 
+Remove Albums for Current User
+https://developer.spotify.com/documentation/web-api/reference/library/remove-albums-user/
+ */
+export const removeAlbum = (albumId) => {
+  if (accessToken) {
+    return axios({
+      method: "delete",
+      url: encodeURI(`https://api.spotify.com/v1/me/albums?ids=${albumId}`),
+      headers
+    });
+  } else {
+    return null;
+  }
+}
+/* 
+Remove User's Saved Tracks
+https://developer.spotify.com/documentation/web-api/reference/library/remove-tracks-user/
+ */
+export const removeTrack = (trackId) => {
+  if (accessToken) {
+    return axios({
+      method: "delete",
+      url: encodeURI(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`),
+      headers
+    });
+  } else {
+    return null;
+  }
+}
+
+/* 
+Save Albums for Current User
+https://developer.spotify.com/documentation/web-api/reference/library/save-albums-user/
+ */
+export const saveAlbum = (albumId) => {
+  if (accessToken) {
+    return axios({
+      method: "put",
+      url: encodeURI(`https://api.spotify.com/v1/me/albums?ids=${albumId}`),
+      headers
+    });
+  } else {
+    return null;
+  }
+};
+
+/* 
+Save Tracks for User
+https://developer.spotify.com/documentation/web-api/reference/library/save-tracks-user/
+ */
+export const saveTrack = (trackId) => {
+  if (accessToken) {
+    return axios({
+      method: "put",
+      url: encodeURI(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`),
+      headers
+    });
+  } else {
+    return null;
+  }
+};
+
+/* 
+Get a User's Top Artists and Tracks
+https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/
+ */
+export const getTop = async () => {
+  if (accessToken) {
+    const [artists, tracks] = await axios.all([
+      axios.get("https://api.spotify.com/v1/me/top/artists?limit=50", {headers}),
+      axios.get("https://api.spotify.com/v1/me/top/tracks?limit=50", {headers})
+    ]);
+    await addIsSavedToTracks(tracks.data.items);
+    return {artists: artists.data, tracks: tracks.data};
+  } else {
+    return null;
+  }
+};
+/* 
+Get Current User's Recently Played Tracks
+https://developer.spotify.com/documentation/web-api/reference/player/get-recently-played/
+ */
+export const getRecent = async () => {
+  const {data} = await axios.get("https://api.spotify.com/v1/me/player/recently-played?limit=50", {headers});
+  const tracks = data.items.map((item) => item.track);
+  await addIsSavedToTracks(tracks);
+  data.items = tracks;
+  return data;
+};
+
+/* 
+Add Tracks to a Playlist 
+https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
+ */
+// export const addTrackToPlaylist = (playlistId, trackUri) => {
+//   if (accessToken) {
+//     // return axios({method: "post", url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`}, headers);
+//     return axios({
+//       method: "post",
+//       url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
+//       headers
+//     });
+//   } else {
+//     return null;
+//   }
+// };
+
+export const playlistAddTrack = async (playlistId, trackUri) => {
+  if (accessToken) {
+    // return axios({method: "post", url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`}, headers);
+    // only add track if not in playlist
+    const {data} = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, {headers});
+      if (!data.tracks.items.some((item) => item.track.uri === trackUri)) {
+        return axios({
+            method: "post",
+            url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
+            headers
+        });
+        // yield put(addAlert("Track added to playlist"));
+    }
+    return null;
+  } else {
+    return null;
+  }
+};
 
 /* 
 Create a Playlist
@@ -41,22 +291,10 @@ export const createPlaylist = (name, description) => {
 };
 
 /* 
-Get a Playlist
-https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlist/
- */
-export const getPlaylist = (playlistId) => {
-  if (accessToken) {
-    return axios.get(`/api/playlist/${playlistId}`).then((response) => response.data);
-  } else {
-    return null;
-  }
-};
- 
-/* 
 Get a List of Current User's Playlists
 https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlist/
  */
-export const getUserPlaylists = () => {
+export const getSavedPlaylists = () => {
   if (accessToken) {
     return axios.get(`https://api.spotify.com/v1/me/playlists`, { headers }).then(response => response.data);
   } else {
@@ -64,17 +302,60 @@ export const getUserPlaylists = () => {
   }
 };
 
+/* 
+Get a Playlist
+ */
+export const getPlaylist = (playlistId) => {
+  return axios.get(`/api/playlist/${playlistId}`).then((response) => response.data);
+};
+
+/* 
+Remove Tracks from a Playlist
+https://developer.spotify.com/documentation/web-api/reference/playlists/remove-tracks-playlist/
+ */
+export const playlistRemoveTrack = (playlistId, trackUri) => {
+  if (accessToken) {
+    return axios({
+      method: "delete",
+      url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
+      headers,
+      data: {
+        tracks: [{uri: trackUri}]
+      }
+    });
+    // return axios.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`, {headers, data: {tracks: [{uri: trackUri}]}}).then(response => response.data);
+  } else {
+    return null;
+  }
+};
+
+/* 
+Upload a Custom Playlist Cover Image
+https://developer.spotify.com/documentation/web-api/reference/playlists/upload-custom-playlist-cover/
+ */
 export const uploadPlaylistImage = (playlistId, image) => {
   if(accessToken) {
-    // const data = new FormData();
-    // data.append("image", image);
     return axios.put(`https://api.spotify.com/v1/playlists/${playlistId}/images`, image, {headers: {  'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'image/jpeg'}});
   } else {
     return null;
   }
 };
 
-
+export const addIsSavedToTracks = async (tracks) => {
+  // spotify only allows checking up to 50 track ids at one time
+  let total = 0;
+  let savedTracksCheck = [];
+  while (total < tracks.length) {
+      const trackIds = tracks.slice(total, total + 50).map((track) => track.id);
+      const {data} = await axios.get("https://api.spotify.com/v1/me/tracks/contains?ids=" + trackIds.join(","), {headers})
+      // const response = await spotifyApiCall(checkUserSavedTracksUrl + trackIds.join(","), accessToken);
+      savedTracksCheck = savedTracksCheck.concat(data);
+      total = total + 50;
+  }
+  tracks.forEach((track, index) => {
+      track.isSaved = savedTracksCheck[index];
+  });
+};
 
 // export const token = getAccessToken();
 

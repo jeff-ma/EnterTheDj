@@ -2,8 +2,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {setTrackIndex} from '../../redux/actions/tracksList';
+// import {playlistAddTrackRequest} from '../../redux/actions/playlist';
 import PropTypes from 'prop-types';
-import {addTrackToPlaylist, createPlaylist, uploadPlaylistImage} from '../../utils';
+import {playlistAddTrack, createPlaylist, uploadPlaylistImage} from '../../utils';
 import '../../styles/createPlaylistModal.scss';
 
 const CreatePlaylistModal = (props) => {
@@ -78,9 +79,13 @@ const CreatePlaylistModal = (props) => {
     if (name.current.value) {
       setErrors({...errors, name: ""});
       setIsLoading(true);
+      console.log("about to add playlist track");
       const playlist = await createPlaylist(name.current.value, description.current.value);
-      await addTrackToPlaylist(playlist.id, props.track.uri);
+      const s = await playlistAddTrack(playlist.id, props.track.uri);
+      console.log(s);
+      console.log("playlist track added!");
       if(base64Image) {
+        console.log("adding image");
         await uploadPlaylistImage(playlist.id, base64Image);
       }
       setTimeout(() => {
@@ -149,7 +154,8 @@ const CreatePlaylistModal = (props) => {
 const mapStateToProps = (state) => state.tracksList;
 
 const mapDispatchToProps = (dispatch) => ({
-  setTrackIndex: (trackIndex) => dispatch(setTrackIndex(trackIndex))
+  setTrackIndex: (trackIndex) => dispatch(setTrackIndex(trackIndex)),
+  // playlistAddTrack: (trackId, trackUri) => dispatch(playlistAddTrackRequest(trackId, trackUri)),
 });
 
 CreatePlaylistModal.propTypes = {

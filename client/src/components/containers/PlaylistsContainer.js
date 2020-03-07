@@ -5,11 +5,11 @@ import Loader from '../presentational/Loader';
 import Playlists from '../presentational/Playlists';
 
 const PlaylistsContainer = (props) => {
-    const { cookies, isLoading, onload } = props;
+    const {isLoading, onload } = props;
 
     useLayoutEffect(() => {
-        onload(cookies.access_token);
-    }, [onload, cookies]);
+        onload();
+    }, [onload]);
     
     if (isLoading) {
         return <Loader/>;
@@ -21,7 +21,7 @@ const PlaylistsContainer = (props) => {
 const mapStateToProps = (state) => state.playlists;
 
 const mapDispatchToProps = (dispatch) => ({
-    onload: (accessToken) => dispatch(getPlaylistsRequest(accessToken))
+    onload: () => dispatch(getPlaylistsRequest())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaylistsContainer);

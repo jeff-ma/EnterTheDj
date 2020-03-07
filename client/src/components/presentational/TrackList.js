@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
-import { saveTrackRequest, removeTrackRequest} from '../../redux/actions/library';
+import { saveTrackRequest, removeTrackRequest} from '../../redux/actions/tracksList';
 import { updatePlayer} from '../../redux/actions/player';
 import { formatDuration } from '../../utils';
 import TrackModal from './TrackModal';

@@ -183,7 +183,7 @@ router.get('/album/:albumId', async (req, res) => {
     }
 });
 
-router.get('/artist/:artistId', async (req, res) => { 
+router.get('/artist/:artistId', async (req, res) => {
     try {
         const { artistId } = req.params;
         const accessToken = req.cookies.access_token;
@@ -343,106 +343,107 @@ router.get('/home', async (req, res) => {
     }
 });
 
-router.post('/library', async (req, res) => {
-    try {
-        const {accessToken} = req.body;        
-        const responses = await axios.all([
-            spotifyApiCall(userUrl + '/albums', accessToken),
-            spotifyApiCall(userUrl + '/tracks', accessToken),
-            spotifyApiCall(userPlaylistsUrl, accessToken),
-            spotifyApiCall(userUrl + '/following?type=artist', accessToken)
-        ]);
-        const albums = responses[0].data;
-        const tracks = responses[1].data;
-        const playlists = responses[2].data;
-        const artists = responses[3].data.artists;
-        // modify object to conform to standard structure
-        albums.items = albums.items.map((item) => item.album);
-        tracks.items = tracks.items.map((item) => item.track);
-        await addIsSavedToTracks(tracks.items, accessToken);
-        // await addAudioDataToTracks(tracks.items);
-        res.status(200).send({albums, tracks, playlists, artists});
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.get('/library', async (req, res) => {
+//     try {
+//         const accessToken = req.cookies.access_token;
+//         // const {accessToken} = req.body;        
+//         const responses = await axios.all([
+//             spotifyApiCall(userUrl + '/albums', accessToken),
+//             spotifyApiCall(userUrl + '/tracks', accessToken),
+//             spotifyApiCall(userPlaylistsUrl, accessToken),
+//             spotifyApiCall(userUrl + '/following?type=artist', accessToken)
+//         ]);
+//         const albums = responses[0].data;
+//         const tracks = responses[1].data;
+//         const playlists = responses[2].data;
+//         const artists = responses[3].data.artists;
+//         // modify object to conform to standard structure
+//         albums.items = albums.items.map((item) => item.album);
+//         tracks.items = tracks.items.map((item) => item.track);
+//         await addIsSavedToTracks(tracks.items, accessToken);
+//         // await addAudioDataToTracks(tracks.items);
+//         res.status(200).send({albums, tracks, playlists, artists});
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
-router.delete('/library/album', async (req, res) => {
-    try {
-        const { accessToken, albumId } = req.body;
-        const response = await spotifyApiCall(saveRemoveAlbumUrl+albumId, accessToken, "delete");
-        res.status(response.status).send({});
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.delete('/library/album', async (req, res) => {
+//     try {
+//         const { accessToken, albumId } = req.body;
+//         const response = await spotifyApiCall(saveRemoveAlbumUrl+albumId, accessToken, "delete");
+//         res.status(response.status).send({});
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
-router.put('/library/album', async (req, res) => {
-    try {
-        const { accessToken, albumId } = req.body;
-        const response = await spotifyApiCall(saveRemoveAlbumUrl+albumId, accessToken, "put");
-        res.status(response.status).send({});
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.put('/library/album', async (req, res) => {
+//     try {
+//         const { accessToken, albumId } = req.body;
+//         const response = await spotifyApiCall(saveRemoveAlbumUrl+albumId, accessToken, "put");
+//         res.status(response.status).send({});
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
-router.delete('/library/playlist', async (req,res) => {
-    try {
-        const {playlistId} = req.body;
-        const response = await spotifyApiCall(`https://api.spotify.com/v1/playlists/${playlistId}/followers`, req.cookies.access_token, "delete");
-        res.status(response.status).send({});
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.delete('/library/playlist', async (req,res) => {
+//     try {
+//         const {playlistId} = req.body;
+//         const response = await spotifyApiCall(`https://api.spotify.com/v1/playlists/${playlistId}/followers`, req.cookies.access_token, "delete");
+//         res.status(response.status).send({});
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
-router.put('/library/playlist', async (req,res) => {
-    try {
-        const {playlistId} = req.body;
-        const response = await spotifyApiCall(`https://api.spotify.com/v1/playlists/${playlistId}/followers`, req.cookies.access_token, "put");
-        res.status(response.status).send({});
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.put('/library/playlist', async (req,res) => {
+//     try {
+//         const {playlistId} = req.body;
+//         const response = await spotifyApiCall(`https://api.spotify.com/v1/playlists/${playlistId}/followers`, req.cookies.access_token, "put");
+//         res.status(response.status).send({});
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
-router.delete('/library/tracks', async (req, res) => {
-    try {
-        const {accessToken, trackId} = req.body;
-        const response = await spotifyApiCall(updateLibraryTracksUrl+trackId, accessToken, "delete");
-        // const responses = await axios.all([
-        //     spotifyApiCall(userUrl + '/albums', accessToken),
-        //     spotifyApiCall(userUrl + '/tracks', accessToken)
-        // ]);
-        // res.status(200).send({albums: responses[0].data, tracks: responses[1].data});
-        // res.send("ok");
-        res.status(200).send({});
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.delete('/library/tracks', async (req, res) => {
+//     try {
+//         const {accessToken, trackId} = req.body;
+//         const response = await spotifyApiCall(updateLibraryTracksUrl+trackId, accessToken, "delete");
+//         // const responses = await axios.all([
+//         //     spotifyApiCall(userUrl + '/albums', accessToken),
+//         //     spotifyApiCall(userUrl + '/tracks', accessToken)
+//         // ]);
+//         // res.status(200).send({albums: responses[0].data, tracks: responses[1].data});
+//         // res.send("ok");
+//         res.status(200).send({});
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
-router.put('/library/tracks', async (req, res) => {
-    try {
-        const {accessToken, trackId} = req.body;        
-        // const response = await axios({
-        //     method: 'PUT',
-        //     url: encodeURI(updateLibraryTracksUrl+trackId),
-        //     headers: {'Authorization': 'Bearer ' + accessToken},
-        //     timeout: timeout
-        // });
-        const response = await spotifyApiCall(updateLibraryTracksUrl+trackId, accessToken, "PUT");
-        // const responses = await axios.all([
-        //     spotifyApiCall(userUrl + '/albums', accessToken),
-        //     spotifyApiCall(userUrl + '/tracks', accessToken)
-        // ]);
-        // res.status(200).send({albums: responses[0].data, tracks: responses[1].data});
-        res.status(200).send({});
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.put('/library/tracks', async (req, res) => {
+//     try {
+//         const {accessToken, trackId} = req.body;        
+//         // const response = await axios({
+//         //     method: 'PUT',
+//         //     url: encodeURI(updateLibraryTracksUrl+trackId),
+//         //     headers: {'Authorization': 'Bearer ' + accessToken},
+//         //     timeout: timeout
+//         // });
+//         const response = await spotifyApiCall(updateLibraryTracksUrl+trackId, accessToken, "PUT");
+//         // const responses = await axios.all([
+//         //     spotifyApiCall(userUrl + '/albums', accessToken),
+//         //     spotifyApiCall(userUrl + '/tracks', accessToken)
+//         // ]);
+//         // res.status(200).send({albums: responses[0].data, tracks: responses[1].data});
+//         res.status(200).send({});
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
 router.post('/lyrics', async (req, res) => {
     const { tracks } = req.body;
@@ -527,23 +528,23 @@ router.post('/playlists', async (req, res) => {
     }
 });
 
-router.post('/recent', async (req, res) => {
-    try {
-        const response = await spotifyApiCall(recentUrl, req.body.accessToken);
-        const tracks = response.data.items.map((item) => item.track);
-        await addIsSavedToTracks(tracks, req.body.accessToken);
-        // await addAudioDataToTracks(tracks);
-        // const recentTrackIds = tracks.map((track) => track.id);
-        // const savedTracksCheck = await spotifyApiCall(checkUserSavedTracksUrl + recentTrackIds.join(","), req.body.accessToken);
-        // tracks.forEach((track, index) => {
-        //     track.isSaved = savedTracksCheck.data[index];
-        // });
-        response.data.items = tracks;
-        res.status(200).send(response.data);
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.post('/recent', async (req, res) => {
+//     try {
+//         const response = await spotifyApiCall(recentUrl, req.body.accessToken);
+//         const tracks = response.data.items.map((item) => item.track);
+//         await addIsSavedToTracks(tracks, req.body.accessToken);
+//         // await addAudioDataToTracks(tracks);
+//         // const recentTrackIds = tracks.map((track) => track.id);
+//         // const savedTracksCheck = await spotifyApiCall(checkUserSavedTracksUrl + recentTrackIds.join(","), req.body.accessToken);
+//         // tracks.forEach((track, index) => {
+//         //     track.isSaved = savedTracksCheck.data[index];
+//         // });
+//         response.data.items = tracks;
+//         res.status(200).send(response.data);
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
 router.get('/search', async (req,res) => {
     try {
@@ -580,20 +581,20 @@ router.get('/show/:showId', async (req, res) => {
     }
 });
 
-router.post('/top', async (req, res) => {
-    try {
-        const {accessToken} = req.body;
-        const responses = await axios.all([
-            spotifyApiCall(userUrl + '/top/artists?limit=50', accessToken),
-            spotifyApiCall(userUrl + '/top/tracks?limit=50', accessToken)
-        ]);
-        const tracks = responses[1].data;
-        await addIsSavedToTracks(responses[1].data.items, accessToken);
-        // await addAudioDataToTracks(responses[1].data.items);
-        res.status(200).send({artists: responses[0].data, tracks: responses[1].data});
-    } catch(error) {
-        res.status(error.status).send(error);
-    }
-});
+// router.post('/top', async (req, res) => {
+//     try {
+//         const {accessToken} = req.body;
+//         const responses = await axios.all([
+//             spotifyApiCall(userUrl + '/top/artists?limit=50', accessToken),
+//             spotifyApiCall(userUrl + '/top/tracks?limit=50', accessToken)
+//         ]);
+//         const tracks = responses[1].data;
+//         await addIsSavedToTracks(responses[1].data.items, accessToken);
+//         // await addAudioDataToTracks(responses[1].data.items);
+//         res.status(200).send({artists: responses[0].data, tracks: responses[1].data});
+//     } catch(error) {
+//         res.status(error.status).send(error);
+//     }
+// });
 
 module.exports = router;

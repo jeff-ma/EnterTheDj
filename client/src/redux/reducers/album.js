@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
         case GET_ALBUM_SUCCESS: 
             return {...state, isLoading: action.isLoading, album: {...action.data, tracks: {...action.data.tracks}}};
         case GET_ALBUM_FAILURE:
-            return {...state, isLoading: action.isLoading, error: action.error}; 
+            return {...state, isLoading: action.isLoading, error: action.error};
         default: 
             return state;
     }

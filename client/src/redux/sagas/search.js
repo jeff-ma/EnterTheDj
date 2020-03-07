@@ -1,6 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import * as searchActions from '../actions/search';
-import {getTracksExtras} from '../actions/library';
+import {getTracksExtras} from '../actions/tracksList';
 import axios from 'axios';
 
 export function* getSearchRequest({ query }) {

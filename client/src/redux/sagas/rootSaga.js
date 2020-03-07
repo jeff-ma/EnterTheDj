@@ -15,6 +15,7 @@ import show from './show';
 import library from './library';
 import top from './top';
 import recent from './recent';
+import tracksList from './tracksList';
 
 export default function* rootSaga() {
     yield all([
@@ -34,6 +35,7 @@ export default function* rootSaga() {
         show(),
         library(),
         top(),
-        recent()
+        recent(),
+        tracksList()
     ]);
 }

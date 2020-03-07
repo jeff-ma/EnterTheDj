@@ -1,7 +1,7 @@
 import React, {useLayoutEffect} from 'react';
 import { connect } from 'react-redux';
 import { getArtistRequest } from '../../redux/actions/artist';
-import {removeArtistRequest, saveArtistRequest} from '../../redux/actions/library';
+import {removeArtistRequest, saveArtistRequest} from '../../redux/actions/artist';
 import Artist from '../presentational/Artist';
 import Loader from '../presentational/Loader';
 
@@ -23,8 +23,8 @@ const mapStateToProps = (state) =>  state.artist;
 
 const mapDispatchToProps = (dispatch) => ({
     onload: (artistId) => dispatch(getArtistRequest(artistId)),
-    removeArtist: (artistId, accessToken) => dispatch(removeArtistRequest(artistId, accessToken)),
-    saveArtist: (artistId, accessToken) => dispatch(saveArtistRequest(artistId, accessToken))
+    removeArtist: (artistId) => dispatch(removeArtistRequest(artistId)),
+    saveArtist: (artistId) => dispatch(saveArtistRequest(artistId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistContainer);

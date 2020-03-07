@@ -7,7 +7,6 @@ import Loader from '../presentational/Loader';
 const BrowseContainer = (props) => {
     const { isLoading, onload } = props;
     const { search } = props.location;
-
     useLayoutEffect(() => {
         onload(search);
     }, [onload, search]);

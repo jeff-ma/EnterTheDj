@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {Cookies} from 'react-cookie';
 import PropTypes from 'prop-types';
 import {setTrackIndex} from '../../redux/actions/tracksList';
-import {playlistAddTrack, playlistRemoveTrack} from '../../redux/actions/library';
-import {getUserPlaylists} from '../../utils';
+import {playlistAddTrackRequest, playlistRemoveTrackRequest} from '../../redux/actions/playlist';
+import {getSavedPlaylists} from '../../utils';
 import playlist1 from '../../images/playlist1.svg';
 
 const PlaylistDropdown = (props) => {
@@ -28,7 +28,7 @@ const PlaylistDropdown = (props) => {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await getUserPlaylists();
+            const response = await getSavedPlaylists();
             setPlaylists(response);
         }
         fetchData();
@@ -64,8 +64,8 @@ const PlaylistDropdown = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
     setTrackIndex: (trackIndex) => dispatch(setTrackIndex(trackIndex)),
-    playlistAddTrack: (trackId, trackUri) => dispatch(playlistAddTrack(trackId, trackUri)),
-    playlistRemoveTrack: (trackId, trackUri) => dispatch(playlistRemoveTrack(trackId, trackUri)),
+    playlistAddTrack: (trackId, trackUri) => dispatch(playlistAddTrackRequest(trackId, trackUri)),
+    playlistRemoveTrack: (trackId, trackUri) => dispatch(playlistRemoveTrackRequest(trackId, trackUri)),
 });
 
 PlaylistDropdown.propTypes = {

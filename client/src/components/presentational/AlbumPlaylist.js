@@ -1,13 +1,15 @@
 import React from 'react';
 // import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
+import {Cookies} from 'react-cookie';
 import TracksList from './TracksList';
 import '../../styles/albumPlaylist.scss';
 
 const AlbumPlaylist = (props) => {
     console.log(props);
+        const cookies = new Cookies();
         const { collection } = props;
-        const accessToken = props.cookies.access_token;
+        const accessToken = cookies.get("access_token");
         // const updateLibraryAlbum = album.isSaved ? props.removeTrack : props.saveTrack;
         const heartIcon = collection.isSaved ? "fas fa-heart" : "far fa-heart";
         let artistThumbnail, by, releaseYear, spotifyUrl, updateLibraryCollection;

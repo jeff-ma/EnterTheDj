@@ -1,17 +1,19 @@
 import React, { useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
+import {Cookies} from 'react-cookie';
 import { getLibraryRequest } from '../../redux/actions/library';
 import Library from '../presentational/Library';
 import Login from '../presentational/Login';
 import Loader from '../presentational/Loader';
 
 const LibraryContainer = (props) => {
+    const cookies = new Cookies();
+    const accessToken = cookies.get("access_token");
     const { isLoading, onload } = props;
-    const accessToken = props.cookies.access_token;
-    console.log("loadinf library....");
     useLayoutEffect(() => {
-        console.log("getting library data....");
-        onload(accessToken);
+        if (accessToken) {
+            onload();
+        }
     }, [onload, accessToken]);
     
     if (!accessToken) {
@@ -19,7 +21,6 @@ const LibraryContainer = (props) => {
     } else if (isLoading) {
         return <Loader/>;
     } else {
-        console.log("render libary....");
         return <Library {...props}/>;    
     }
 };
@@ -27,7 +28,7 @@ const LibraryContainer = (props) => {
 const mapStateToProps = (state) => state.library;
 
 const mapDispatchToProps = (dispatch) => ({
-    onload: (accessToken) => dispatch(getLibraryRequest(accessToken))
+    onload: () => dispatch(getLibraryRequest())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LibraryContainer);

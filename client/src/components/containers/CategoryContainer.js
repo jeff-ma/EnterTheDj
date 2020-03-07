@@ -8,7 +8,6 @@ const CategoryContainer = (props) => {
     const { isLoading, onload } = props;
     const { search } = props.location;
     const { categoryId } = props.match.params;
-    console.log(props);
     useLayoutEffect(() => {
         onload(categoryId, search);
     }, [onload, categoryId, search]);

@@ -4,7 +4,6 @@ import axios from 'axios';
 
 export function* getCategoryRequest({ categoryId, query }) {
     try {
-        console.log(query);
         const data = yield axios('/api/category/' + categoryId + query).then(response => response.data);
         yield put(categoryActions.getCategorySuccess(data));
     } catch(error) {

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 // import Swiper from 'react-id-swiper';
+import {Cookies} from 'react-cookie';
 import { commafyNumber } from '../../utils';
 import Tiles from './Tiles';
 import TracksList from './TracksList';
@@ -9,12 +10,12 @@ import '../../styles/artist.scss';
 
 const Artist = (props) => {
     console.log(props);
-    
+    const cookies = new Cookies();
     const artistViews = ["top_tracks", "playlists", "featured_in", "related_artists", "bio"]
     // const [view, setView] = useState(artistViews[0]);
     const {artist, bio, albums, latest, playlists, singles, topTracks} = props;
     // const genres = Array.from(new Set(artist.genres));
-    const accessToken = props.cookies.access_token;
+    const accessToken = cookies.get("access_token");
     const {artistId, view} = props.match.params;
     const url = "/artist/" + artistId;
     const heartIcon = artist.isSaved ? "fas fa-heart" : "far fa-heart";

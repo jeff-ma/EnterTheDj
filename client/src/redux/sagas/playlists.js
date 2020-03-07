@@ -1,9 +1,12 @@
 import { put, takeLatest } from 'redux-saga/effects';
+import {Cookies} from 'react-cookie';
 import * as playlistsActions  from '../actions/playlists';
-// import * as homeActions from '../actions/home';
 import axios from 'axios';
 
-export function* getPlaylistsRequest({accessToken}) {
+const cookies = new Cookies();
+const accessToken = cookies.get("access_token");
+
+export function* getPlaylistsRequest() {
     try {
         const data = yield axios.post('/api/playlists/', {accessToken: accessToken}).then(response => response.data);
         yield put(playlistsActions.getPlaylistsSuccess(data));

@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import { connect } from 'react-redux';
 import { getAlbumRequest } from '../../redux/actions/album';
 import { updatePlayer } from '../../redux/actions/player';
-import {removeAlbumRequest, saveAlbumRequest} from '../../redux/actions/library';
+import {removeAlbumRequest, saveAlbumRequest} from '../../redux/actions/album';
 import Loader from '../presentational/Loader';
 import AlbumPlaylist from '../presentational/AlbumPlaylist';
 
@@ -15,7 +15,7 @@ const AlbumContainer = (props) => {
     if (isLoading) {
         return <Loader/>;
     } else {
-        return <AlbumPlaylist collection={album} cookies={props.cookies} updatePlayer={props.updatePlayer} removeAlbum={props.removeAlbum} saveAlbum={props.saveAlbum}/>;
+        return <AlbumPlaylist collection={album} updatePlayer={props.updatePlayer} removeAlbum={props.removeAlbum} saveAlbum={props.saveAlbum}/>;
     }
 };
 
