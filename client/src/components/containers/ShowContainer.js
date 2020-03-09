@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 import { connect } from 'react-redux';
 import {getShowRequest, removeShowRequest, saveShowRequest} from '../../redux/actions/show';
 import { updatePlayer } from '../../redux/actions/player';
@@ -10,7 +10,7 @@ const ShowContainer = (props) => {
     const {showId} = props.match.params;
     const onload = props.onload
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         onload(showId);
     },[onload, showId]);
 
