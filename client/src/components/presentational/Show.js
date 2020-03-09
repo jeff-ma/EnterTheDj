@@ -5,11 +5,11 @@ import '../../styles/home.scss';
 
 // const Show = () => <h1>Show</h1>;
 class Show extends Component {
-    componentDidMount() {
-        const { showId } = this.props.match.params
-        this.props.onload(showId);
-        console.log(this.props);
-    }
+    // componentDidMount() {
+    //     const { showId } = this.props.match.params
+    //     this.props.onload(showId);
+    //     console.log(this.props);
+    // }
 
     render() {
         const { show, isLoading, updateAudio } = this.props;

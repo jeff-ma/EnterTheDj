@@ -12,19 +12,11 @@ const initialState = {
 export default (state = initialState, action) => {
     switch(action.type) {
         case GET_SHOW_REQUEST:
-            return Object.assign({}, state, {
-                isLoading: action.isLoading
-            });
+            return {...state, isLoading: action.isLoading};
         case GET_SHOW_SUCCESS:
-            return Object.assign({}, state, {
-                isLoading: action.isLoading,
-                show: action.data
-            });
+            return {...state, isLoading: action.isLoading, show: {...action.data}};
         case GET_SHOW_FAILURE:
-            return Object.assign({}, state, {
-                isLoading: action.isLoading,
-                error: action.error
-            });
+            return {...state, isLoading: action.isLoading, error: action.error};
         default: return state;
     }
 };

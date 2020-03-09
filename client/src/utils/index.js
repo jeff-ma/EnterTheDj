@@ -341,6 +341,52 @@ export const uploadPlaylistImage = (playlistId, image) => {
   }
 };
 
+/* 
+save show
+undocumented spotify api endpoint
+ */
+export const saveShow = (showId) => {
+  if (accessToken) {
+    return axios({
+      method: "put",
+      url: encodeURI(`https://api.spotify.com/v1/me/shows?ids=${showId}`),
+      headers
+    });
+  } else {
+    return null;
+  }
+};
+
+/* 
+remove show
+undocumented spotify api endpoint
+ */
+export const removeShow = (showId) => {
+  if (accessToken) {
+    return axios({
+      method: "delete",
+      url: encodeURI(`https://api.spotify.com/v1/me/shows?ids=${showId}`),
+      headers
+    });
+  } else {
+    return null;
+  }
+};
+
+/* 
+get saved shows
+undocumented spotify api endpoint
+ */
+export const getSavedShows = async () => {
+  if (accessToken) {
+    const {data} = await axios.get("https://api.spotify.com/v1/me/shows?limit=50", {headers});
+    data.items = data.items.map((item) => item.show);
+    return data;
+  } else {
+    return null;
+  }
+};
+
 export const addIsSavedToTracks = async (tracks) => {
   // spotify only allows checking up to 50 track ids at one time
   let total = 0;

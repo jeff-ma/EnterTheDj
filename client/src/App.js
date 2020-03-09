@@ -17,7 +17,7 @@ import Playlists from './components/containers/PlaylistsContainer';
 import Profile from './components/presentational/Profile';
 import Recent from './components/containers/RecentContainer';
 import Search from './components/containers/SearchContainer';
-import Show from './components/containers/Show';
+import Show from './components/containers/ShowContainer';
 import SideNav from './components/containers/SideNavContainer';
 import Top from './components/containers/TopContainer';
 import './styles/App.scss';

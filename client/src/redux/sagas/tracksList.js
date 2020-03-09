@@ -19,10 +19,10 @@ function* updateTracks(tracks) {
         data = state[path];
     } else if (path === "artist") {
         state.topTracks.items = tracks;
-        data = {albums: state.albums, appearsOn: state.appearsOn, artist: state.artist, bio: state.bio, latest: state.latest, playlists: state.playlists, recommendations: state.recommendations, relatedArtists: state.relatedArtists, singles: state.singles, topTracks: {...state.topTracks}};
+        data = {...state, topTracks: {...state.topTracks}}
     } else if (path === "library") {
         state.tracks.items = tracks;
-        data = {albums: state.albums, artists: state.artists, playlists: state.playlists, tracks: {...state.tracks}};
+        data = {...state, tracks: {...state.tracks}};
     } else if (path === "recent") {
         state.tracks.items = tracks;
         data = {...state.tracks};

@@ -1,0 +1,39 @@
+.dropdown-menu {
+    border: none;
+    z-index: 90;
+    
+.dropdown-item-text {
+    color: #a6b2d1;
+    width: 80vw;
+    p {
+        margin: 0;
+        padding: 0;
+        &:first-child {
+            color: #ffffff;
+        }
+    }
+
+}
+}
+.episode-description {
+    color: #a6b2d1;
+    height: 250px;
+    overflow: auto;
+}
+
+.episode-details {
+    overflow: hidden;
+    white-space: nowrap;
+    * {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .dropdown-menu {    
+    .dropdown-item-text {
+        width: 400px;
+    }
+}
+}

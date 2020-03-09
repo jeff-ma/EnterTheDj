@@ -12,13 +12,11 @@ const PlaylistContainer = (props) => {
     const { playlistId } = props.match.params;
     useLayoutEffect(() => {
         onload(playlistId);
-        console.log("gettting collection...");
     }, [onload, playlistId]);
     if (isLoading) {
         return <Loader/>;
     } else {
         return <AlbumPlaylist collection={props.playlist} updatePlayer={props.updatePlayer} removePlaylist={props.removePlaylist} savePlaylist={props.savePlaylist}/>;
-        // return <playlist {...props}/>;
     }
 };
 

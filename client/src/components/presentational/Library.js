@@ -6,7 +6,7 @@ import TracksList from './TracksList';
 import '../../styles/library.scss';
 
 const Library = (props) => {
-    const libraryViews = ["albums", "artists", "playlists", "tracks"];
+    const libraryViews = ["albums", "artists", "playlists", "shows", "tracks"];
     const { view = "albums" } = props.match.params;
     const data = props[view];
     const path = view.slice(0,-1);
