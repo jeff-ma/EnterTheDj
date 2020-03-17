@@ -7,7 +7,7 @@ export function* getRecentRequest() {
     try {
         const data = yield getRecent();
         yield put(recentActions.getRecentSuccess(data));
-        yield put(getTracksExtras(data.items));
+        yield put(getTracksExtras(data.items, "recent"));
     } catch(error) {
         console.log(error);
         yield put(recentActions.getRecentFailure(error));

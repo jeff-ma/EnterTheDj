@@ -11,6 +11,6 @@ const mapStateToProps = (state) => state.sideNav;
 
 const mapDispatchToProps = (dispatch) => ({
     toggleNav: () => dispatch(toggleNav())
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

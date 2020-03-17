@@ -18,8 +18,9 @@ export const saveTrackRequest = (trackId) => ({
     trackId
 });
 
-export const getTracksExtras = (tracks) => ({
+export const getTracksExtras = (tracks, path) => ({
     type: GET_TRACKS_EXTRAS,
     isLoading: false,
-    tracks
+    tracks,
+    path
 });

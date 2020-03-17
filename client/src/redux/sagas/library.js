@@ -26,10 +26,8 @@ export function* getLibraryRequest() {
         albums.items = albums.items.map((item) => item.album);
         tracks.items = tracks.items.map((item) => item.track);
         yield addIsSavedToTracks(tracks.items, accessToken);
-        // await addAudioDataToTracks(tracks.items);
         yield put(libraryActions.getLibrarySuccess({albums, artists, playlists, shows, tracks}));
-        console.log("getting lyrics..");
-        yield put(getTracksExtras(tracks.items));
+        yield put(getTracksExtras(tracks.items, "library"));
     } catch(error) {
         console.log(error);
         yield put(libraryActions.getLibraryFailure(error));

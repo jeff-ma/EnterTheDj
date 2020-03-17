@@ -5,10 +5,10 @@ import {addAlert} from '../actions/alert';
 import {removeTrack, saveTrack} from "../../utils";
 import {REMOVE_TRACK_REQUEST, SAVE_TRACK_REQUEST, GET_TRACKS_EXTRAS} from '../actions/tracksList';
 
-function* updateTracks(tracks) {
+function* updateTracks(tracks, path) {
     // console.log("updating tracks");
     try {
-    const path = window.location.pathname.split("/")[1];
+    // const path = window.location.pathname.split("/")[1];
     const state = yield select((state) => state[path]);
 
     let data;
@@ -32,8 +32,8 @@ function* updateTracks(tracks) {
     } else if (path === "search") {
         state.searchResults.tracks.items = tracks;
         data = {...state.searchResults};
-    }
-    // console.log("updating T and putting");
+    } 
+    console.log("path " + path);
     yield put({type: `GET_${path.toUpperCase()}_SUCCESS`, isLoading: false, data: data});
     } catch(error) {
         console.log(error);
@@ -64,32 +64,40 @@ function* updateTrack(trackId) {
         }
     });
     console.log("done updating track");
-    yield updateTracks(tracks.items);
+    yield updateTracks(tracks.items, path);
 };
 
-function* getTracksExtras({tracks}) {
+function* getTracksExtras({tracks, path}) {
 // set each track to loading
+try {
+console.log("path found " + path);
     tracks.forEach((track, index) => {
         track.lyrics = "loading";
         track.audioAnalysis = "loading"; 
         track.audioFeatures = "loading";
     });
-    yield updateTracks(tracks);
+    yield updateTracks(tracks, path);
     // console.log("getting track extras...");
     const lyrics = yield axios.post('/api/lyrics', {tracks});
     tracks.forEach((track, index) => {
         track.lyrics = lyrics.data[index].lyrics;
     });
     // console.log("update traks for lyrics");
-    yield updateTracks(tracks);
+    yield updateTracks(tracks, path);
     console.log("done lyrcis ");        
     const audioData = yield axios.post('/api/audio_data', {tracks});
     tracks.forEach((track, index) => {
         track.audioAnalysis = audioData.data[index].audioAnalysis;
         track.audioFeatures = audioData.data[index].audioFeatures; 
     });
-    yield updateTracks(tracks);
+    yield updateTracks(tracks, path);
     // console.log("done audio data ");
+    } catch (error) {
+        console.log(error);
+        if (tracks) {
+            yield updateTracks(tracks, path);
+        }
+    }
 };
 
 export function* removeTrackRequest({trackId}) {

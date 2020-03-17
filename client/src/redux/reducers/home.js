@@ -1,42 +1,42 @@
 // import * as actions from '../actions/home';
 import { 
-    GET_HOME_ALBUMS_REQUEST,
-    GET_HOME_ALBUMS_SUCCESS,
-    GET_HOME_ALBUMS_FAILURE
+    GET_HOME_REQUEST,
+    GET_HOME_SUCCESS,
+    GET_HOME_FAILURE
 } from '../actions/home';
 
 const initialState = {
-    albums: [],
-    featured: [],
+    newAlbums: [],
+    latestAlbums: [],
     mostPopular: [],
     newShows: [],
-    topSongs: [],
+    // topSongs: [],
+    turnItUp: [],
     top50: [],
     featuredPlaylists: [],
-    recommends: [],
+    bruceLeePicks: [],
     isLoading: true,
 };
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case GET_HOME_ALBUMS_REQUEST:
-        return Object.assign({}, state, {isLoading: action.isLoading});
-        case GET_HOME_ALBUMS_SUCCESS: 
-        return Object.assign({}, state, {
+        case GET_HOME_REQUEST:
+        return {...state, isLoading: action.isLoading};
+        case GET_HOME_SUCCESS: 
+        return {...state, 
             isLoading: action.isLoading, 
-            featured: action.data.featured,
-            albums: action.data.albums,
+            latestAlbums: action.data.latestAlbums,
+            newAlbums: action.data.newAlbums,
             categories: action.data.categories,
-            topSongs: action.data.topSongs,
+            turnItUp: action.data.turnItUp,
             newShows: action.data.newShows,
             mostPopular: action.data.mostPopular,
             top50: action.data.top50,
             featuredPlaylists: action.data.featuredPlaylists,
-            recommends: action.data.recommends,
-            // data: action.data
-        });
-        case GET_HOME_ALBUMS_FAILURE: 
-        return Object.assign({}, state, {isLoading: action.isLoading});
+            bruceLeePicks: action.data.bruceLeePicks,
+        };
+        case GET_HOME_FAILURE: 
+        return {...state, isLoading: action.isLoading};
         default: return state;
     }
 };

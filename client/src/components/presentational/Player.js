@@ -1,12 +1,14 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-import '../../styles/player.scss';
+import React from "react";
+import {connect} from "react-redux";
+import {PropTypes} from "prop-types";
+import {updatePlayer} from "../../redux/actions/player";
+import "../../styles/player.scss";
 
-const Player = (props) => {
-    if (props.audioId && props.audioType) {
+const Player = ({audioId, audioType}) => {
+    if (audioId && audioType) {
         return (
             <div id="player-container">
-                <iframe id="player" title="player" src={`https://open.spotify.com/embed/${props.audioType}/${props.audioId}`} allowtransparency="false" allow="encrypted-media"></iframe>;
+                <iframe id="player" title="player" src={`https://open.spotify.com/embed/${audioType}/${audioId}`} allowtransparency="false" allow="encrypted-media"></iframe>
             </div>
         );
     } else {
@@ -19,4 +21,10 @@ Player.propTypes = {
     audioType: PropTypes.string
 }
 
-export default Player;
+const mapStateToProps = (state) => state.player;
+
+const mapDispatchToProps = (dispatch) => ({
+    updatePlayer: (audioId, audioType) => dispatch(updatePlayer(audioId, audioType))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

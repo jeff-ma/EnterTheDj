@@ -1,29 +1,28 @@
-import React, { useLayoutEffect } from 'react';
-import { connect } from 'react-redux';
-import { getAlbumRequest } from '../../redux/actions/album';
-import { updatePlayer } from '../../redux/actions/player';
-import {removeAlbumRequest, saveAlbumRequest} from '../../redux/actions/album';
+import React, {useLayoutEffect} from 'react';
+import {connect} from 'react-redux';
+import {getAlbumRequest, removeAlbumRequest, saveAlbumRequest} from '../../redux/actions/album';
+import NotFound from '../presentational/NotFound';
 import Loader from '../presentational/Loader';
-import AlbumPlaylist from '../presentational/AlbumPlaylist';
+import Collection from '../presentational/Collection';
 
-const AlbumContainer = (props) => {
-    const { album, isLoading, onload } = props;
-    const {albumId} = props.match.params;
+const AlbumContainer = ({album, isLoading, error, getAlbum, removeAlbum, saveAlbum, match}) => {
+    const {albumId} = match.params;
     useLayoutEffect(() => {
-        onload(albumId);
-    }, [onload, albumId]);
-    if (isLoading) {
+        getAlbum(albumId);
+    }, [getAlbum, albumId]);
+    if (error) {
+        return <NotFound/>;
+    } else if (isLoading) {
         return <Loader/>;
     } else {
-        return <AlbumPlaylist collection={album} updatePlayer={props.updatePlayer} removeAlbum={props.removeAlbum} saveAlbum={props.saveAlbum}/>;
+        return <Collection collection={album} remove={removeAlbum} save={saveAlbum}/>;
     }
 };
 
 const mapStateToProps = (state) => state.album;
 
 const mapDispatchToProps = (dispatch) => ({
-    onload: (albumId) => dispatch(getAlbumRequest(albumId)),
-    updatePlayer: (audioId, audioType) => dispatch(updatePlayer(audioId, audioType)),
+    getAlbum: (albumId) => dispatch(getAlbumRequest(albumId)),
     removeAlbum: (albumId, accessToken) => dispatch(removeAlbumRequest(albumId, accessToken)),
     saveAlbum: (albumId, accessToken) => dispatch(saveAlbumRequest(albumId, accessToken))
 });

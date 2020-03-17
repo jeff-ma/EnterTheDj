@@ -1,30 +1,28 @@
-import React, {useLayoutEffect} from 'react';
-import { connect } from 'react-redux';
-import { getPlaylistRequest} from '../../redux/actions/playlist';
-// import { updateAudio } from '../../redux/actions/footer';
-import {removePlaylistRequest, savePlaylistRequest} from '../../redux/actions/playlist';
-import { updatePlayer } from '../../redux/actions/player';
-import Loader from '../presentational/Loader';
-import AlbumPlaylist from '../presentational/AlbumPlaylist';
+import React, {useLayoutEffect} from "react";
+import {connect} from "react-redux";
+import {getPlaylistRequest, removePlaylistRequest, savePlaylistRequest} from "../../redux/actions/playlist";
+import NotFound from "../presentational/NotFound";
+import Loader from "../presentational/Loader";
+import Collection from "../presentational/Collection";
 
-const PlaylistContainer = (props) => {
-    const { isLoading, onload } = props;
-    const { playlistId } = props.match.params;
+const PlaylistContainer = ({isLoading, getPlaylist, playlist, removePlaylist, savePlaylist, match, error}) => {
+    const {playlistId} = match.params;
     useLayoutEffect(() => {
-        onload(playlistId);
-    }, [onload, playlistId]);
-    if (isLoading) {
+        getPlaylist(playlistId);
+    }, [getPlaylist, playlistId]);
+    if (error) {
+        return <NotFound/>;
+    } else if (isLoading) {
         return <Loader/>;
     } else {
-        return <AlbumPlaylist collection={props.playlist} updatePlayer={props.updatePlayer} removePlaylist={props.removePlaylist} savePlaylist={props.savePlaylist}/>;
+        return <Collection collection={playlist} remove={removePlaylist} save={savePlaylist}/>;
     }
 };
 
 const mapStateToProps = (state) => state.playlist;
 
 const mapDispatchToProps = (dispatch) => ({
-    onload: (playlistId) => dispatch(getPlaylistRequest(playlistId)),
-    updatePlayer: (audioId, audioType) => dispatch(updatePlayer(audioId, audioType)),
+    getPlaylist: (playlistId) => dispatch(getPlaylistRequest(playlistId)),
     removePlaylist: (playlistId) => dispatch(removePlaylistRequest(playlistId)),
     savePlaylist: (playlistId) => dispatch(savePlaylistRequest(playlistId))
 });

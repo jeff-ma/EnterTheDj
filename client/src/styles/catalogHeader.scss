@@ -1,19 +1,15 @@
-#artist-details-grid {
-    // display: grid;
-    // grid-template-columns: max-content auto;
-    // grid-gap: 30px;
+.catalog-details-grid {
     margin-top: 40px;
     text-align: center;
 }
-
-#artist-button-grid {
+.catalog-button-grid {
     display: grid;
     font-size: 24px;
     grid-template-columns: repeat(2, max-content);
     justify-content: center;
     grid-gap: 30px;
     margin-top: 20px;
-    margin-bottom: 20px;     
+    // margin-bottom: 20px;     
     min-height: 40px;
     .fa-spotify {
         color: #1DB954;
@@ -22,19 +18,41 @@
         margin: auto 0;
     }  
 }
+.button-outline {
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 4px;
+    background-color: transparent;
+    font-size: 20px;
+    width: 80px;
+    height: 40px;
+}
 
-#artist-cover {
-    height: 200px;
-    width: 200px;
+  .button-spotify {
+    display: flex;
+    align-items: center;      
+    justify-content: center;
+}
+
+.album-artist-thumbnail {
+    height: 30px;
+    width: 30px;
+    // border-radius: 50%;
+}
+
+
+.catalog-cover {
+    // height: 200px;
+    width: 250px;
     position: relative;
     margin-left: auto;
     margin-right: auto;
     img {
-        height: 100%;
-        width: 100%;
+        height: 250px;
+        width: 250px;
         // position: absolute;
         object-fit: cover;
-        border-radius: 50%;
+        // border-radius: 50%;
     }
 }
 
@@ -57,16 +75,16 @@
 }
 
 @media screen and (min-width: 768px) {
-    #artist-details-grid {
+    .catalog-details-grid {
         display: grid;
         grid-template-columns: max-content auto;
         grid-gap: 30px;
         // margin-top: 40px;
-        .artist-info {
+        .catalog-info {
             text-align: left;
         }
     }
-    #artist-button-grid {
+    .catalog-button-grid {
         justify-content: left;
     }
 }

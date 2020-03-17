@@ -13,19 +13,16 @@ const PlaylistDropdown = (props) => {
     const {track, trackIndex} = props;    
     const paths = window.location.pathname.split("/");
     const [playlists, setPlaylists] = useState();
-
     const changeTrackIndex = () => {
         if (trackIndex) {
             props.setTrackIndex(trackIndex);
         }
     };
-
     const removeTrack = (playlistId, trackUri) => {
         // close track modal
         document.getElementById("track-modal-close").click();
         props.playlistRemoveTrack(playlistId, trackUri);
     }
-
     useEffect(() => {
         async function fetchData() {
             const response = await getSavedPlaylists();
@@ -33,9 +30,7 @@ const PlaylistDropdown = (props) => {
         }
         fetchData();
     }, []);
-
     if (accessToken) {
-    
         return (
             <div className={"dropdown option-box " + props.dropDirection}>
                 <img className="option-icon dropdown-toggle" src={playlist1} alt="add to playlist" data-toggle="dropdown"/>

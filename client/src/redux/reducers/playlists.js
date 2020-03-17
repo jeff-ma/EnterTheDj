@@ -6,9 +6,8 @@ import {
 
 const initialState = {
     isLoading: false,
-    playlists: {},
     featuredPlaylists: {},
-    userPlaylists: {}
+    playlists: {}
 };
 
 export default (state = initialState, action) => {
@@ -17,7 +16,7 @@ export default (state = initialState, action) => {
             return Object.assign({}, state, {isLoading: action.isLoading});
         case GET_PLAYLISTS_SUCCESS:
             // return Object.assign({}, state, {isLoading: action.isLoading, playlists: action.data});
-            return Object.assign({}, state, {isLoading: action.isLoading, featuredPlaylists: action.data.featuredPlaylists, userPlaylists: action.data.userPlaylists});
+            return {state, isLoading: action.isLoading, featuredPlaylists: action.data.featuredPlaylists, playlists: action.data.playlists};
         case GET_PLAYLISTS_FAILURE:
             return Object.assign({}, state, {isLoading: false, error: action.error});
         default: return state;

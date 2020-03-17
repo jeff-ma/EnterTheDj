@@ -6,9 +6,8 @@ import {getTop} from '../../utils';
 export function* getTopRequest() {
     try {
         const data = yield getTop();
-        // const data = yield axios.post('/api/top', {accessToken: accessToken}).then(response => response.data);
         yield put(topActions.getTopSuccess(data));
-        yield put(getTracksExtras(data.tracks.items));
+        yield put(getTracksExtras(data.tracks.items, "top"));
     } catch(error) {
         console.log(error);
         yield put(topActions.getTopFailure(error));

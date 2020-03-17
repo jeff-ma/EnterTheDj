@@ -1,17 +1,19 @@
-import React, { useLayoutEffect } from 'react';
-import { connect } from 'react-redux';
-import { getBrowseRequest } from '../../redux/actions/browse';
-import Browse from '../presentational/Browse';
-import Loader from '../presentational/Loader';
+import React, {useLayoutEffect} from "react";
+import {connect} from "react-redux";
+import {getBrowseRequest} from "../../redux/actions/browse";
+import NotFound from "../presentational/NotFound";
+import Loader from "../presentational/Loader";
+import Browse from "../presentational/Browse";
 
 const BrowseContainer = (props) => {
-    const { isLoading, onload } = props;
-    const { search } = props.location;
+    const {isLoading, getBrowse, error} = props;
+    const {search} = props.location;
     useLayoutEffect(() => {
-        onload(search);
-    }, [onload, search]);
-    
-    if (isLoading) {
+        getBrowse(search);
+    }, [getBrowse, search]);
+    if (error) {
+        return <NotFound/>;
+    } else if (isLoading) {
         return <Loader/>;
     } else {
         return <Browse {...props}/>;    
@@ -21,7 +23,7 @@ const BrowseContainer = (props) => {
 const mapStateToProps = (state) => state.browse;
 
 const mapDispatchToProps = (dispatch) => ({
-    onload: (query) => dispatch(getBrowseRequest(query)),
+    getBrowse: (query) => dispatch(getBrowseRequest(query)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BrowseContainer);

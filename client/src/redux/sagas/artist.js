@@ -7,8 +7,9 @@ import axios from 'axios';
 export function* getArtistRequest({ artistId }) {
     try {
         const data = yield axios('/api/artist/' + artistId).then((response) => response.data);
+        console.log(data);
         yield put(artistActions.getArtistSuccess(data));
-        yield put(getTracksExtras(data.topTracks.items));
+        yield put(getTracksExtras(data.topTracks.items, "artist"));
     } catch(error) {
         console.log(error);
         yield put(artistActions.getArtistFailure(error));

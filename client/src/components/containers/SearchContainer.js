@@ -1,21 +1,19 @@
-import React, { useLayoutEffect } from 'react';
-import { connect } from 'react-redux';
-// import queryString from 'query-string';
-import { getSearchRequest } from '../../redux/actions/search';
-import Loader from '../presentational/Loader';
-import Search from '../presentational/Search';
+import React, {useLayoutEffect} from "react";
+import {connect} from "react-redux";
+import {getSearchRequest} from "../../redux/actions/search";
+import NotFound from "../presentational/NotFound";
+import Loader from "../presentational/Loader";
+import Search from "../presentational/Search";
 
 const SearchContainer = (props) => {
-    console.log(props);
-    const { q } = props.match.params;
-    // const { q } =  queryString.parse(props.location.search);
-    const { isLoading, search } = props;    
+    const {q} = props.match.params;
+    const {isLoading, search, error} = props;    
     useLayoutEffect(() => {
-        console.log("serching");
-            search(q);
+        search(q);
     }, [q, search]);
-
-    if (isLoading) {
+    if (error) {
+        return <NotFound/>;
+    } else if (isLoading) {
         return <Loader/>;
     } else {
         return <Search {...props}/>;

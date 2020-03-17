@@ -11,7 +11,7 @@ footer {
         padding-left: 15px;
     }
 
-    #bruce-lee-image,
+    #bruce-lee-dj,
     #bruce-lee-signature {
         display: block;
         margin: 30px auto;
@@ -33,8 +33,8 @@ footer {
         font-family: CHINESETAKEAWAY;
     }
 
-    #bruce-lee-image {
-        height: 200px;
+    #bruce-lee-dj {
+        height: 160px;
         margin-bottom: 10px;
     }
 
@@ -89,52 +89,10 @@ footer {
     }
 }
 
-// @media screen and (min-width: 992px) {
-//     #footer-grid {
-//         display: grid;
-//         grid-template-columns: 1.5fr 1fr 1fr;
-//     }
-// }
-
-// @media screen and (min-width: 576px) {
-//     #app {
-//       // margin-left: 180px;
-//       // width: 100%;
-//       position: relative;
-//       // left: 180px;
-//       padding-left: 180px;
-//       // padding-right: 0px;
-//       #main-wrapper {
-//         padding-left: 30px;
-//         padding-right: 30px;
-//       }
-//     }
-//     .grid-container {
-//       grid-template-columns: repeat(2, 1fr);
-//       margin-bottom: 40px;
-//     }
-//   }
-  
-//   @media screen and (min-width:701px) {
-//     .grid-container {
-//       grid-template-columns: repeat(3, 1fr);
-//     }
-//   }
-  
-//   @media screen and (min-width:811px) {
-//     .grid-container {
-//       grid-template-columns: repeat(4, 1fr);
-//     }
-//   }
-  
-//   @media screen and (min-width:1021px) {
-//     .grid-container {
-//       grid-template-columns: repeat(5, 1fr);
-//     }
-//   }
-  
-//   @media screen and (min-width:1231px) {
-//     .grid-container {
-//       grid-template-columns: repeat(6, 1fr);
-//     }
-//   }
+@media screen and (min-width: 992px) {
+    footer {
+        #bruce-lee-dj {
+            height: 200px;
+        }
+    }
+}

@@ -22,7 +22,7 @@ function requestSpotifyToken(code, redirectUri) {
             "Content-Type" : "application/x-www-form-urlencoded"
         }
     });
-};
+}
 
 // spotify calls back this route after authenticating and gives the access token of the user logging in
 router.get('/authorize', async (req, res) => {
@@ -74,7 +74,7 @@ router.get('/callback', async (req, res) => {
 
 // application needs to get access token or refresh access token
 router.get('*', async (req, res, next) => {
-    // console.log(req.originalUrl);
+    console.log("need to token.......");
     try {
         let accessToken;
         let refreshToken;
@@ -85,6 +85,7 @@ router.get('*', async (req, res, next) => {
             refreshToken = fs.readFileSync('refreshToken.txt', 'utf8');
         }
         if(accessToken && refreshToken) {
+            console.log("need to refresh......");
             const response = await axios({
                 method: 'post',
                 url: tokenUrl,
@@ -97,8 +98,10 @@ router.get('*', async (req, res, next) => {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
-            });
-            if(response.status === 200) {        
+            }).catch(error => console.log(error));
+            console.log("reponse done from token...");
+            if(response.status === 200) {      
+                console.log("token refreshed....");  
                 accessToken = response.data.access_token;
                 fs.writeFileSync('accessToken.txt', accessToken, 'utf8');
                 next();
@@ -116,7 +119,7 @@ router.get('*', async (req, res, next) => {
             res.redirect(`https://accounts.spotify.com/authorize?${query}`);
         }
     } catch(error) {
-        console.log(error);
+        console.log("error");
         res.send(error);
     }
 });

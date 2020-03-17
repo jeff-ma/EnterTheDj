@@ -1,4 +1,4 @@
-import { UPDATE_PLAYER } from '../actions/player';
+import {UPDATE_PLAYER} from "../actions/player";
 
 const initialState = {
     audioId: null,

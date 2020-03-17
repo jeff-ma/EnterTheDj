@@ -1,0 +1,20 @@
+#not-found {
+    margin: 40px auto;
+    padding: 0 10px;
+    max-width: 500px;
+    text-align: center;
+    img {
+        height: 350px;
+        opacity: 0.3;
+    }
+    blockquote {
+        font-style: italic;
+        margin: 0 auto;
+        max-width: 300px;
+        text-align: left;
+    }
+    :last-child {
+        font-style: normal;
+        text-align: right;
+    }
+}

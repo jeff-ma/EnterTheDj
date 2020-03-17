@@ -9,7 +9,7 @@ export function* getAlbumRequest({ albumId }) {
     try {
         const data = yield axios('/api/album/' + albumId).then((response) => response.data);
         yield put(albumActions.getAlbumSuccess(data));
-        yield put(getTracksExtras(data.tracks.items));
+        yield put(getTracksExtras(data.tracks.items, "album"));
     } catch(error) {
         console.log(error);
         yield put(albumActions.getAlbumFailure(error));

@@ -1,16 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Alert from '../presentational/Alert';
 import {removeAlert} from '../../redux/actions/alert';
+import Alert from '../presentational/Alert';
 
-const AlertContainer = (props) => {
+const AlertContainer = ({alerts, removeAlert}) => {
     return (
         <div id="alert-container">
-            {props.alerts.map(alert => 
-                <Alert key={alert.id} removeAlert={() => props.removeAlert(alert.id)}>
+            {alerts.map(alert => (
+                <Alert key={alert.id} removeAlert={() => removeAlert(alert.id)}>
                     <span>{alert.message}</span>
                 </Alert>
-            )}
+            ))}
         </div>
     );
 };

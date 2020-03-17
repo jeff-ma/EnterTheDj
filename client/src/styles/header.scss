@@ -76,8 +76,10 @@ header {
             border-top: 0;
             border-left: 0;
             border-right: 0;
+            border-bottom: 1px solid #ffffff;
             color: #FFFFFF;
-            padding-left: 30px;
+            padding: 6px 0 6px 30px;
+            width: 100%;
   
             &:focus {
                 border-bottom-color: #FFFFFF;
@@ -195,11 +197,11 @@ nav {
             display: none;
         }
 
-        #search-input {
-            padding-top: 8px;
-            padding-bottom: 8px;
-            padding-right: 0px;
-        }
+        // #search-input {
+        //     padding-top: 8px;
+        //     padding-bottom: 8px;
+        //     padding-right: 0px;
+        // }
 
         #user-profile {
             margin-right: 20px;

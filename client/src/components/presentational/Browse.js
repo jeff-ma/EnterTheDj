@@ -1,30 +1,25 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
-// import {Link} from 'react-router-dom';
-import queryString from 'query-string';
-import Pagination from './Pagination';
-import Tiles from './Tiles';
-// import '../../styles/browse.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import queryString from "query-string";
+import Pagination from "./Pagination";
+import Tiles from "./Tiles";
 
-const Browse = (props) => {
-    const { query } = props;
-    const data = props.categories;
-    const { page } = queryString.parse(query);
-
+const Browse = ({categories, query}) => {
+    const {page} = queryString.parse(query);
     return (
         <div id="main-wrapper" className="container">
             <section> 
                 <h2 className="section-title">Browse</h2>
-                <Tiles data={data} path="category"/>
-                <Pagination page={page} limit={data.limit} total={data.total}/>
+                <Tiles data={categories} path="category"/>
+                <Pagination page={page} limit={categories.limit} total={categories.total}/>
             </section>
         </div>
     );
-
 };
 
-// Browse.propTypes = {
-//     categories: PropTypes.object
-// };
+Browse.propTypes = {
+    categories: PropTypes.object,
+    query: PropTypes.string
+};
 
 export default Browse;

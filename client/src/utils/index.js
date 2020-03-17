@@ -403,6 +403,31 @@ export const addIsSavedToTracks = async (tracks) => {
   });
 };
 
+// export const getTracksExtras = async (tracks) => {
+// // set each track to loading
+//   tracks.forEach((track, index) => {
+//       track.lyrics = "loading";
+//       track.audioAnalysis = "loading"; 
+//       track.audioFeatures = "loading";
+//   });
+//   yield updateTracks(tracks);
+//   // console.log("getting track extras...");
+//   const lyrics = yield axios.post('/api/lyrics', {tracks});
+//   tracks.forEach((track, index) => {
+//       track.lyrics = lyrics.data[index].lyrics;
+//   });
+//   // console.log("update traks for lyrics");
+//   yield updateTracks(tracks);
+//   console.log("done lyrcis ");        
+//   const audioData = yield axios.post('/api/audio_data', {tracks});
+//   tracks.forEach((track, index) => {
+//       track.audioAnalysis = audioData.data[index].audioAnalysis;
+//       track.audioFeatures = audioData.data[index].audioFeatures; 
+//   });
+//   yield updateTracks(tracks);
+//   // console.log("done audio data ");
+// };
+
 // export const token = getAccessToken();
 
 

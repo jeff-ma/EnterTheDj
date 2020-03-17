@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: action.isLoading,
-                artist: action.data.artist,
+                artist: {...action.data.artist},
                 albums: action.data.albums,
                 appearsOn: action.data.appearsOn,
                 bio: action.data.bio,

@@ -11,7 +11,7 @@ import CreatePlaylistModal from './CreatePlaylistModal';
 import TrackModal from './TrackModal';
 import PlaylistDropdown from './PlaylistDropdown';
 import '../../styles/tracksList.scss';
-import ipod3 from '../../images/ipod3.svg';
+import ipod from '../../images/ipod.svg';
 // import playlist1 from '../../images/playlist1.svg';
 import heart_outline2 from '../../images/heart_outline2.svg';
 import heart_solid2 from '../../images/heart_solid2.svg';
@@ -36,7 +36,7 @@ const TracksList = (props) => {
                     return (
                         <li className={props.type === "album" ? "album-list-item" : "list-item"} key={index}>
                             <div className="player-icon-box">
-                                <img src={ipod3} height="20" alt="player" onClick={() => updatePlayer(item.id, "track")}/>
+                                <img src={ipod} height="20" alt="player" onClick={() => updatePlayer(item.id, "track")}/>
                                 {/* <i className="fas fa-play list-player-icon" onClick={() => updatePlayer(item.id, "track")}></i> */}
                             </div>
                             {props.type !== "album" &&

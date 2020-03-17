@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import footer from './footer';
 import home from './home';
 import browse from './browse';
 import search from './search';
@@ -19,7 +18,6 @@ import alert from './alert';
 
 export default combineReducers({
     alert,
-    footer,
     home,
     browse,
     search,

@@ -1,23 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const request = require('request');
-const session = require('express-session');
 const axios = require('axios');
-const querystring = require('querystring');
 const fs = require('fs');
-const path = require('path');
 const cheerio = require('cheerio');
 
-// Spotify api credentials
-const clientId = '2d6223f5a7d74315a03e819aee4e3934';
-const clientSecret = '59a5341f9642466ab0e0cb00eb00ac7c';
-const redirectUri = 'http://localhost:3001/callback';
-
 // Spotify api endpoints
-const authorizeUrl = 'https://accounts.spotify.com/authorize?';
-const userUrl = 'https://api.spotify.com/v1/me';
 // const searchUrl = 'https://api.spotify.com/v1/search?type=track&limit=2&query=';
-const searchUrl = 'https://api.spotify.com/v1/search?type=album,artist,track,playlist,show&market=us&locale=en&limit=50&q=';
+const searchUrl = 'https://api.spotify.com/v1/search?type=album,artist,playlist,show,track&market=us&locale=en&limit=50&q=';
 const top50Url = 'https://api.spotify.com/v1/search?type=playlist&market=us&locale=en&limit=50&q=top 50';
 const albumUrl = 'https://api.spotify.com/v1/albums/';
 const artistUrl = 'https://api.spotify.com/v1/artists/';
@@ -38,6 +27,7 @@ const checkUserSavedArtistsUrl = "https://api.spotify.com/v1/me/following/contai
 const checkUserSavedShowsUrl = "https://api.spotify.com/v1/me/shows/contains?";
 const updateLibraryTracksUrl = "https://api.spotify.com/v1/me/tracks?ids=";
 const saveRemoveAlbumUrl = "https://api.spotify.com/v1/me/albums?ids=";
+const pastAlbumsUrl = "https://api.spotify.com/v1/search?q=%20:new&type=album&limit=16";
 
 // genius token
 const geniusToken = 'WR1f5FtWUISyYj0Zd20aL5YZNuOnXr0otQ5mnND1nANzguPbIbZrkDYBeFX9YCNb';
@@ -60,14 +50,13 @@ async function spotifyApiCall(url, token, method = "get") {
                 timeout: timeout
             });
             return response;
-        } catch({response:{data:{error}}}) {
-            console.log(error);
-            return Promise.reject(error);
+        } catch(error) {
+            return Promise.reject(error.response.data.error);
         }
     } else {
         return Promise.reject(new Error('spotify access token not found'));
     }
-};
+}
 
 async function geniusApiCall(url) {
     return axios({
@@ -76,7 +65,7 @@ async function geniusApiCall(url) {
         headers: {'Authorization': 'Bearer ' + geniusToken},
         timeout: timeout
     });
-};
+}
 
 async function addIsSavedToTracks(tracks, accessToken) {
     // spotify only allows checking up to 50 track ids at one time
@@ -91,40 +80,12 @@ async function addIsSavedToTracks(tracks, accessToken) {
     tracks.forEach((track, index) => {
         track.isSaved = savedTracksCheck[index];
     });
-};
-
-async function addAudioDataToTracks(tracks) {
-    const accessToken = fs.readFileSync('accessToken.txt', 'utf8');
-    let total = 0;
-    let audioFeatures = [];
-    while(total < tracks.length) {
-        const trackIds = tracks.slice(total, total + 100).map((track) => track.id);
-        const response = await spotifyApiCall("https://api.spotify.com/v1/audio-features?ids=" + trackIds.join(","));
-        audioFeatures = audioFeatures.concat(response.data.audio_features);
-        total = total + 100;
-    }
-    let promises = tracks.map((track, index) => axios.get("https://api.spotify.com/v1/audio-analysis/" + track.id, {headers: {'Authorization': 'Bearer ' + accessToken}}));
-    const responses = await axios.all(promises);
-    tracks.forEach((track, index) => {
-        //loop each track and add audio features
-        track.audioAnalysis = responses[index].data;
-        track.audioFeatures = audioFeatures[index]; 
-    });
-}
-
-async function getUserPlaylists(accessToken) {
-    try {
-        const response = await spotifyApiCall(`https://api.spotify.com/v1/users/${userId}/playlists`, accessToken);
-        return resposne.data;
-    } catch(error) {
-        console.log(error);
-    }
 }
 
 router.post('/audio_data', async (req, res) => {
+    const {tracks} = req.body;
     try {
         const accessToken = fs.readFileSync('accessToken.txt', 'utf8');
-        const {tracks} = req.body;
         let total = 0;
         let audioFeatures = [];
         // max of 100 track ids for each audio features api call
@@ -134,7 +95,8 @@ router.post('/audio_data', async (req, res) => {
             audioFeatures = audioFeatures.concat(response.data.audio_features);
             total = total + 100;
         }
-        let promises = tracks.map((track, index) => axios.get("https://api.spotify.com/v1/audio-analysis/" + track.id, {headers: {'Authorization': 'Bearer ' + accessToken}}));
+        // let promises = tracks.map((track, index) => axios.get("https://api.spotify.com/v1/audio-analysis/" + track.id, {headers: {'Authorization': 'Bearer ' + accessToken}}));
+        let promises = tracks.map((track, index) => spotifyApiCall("https://api.spotify.com/v1/audio-analysis/" + track.id));
         const responses = await axios.all(promises);
         tracks.forEach((track, index) => {
             //loop each track and add audio features
@@ -143,7 +105,6 @@ router.post('/audio_data', async (req, res) => {
         });
         res.send(tracks);
     } catch(error) {
-        console.log(error);
         res.send(tracks);
     }
 });
@@ -194,78 +155,62 @@ router.get('/artist/:artistId', async (req, res) => {
             spotifyApiCall(artistUrl + artistId + "/related-artists?limit=50"),
             spotifyApiCall(artistUrl + artistId + "/albums?include_groups=appears_on&country=US&limit=50"),
             spotifyApiCall(artistUrl + artistId + "/top-tracks?country=us"),
-            // spotifyApiCall('https://api.spotify.com/v1/search?type=playlist&limit=50&q='),
-            // spotifyApiCall(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=us&limit=50`),
             axios(`https://open.spotify.com/artist/${artistId}/about`),
         ]);
-        // get recommendations
+        let latest;
         const artist = responses[0].data;
         const albums = responses[1].data;
         const singles = responses[2].data;
         const relatedArtists = {items: responses[3].data.artists};
         const appearsOn = responses[4].data;
         const topTracks = {items: responses[5].data.tracks};
+        const playlists = await spotifyApiCall(`https://api.spotify.com/v1/search?type=playlist&limit=50&q=${artist.name}`);
         const $ = cheerio.load(responses[6].data);
-        const bioPrimary = $(".bio-primary span").html();
-        const bioSecondary = $(".bio-secondary span").html();
         $("a").each((index, element) => {
+            // get the link address
             const href = $(element).attr("href");
-            if (!href.startsWith("/album/") && !href.startsWith("/artist/")) {            
+            // remove all links except for "/album" and "/artist"
+            if (!href.startsWith("/album/") && !href.startsWith("/artist/")) {
                 const html = $(element).html();
+                // replace links with the links inner html text
                 $(element).replaceWith(html);
             }
         });
-        // let innerHtml = '<p class="bio-primary">' + $(".bio-primary span").html() + $(".bio-secondary span").first().html() + "</p>";
-        let innerHtml = $(".bio-primary span").html() + $(".bio-secondary span").first().html();
-        // $(".bio-primary").replaceWith('<p class="bio-primary">' + bioPrimary + $(".bio-secondary span").first().html() + "</p>");
+        // get the bio paragraphs text
+        let bio = $(".bio-primary span").html() + $(".bio-secondary span").first().html();
+        // remove first paragraph of bio secondary because its exactly same as bio primary paragraph
         $(".bio-secondary").first().remove();
+        // remove the outer span tag from each bio secondary paragraph
         $(".bio-secondary").each((index, element) => {
-            // console.log(element);
-            // const html = $(element).html();
             const html = $(element).children().first().html();
-            // console.log($(element).children().first().html());
-            // $(element).replaceWith('<p class="bio-secondary">' + html + "</p>");
-            // console.log($(element).html());
-            innerHtml = innerHtml + '<p class="bio-secondary">' + $(element).children().first().html() + "</p>";
+            bio = bio + '<p class="bio-secondary">' + $(element).children().first().html() + "</p>";
         });
-        if (innerHtml) {
-            innerHtml = '<p class="bio-primary">' + innerHtml + '</p>';
+        if (bio) {
+            bio = '<p class="bio-primary">' + bio + '</p>';
         }
-        // only allow links to albums and artist remove all other links
-        // const bio = $(".bio").html();
         artist.monthlyListeners = $(".insights__column__number").first().html();
-        // console.log(bio);
-        // get tracks for the most recent album
-        // get the latest
-        let latest;
-        if (albums.items.length > 0) {
-            if (singles.items.length > 0) {
-                // compare dates 
-                const albumReleaseDate = new Date(albums.items[0].release_date);
-                const singleReleaseDate = new Date(singles.items[0].release_date);
-                if (albumReleaseDate.getTime() >= singleReleaseDate.getTime()) {
-                    latest = albums.items[0];
-                } else {
-                    latest = singles.items[0];
-                }
-            } else {
+        // spotify puts most recent item in first index
+        latest = singles.items[0] || albums.items[0];
+        if (albums.total > 0 && singles.total > 0) {
+            // compare and get most recent release
+            const albumReleaseDate = new Date(albums.items[0].release_date).getTime();
+            const singleReleaseDate = new Date(singles.items[0].release_date).getTime();
+            if (albumReleaseDate >= singleReleaseDate) {
                 latest = albums.items[0];
             }
-        } else {
-            latest = singles.items[0];
         }
-
-        // let latest = albums.items;
-        await spotifyApiCall(albumUrl + latest.id).then(response => {latest.tracks = response.data.tracks});
-        const playlists = await spotifyApiCall(`https://api.spotify.com/v1/search?type=playlist&limit=50&q=${artist.name}`).then(response => response.data.playlists);
-        const response = await spotifyApiCall(`${recommendationUrl}?seed_artists=${artistId}&seed_genres=${artist.genres[0]}`);
-        // await addAudioDataToTracks(topTracks.items);
+        if (latest) {
+            // get latest tracks
+            await spotifyApiCall(albumUrl + latest.id).then(response => {latest.tracks = response.data.tracks});
+        }
+        // implement recommendations later
+        // const recommendations = await spotifyApiCall(`${recommendationUrl}?seed_artists=${artistId}&seed_genres=${artist.genres[0]}`);
         if (accessToken) {
-            const response = await spotifyApiCall(checkUserSavedArtistsUrl + artist.id, accessToken);
-            artist.isSaved = response.data[0];
+            const isSaved = await spotifyApiCall(checkUserSavedArtistsUrl + artist.id, accessToken);
+            artist.isSaved = isSaved.data[0];
             await addIsSavedToTracks(topTracks.items, accessToken);
         }
-        res.status(200).send({artist, albums, singles, appearsOn, bio: innerHtml, latest, playlists, recommendations: response.data.tracks, relatedArtists, topTracks});
+        res.status(200).send({artist, albums, singles, appearsOn, bio, latest, playlists: playlists.data.playlists, relatedArtists, topTracks});
     } catch(error) {
         res.status(error.status).send(error);
     }
@@ -316,28 +261,27 @@ router.get('/embed/:audioType/:audioId', async (req,res)=> {
 });
 
 router.get('/home', async (req, res) => {
-    let genres = fs.readFileSync("genres.txt", "utf8");
-    genres = genres.split(" ").sort(() => 0.5 - Math.random()).slice(0,5);
     try {
+        const genres = await spotifyApiCall("https://api.spotify.com/v1/recommendations/available-genre-seeds");
+        const randomGenres = () => genres.data.genres.sort(() => 0.5 - Math.random()).slice(0,5);
         const responses = await axios.all([
             spotifyApiCall(newReleasesUrl),
             spotifyApiCall(mostPopularUrl),
-            spotifyApiCall(topSongsUrl),
-            spotifyApiCall(newShowsUrl),
+            spotifyApiCall(`https://api.spotify.com/v1/recommendations?seed_genres=${randomGenres().join()}`),
+            spotifyApiCall(`https://api.spotify.com/v1/recommendations?seed_genres=${randomGenres().join()}`),
             spotifyApiCall(top50Url),
             spotifyApiCall(featuredPlaylistUrl),
-            spotifyApiCall(`https://api.spotify.com/v1/recommendations?seed_genres=${genres.join()}`),
+            spotifyApiCall(newShowsUrl)
         ]);
-        const featured = [...responses[0].data.albums.items].sort(() => 0.5 - Math.random()).slice(0,7);
-        const albums = responses[0].data.albums.items.splice(0, 16);
+        const latestAlbums = [...responses[0].data.albums.items].sort(() => 0.5 - Math.random()).slice(0,7);
+        const newAlbums = responses[0].data.albums.items.splice(0, 16);
         const mostPopular = responses[1].data.tracks.items.splice(0, 16);
-        // const categories = responses[1].data.categories.items;
-        const topSongs = responses[2].data.tracks.items.splice(0, 16);
-        const newShows = responses[3].data.shows.items;
+        const turnItUp = responses[2].data.tracks.map((track) => track.album).splice(0, 16);
+        const bruceLeePicks = responses[3].data.tracks.map((track) => track.album).splice(0, 16);
         const top50 = responses[4].data.playlists.items.filter(item => item.name.includes("Top 50")).splice(0, 16);
         const featuredPlaylists = responses[5].data.playlists.items.splice(0, 16);
-        const recommends = responses[6].data.tracks.map((track) => track.album).splice(0, 16);
-        res.status(200).send({ featured, albums, mostPopular, topSongs, newShows, top50, featuredPlaylists, recommends});
+        const newShows = responses[6].data.shows.items;
+        res.status(200).send({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, top50, featuredPlaylists, newShows});
     } catch(error) {
         res.status(error.status).send(error);
     }
@@ -407,19 +351,15 @@ router.get('/playlist/:playlistId', async (req, res) => {
 router.get('/playlists', async (req, res) => {
     try {
         const accessToken = req.cookies.access_token;
-        // let response, responses;
         if (accessToken) {
              const responses = await axios.all([
                 spotifyApiCall(featuredPlaylistUrl, accessToken),
                 spotifyApiCall(userPlaylistsUrl, accessToken)             
             ]);
-            res.status(200).send({featuredPlaylists: responses[0].data.playlists, userPlaylists: responses[1].data});
-            // res.status(200).send({userPlaylists: responses[0].data, featuredPlaylists: responses[1].data})
+            res.status(200).send({featuredPlaylists: responses[0].data.playlists, playlists: responses[1].data});
         } else {
             const response = await spotifyApiCall(featuredPlaylistUrl);
             res.status(200).send({featuredPlaylists: response.data.playlists});
-            // const featuredPlaylists = response.data;
-            // response = {featuredPlaylists};
         }
     } catch(error) {
         res.status(error.status).send(error);
@@ -429,21 +369,18 @@ router.get('/playlists', async (req, res) => {
 router.get('/search', async (req,res) => {
     try {
         const accessToken = req.cookies.access_token;
-        // const { q } = req.query;    
-        const response = await spotifyApiCall(searchUrl + req.query.q);
-        // console.log(response.data);
-        // if no items do not send as response
+        const {data} = await spotifyApiCall(searchUrl + req.query.q);
         const searchResults = {};
-        for (let key in response.data) {
-            if (response.data[key].total > 0) {
-                searchResults[key] = response.data[key];
+        for (let key in data) {
+            if (data[key].total > 0) {
+                searchResults[key] = data[key];
             }
         }
         // await addAudioDataToTracks(searchResults.tracks.items);   
         if (accessToken && searchResults.tracks) {
             await addIsSavedToTracks(searchResults.tracks.items, accessToken);
         }
-        res.status(response.status).send(searchResults);
+        res.status(200).send(searchResults);
     }
     catch(error) {
         res.status(error.status).send(error);

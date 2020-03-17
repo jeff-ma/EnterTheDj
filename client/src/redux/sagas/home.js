@@ -2,16 +2,16 @@ import { put, takeLatest } from 'redux-saga/effects';
 import * as homeActions from '../actions/home';
 import axios from 'axios';
 
-export function* getHomeAlbumsRequest() {
+export function* getHomeRequest() {
     try {
         const data = yield axios('/api/home').then((response) => response.data);
-       yield put(homeActions.getHomeAlbumsSuccess(data));
+       yield put(homeActions.getHomeSuccess(data));
     } catch(error) {
         console.log(error);
-        yield put(homeActions.getHomeAlbumsFailure(error));
+        yield put(homeActions.getHomeFailure(error));
     }
 }
 
 export function* watchHomeSaga() {
-    yield takeLatest(homeActions.GET_HOME_ALBUMS_REQUEST, getHomeAlbumsRequest);
+    yield takeLatest(homeActions.GET_HOME_REQUEST, getHomeRequest);
 }

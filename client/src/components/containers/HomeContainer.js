@@ -1,24 +1,28 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getHomeAlbumsRequest } from '../../redux/actions/home';
-import { addAlert } from '../../redux/actions/alert';
-import Home from '../presentational/Home';
+import React, {useLayoutEffect} from "react";
+import {connect} from "react-redux";
+import {getHomeRequest} from "../../redux/actions/home";
+import NotFound from "../presentational/NotFound";
+import Loader from "../presentational/Loader";
+import Home from "../presentational/Home";
 
-class HomeContainer extends Component {
-    componentDidMount() {
-        this.props.onload();
-    }   
-
-    render() {
-        return <Home {...this.props}/>;
+const HomeContainer = (props) => {
+    const {isLoading, getHome, error} = props;
+    useLayoutEffect(() => {
+        getHome();
+    }, [getHome]);
+    if (error) {
+        return <NotFound/>;
+    } else if(isLoading) {
+        return <Loader/>;
+    } else {
+        return <Home {...props}/>;
     }
 }
 
 const mapStateToProps = (state) => state.home;
 
 const mapDispatchToProps = (dispatch) => ({
-    onload: () => dispatch(getHomeAlbumsRequest()),
-    addAlert: (message) => dispatch(addAlert(message))
+    getHome: () => dispatch(getHomeRequest()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

@@ -5,20 +5,21 @@ import Alert from './components/containers/AlertContainer';
 import Artist from './components/containers/ArtistContainer';
 import Browse from './components/containers/BrowseContainer';
 import Category from './components/containers/CategoryContainer';
-import Footer from './components/containers/Footer';
+import Footer from './components/presentational/Footer';
 import Header from './components/containers/HeaderContainer';
 import Home from './components/containers/HomeContainer';
 import Library from './components/containers/LibraryContainer';
 import Login from './components/presentational/Login';
 import Logout from './components/presentational/Logout';
-import Player from './components/containers/PlayerContainer';
+import NotFound from './components/presentational/NotFound';
+import Player from './components/presentational/Player';
 import Playlist from './components/containers/PlaylistContainer';
 import Playlists from './components/containers/PlaylistsContainer';
 import Profile from './components/presentational/Profile';
 import Recent from './components/containers/RecentContainer';
 import Search from './components/containers/SearchContainer';
 import Show from './components/containers/ShowContainer';
-import SideNav from './components/containers/SideNavContainer';
+import SideNav from './components/presentational/SideNav';
 import Top from './components/containers/TopContainer';
 import './styles/App.scss';
 
@@ -59,6 +60,7 @@ const App = (props) => {
         <Route path="/search/:q/:view?" exact component={Search}/>
         <Route path="/show/:showId?" exact component={Show} />
         <Route path="/top/:view?" exact component={Top}/>
+        <Route component={NotFound}/>
       </Switch>
     </main>
     <Player/>
@@ -66,6 +68,5 @@ const App = (props) => {
     </React.Fragment>
   );
 }
-
 
 export default withRouter(App);

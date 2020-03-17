@@ -1,33 +1,28 @@
 import React, {useLayoutEffect} from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {getShowRequest, removeShowRequest, saveShowRequest} from '../../redux/actions/show';
-import { updatePlayer } from '../../redux/actions/player';
-// import Show from '../presentational/Show';
-import AlbumPlaylist from '../presentational/AlbumPlaylist';
+import NotFound from "../presentational/NotFound";
 import Loader from '../presentational/Loader';
+import Collection from '../presentational/Collection';
 
-const ShowContainer = (props) => {
-    const {showId} = props.match.params;
-    const onload = props.onload
-
+const ShowContainer = ({isLoading, getShow, show, removeShow, saveShow, match, error}) => {
+    const {showId} = match.params;
     useLayoutEffect(() => {
-        onload(showId);
-    },[onload, showId]);
-
-    if (props.isLoading) {
+        getShow(showId);
+    },[getShow, showId]);
+    if (error) {
+        return <NotFound/>;
+    } else if (isLoading) {
         return <Loader/>;
     } else {
-        return <AlbumPlaylist collection={props.show} {...props}/>
+        return <Collection collection={show} remove={removeShow} save={saveShow}/>;
     }
 };
 
-const mapStateToProps = (state) => {
-    return state.show;
-};
+const mapStateToProps = (state) => state.show;
 
 const mapDispatchToProps = (dispatch) => ({
-    onload: (showId) => dispatch(getShowRequest(showId)),
-    updatePlayer: (audioId, audioType) => dispatch(updatePlayer(audioId, audioType)),
+    getShow: (showId) => dispatch(getShowRequest(showId)),
     removeShow: (showId) => dispatch(removeShowRequest(showId)),
     saveShow: (showId) => dispatch(saveShowRequest(showId))
 });

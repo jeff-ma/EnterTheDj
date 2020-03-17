@@ -9,7 +9,7 @@ export function* getPlaylistRequest({playlistId}) {
     try {
         const data = yield axios('/api/playlist/' + playlistId).then((response => response.data));
         yield put(playlistActions.getPlaylistSuccess(data));
-        yield put(getTracksExtras(data.tracks.items));
+        yield put(getTracksExtras(data.tracks.items, "playlist"));
     } catch(error) {
         yield put(playlistActions.getPlaylistFailure(error));
     }
@@ -58,7 +58,7 @@ export function* playlistRemoveTrackRequest({playlistId, trackUri}) {
         if (playlist.tracks.items[0].audioAnalysis && playlist.tracks.items[0].audioAnalysis !== "loading") {
             yield put(playlistActions.getPlaylistSuccess({...playlist}));
         } else {
-            yield put(getTracksExtras(playlist.tracks.items));
+            yield put(getTracksExtras(playlist.tracks.items, "playlist"));
         }
     } catch(error) {
         console.log(error);
