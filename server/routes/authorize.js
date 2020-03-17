@@ -74,7 +74,6 @@ router.get('/callback', async (req, res) => {
 
 // application needs to get access token or refresh access token
 router.get('*', async (req, res, next) => {
-    console.log("need to token.......");
     try {
         let accessToken;
         let refreshToken;
@@ -85,7 +84,6 @@ router.get('*', async (req, res, next) => {
             refreshToken = fs.readFileSync('refreshToken.txt', 'utf8');
         }
         if(accessToken && refreshToken) {
-            console.log("need to refresh......");
             const response = await axios({
                 method: 'post',
                 url: tokenUrl,
@@ -98,19 +96,16 @@ router.get('*', async (req, res, next) => {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
-            }).catch(error => console.log(error));
-            console.log("reponse done from token...");
+            });
             if(response.status === 200) {      
-                console.log("token refreshed....");  
                 accessToken = response.data.access_token;
                 fs.writeFileSync('accessToken.txt', accessToken, 'utf8');
                 next();
             } else {
-                console.log("Refresh failed!");
                 return new Error("There was an error fetching data");
             }
         } else {
-            console.log("Redirecting to spotify login");
+            // redirect to spotify login
             const query = querystring.stringify({
                 response_type: 'code',
                 client_id: clientId,
