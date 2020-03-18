@@ -49,16 +49,16 @@ const TracksList = (props) => {
                             <div className="list-details">
                                 {props.type === "album" ? 
                                     <React.Fragment>
-                                        <div className="track-name" onClick={() => updatePlayer(item.id, "track")}>{item.name}</div>
+                                        <div>{item.name}</div>
                                         <div>{formatDuration(item.duration_ms)}</div>
                                     </React.Fragment>
                                     :
                                     <React.Fragment>
-                                        <div className="track-name" onClick={() => updatePlayer(item.id, "track")}>
-                                            {/* <Link to={"/album/" + item.album.id} className="track-link"> */}
+                                        <div className="track-name">
+                                            <Link to={"/album/" + item.album.id} className="track-link">
                                                 <div className="tile-track">{item.name}</div>
                                                 <div className="track-artist">{item.artists[0].name} &middot; {item.album.name}</div>
-                                            {/* </Link> */}
+                                            </Link>
                                         </div>
                                         <div className="track-duration">{formatDuration(item.duration_ms)}</div>
                                     </React.Fragment>

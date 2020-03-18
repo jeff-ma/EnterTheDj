@@ -73,9 +73,9 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
             }
-            .track-link {
-                color: #FFFFFF;
-            }
+            // .track-link {
+            //     color: #FFFFFF;
+            // }
         }
         .list-image {
             img {
@@ -129,9 +129,9 @@
         cursor: pointer;
         &:hover {
             // color: rgb(239,84,102);
-            color: #FF0000;
+            color: #ff4646;
             .track-artist {
-                color: #FF0000;
+                color: #ff4646;
             }
         }
     }
