@@ -1,140 +1,71 @@
-#loader {
-    height: 100%;
-    position: fixed;    
+.loader {
     width: 100%;
-    // background-attachment: fixed;
-    background-color: rgb(18, 18, 22);
-    // background-image: url("/images/bruce.png"), linear-gradient(135deg, rgb(33, 39, 55) 0%, rgb(22, 28, 37) 100%);
-    // // background-image: linear-gradient(135deg, rgb(27, 32, 45) 0%, rgb(22, 28, 37) 100%);
-    // background-repeat: no-repeat;
-    // background-size: contain;
-    // background-position: center calc(50% + 60px);
-    z-index: 20;
-    top: 0;
-    left: 0;
-  }
-
-#loader::before {
-    content: "";
-    height: 100%;
-    display: block;
-    // background-color: rgba(0,0,0,1);
-    // background-image: linear-gradient(135deg, rgb(33, 39, 55) 0%, rgb(22, 28, 37) 100%);
-    // background-color: rgb(18, 18, 22);
-}
-
-#loader-box {
+    height: 90vh;
     display: flex;
     flex-direction: column;
-    // align-items: center;
-    left: 50%;
-    position: fixed;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    
+    justify-content: center;
+    align-items: center;
     blockquote {
         font-size: 1.2rem;
         animation: fade 2s ease-in-out;
         animation-iteration-count: infinite;
-        &#quote {
+        width: 300px;
+        &.quote {
             font-style: italic;
             text-align: left;
         }
-        &#signature {
+        &.signature {
             text-align: right;
         }
     }
 }
-#equalizer {
-	width: 10em;
-	height: 10em;
+
+.equalizer {
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
-	justify-content: space-between;
-    font-size: 10px;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    width: 140px;
+    min-width: 140px;
+    height: 80px;
+    margin: 0 auto;
     z-index: 21;
+    div {
+        width: 15px;
+        height: 5px;
+        margin: 0 2px;
+        background-color: #ffffff;
+        animation-name: equalize;
+        animation-duration: 350ms;
+        animation-direction: alternate;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-delay: var(--n);
+        &:nth-child(1) {
+            --n: 275ms;
+        }
+        &:nth-child(2) {
+            --n: 605ms;
+        }
+        &:nth-child(3) {
+            --n: 375ms;
+        }
+        &:nth-child(4) {
+            --n: 15ms;
+        }
+        &:nth-child(5) {
+            --n: 165ms;
+        }
+    }
 }
 
-#equalizer span {
-	width: 1.5em;
-    // background: linear-gradient(red, yellow, green);
-    background-color: #FFFFFF;
-    // animation: up-and-down 2s linear calc(-1 * 0.4s * var(--n));
-    animation: up-and-down 2s linear infinite calc(-1 * 0.4s * var(--n));    
-    // animation-iteration-count: infinite;
-}
-
-#equalizer span {
-	--n: 1;
-}
-
-#equalizer span:nth-child(2) {
-	--n: 2;
-}
-
-#equalizer span:nth-child(3) {
-	--n: 3;
-}
-
-#equalizer span:nth-child(4) {
-	--n: 4;
-}
-
-#equalizer span:nth-child(5) {
-	--n: 5;
-}
-
-@keyframes up-and-down{
-	0%, 100% {
-        clip-path: inset(27% 0 0 0);
-        -webkit-clip-path: inset(27% 0 0 0);
-	}
-
-	10% {
-        clip-path: inset(17% 0 0 0);
-        -webkit-clip-path: inset(17% 0 0 0);
-	}
-
-	20% {
-        clip-path: inset(55% 0 0 0);
-        -webkit-clip-path: inset(55% 0 0 0);
-	}
-
-	30% {
-        clip-path: inset(30% 0 0 0);
-        -webkit-clip-path: inset(30% 0 0 0);
-	}
-
-	40% {
-        clip-path: inset(13% 0 0 0);
-        -webkit-clip-path: inset(13% 0 0 0);
-	}
-
-	50% {
-        clip-path: inset(38% 0 0 0);
-        -webkit-clip-path: inset(38% 0 0 0);
-	}
-
-	60% {
-        clip-path: inset(80% 0 0 0);
-        -webkit-clip-path: inset(80% 0 0 0);
-	}
-
-	70% {
-        clip-path: inset(21% 0 0 0);
-        -webkit-clip-path: inset(21% 0 0 0);
-	}
-
-	80% {
-        clip-path: inset(0% 0 0 0);
-        -webkit-clip-path: inset(0% 0 0 0);
-	}
-
-	90% {
-        clip-path: inset(36% 0 0 0);
-        -webkit-clip-path: inset(36% 0 0 0);
-	}
+@keyframes equalize {
+    from {
+        height: 1px;
+    }
+    to {
+        height: 100%;
+    }
 }
 
 @keyframes fade {
@@ -150,10 +81,10 @@
 }
 
 @media screen and (min-width: 576px) {
-    #loader {
+    .loader {
       background-position: calc(50% + 160px) calc(50% + 60px);
     }
-    #loader-box {
+    .loader-box {
         left: calc(50% + 90px);
     }
 }

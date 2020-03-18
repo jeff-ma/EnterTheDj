@@ -3,18 +3,16 @@ import {randomQuote} from "../../utils";
 import "../../styles/loader.scss";
 
 const Loader = () => (
-    <div id="loader">
-        <div id="loader-box">
-            <div id="equalizer">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <blockquote id="quote">"{randomQuote()}"</blockquote>
-            <blockquote id="signature">-Bruce Lee</blockquote>
+    <div className="loader">
+        <div className="equalizer">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
+        <blockquote className="quote">"{randomQuote()}"</blockquote>
+        <blockquote className="signature">-Bruce Lee</blockquote>
     </div>
 );
 
