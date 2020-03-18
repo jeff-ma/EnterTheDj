@@ -9,7 +9,7 @@ const Library = (props) => {
     const libraryViews = ["albums", "artists", "playlists", "shows", "tracks"];
     const {view = "albums"} = props.match.params;
     const data = props[view];
-    const type = view.slice(0,-1);
+    const path = view.slice(0,-1);
     const viewButtons = libraryViews.map((libraryView, index) => <Link key={index} className={view === libraryView ? "view-button active" : "view-button"} to={`/library/${libraryView}`}><span>{libraryView}</span></Link>);
     return (
         <div id="main-wrapper" className="container">
@@ -19,7 +19,7 @@ const Library = (props) => {
                     {viewButtons}
                 </div>
             </div>
-            {view === "tracks" ? <TracksList tracks={data}/> : <Tiles data={data} path={type}/>}
+            {view === "tracks" ? <TracksList tracks={data}/> : <Tiles data={data} path={path}/>}
         </div>
     );
 };

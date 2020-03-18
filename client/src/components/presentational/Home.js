@@ -80,7 +80,7 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
                     <h2 className="section-title swiper-title">New Releases</h2>
                     <Swiper {...swiperParams}>
                         {newAlbums.map((newAlbum, index) =>
-                            swiperTile(index, `/album/${newAlbum.id}`, newAlbum.images.length > 0 && newAlbum.images[0].url, newAlbum.name, newAlbum.artists[0].name)
+                            swiperTile(index, `/album/${newAlbum.id}`, newAlbum.images.length > 0 && newAlbum.images[1].url, newAlbum.name, newAlbum.artists[0].name)
                         )}
                     </Swiper>  
                 </section>
@@ -88,7 +88,7 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
                     <h2 className="section-title swiper-title">Popular Albums</h2>
                     <Swiper {...swiperParams}>
                         {mostPopular.map((popular, index) =>
-                            swiperTile(index, `/album/${popular.track.album.id}`, popular.track.album.images.length > 0 && popular.track.album.images[0].url, popular.track.album.name, popular.track.artists[0].name)
+                            swiperTile(index, `/album/${popular.track.album.id}`, popular.track.album.images.length > 0 && popular.track.album.images[1].url, popular.track.album.name, popular.track.artists[0].name)
                         )}
                     </Swiper> 
                 </section>
@@ -96,7 +96,7 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
                     <h2 className="section-title swiper-title">Turn It Up</h2>
                     <Swiper {...swiperParams}>
                         {turnItUp.map((up, index) =>
-                            swiperTile(index, `/album/${up.id}`, up.images.length > 0 && up.images[0].url, up.name, up.artists[0].name)
+                            swiperTile(index, `/album/${up.id}`, up.images.length > 0 && up.images[1].url, up.name, up.artists[0].name)
                         )}
                     </Swiper> 
                 </section>
@@ -104,7 +104,7 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
                     <h2 className="section-title swiper-title">Bruce Lee Picks</h2>
                     <Swiper {...swiperParams}>
                         {bruceLeePicks.map((bruceLeePick, index) =>
-                            swiperTile(index, `/album/${bruceLeePick.id}`, bruceLeePick.images.length > 0 && bruceLeePick.images[0].url, bruceLeePick.name, bruceLeePick.artists[0].name)
+                            swiperTile(index, `/album/${bruceLeePick.id}`, bruceLeePick.images.length > 0 && bruceLeePick.images[1].url, bruceLeePick.name, bruceLeePick.artists[0].name)
                         )}
                     </Swiper>  
                 </section>
@@ -128,7 +128,7 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
                     <h2 className="section-title swiper-title">Fresh Podcasts</h2>
                     <Swiper {...swiperParams}>
                         {newShows.map((newShow, index) => 
-                            swiperTile(index, `/show/${newShow.id}`, newShow.images.length > 0 && newShow.images[0].url, newShow.name, newShow.publisher)
+                            swiperTile(index, `/show/${newShow.id}`, newShow.images.length > 0 && newShow.images[1].url, newShow.name, newShow.publisher)
                         )}
                     </Swiper> 
                 </section>

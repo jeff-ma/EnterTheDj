@@ -42,7 +42,7 @@ const TracksList = (props) => {
                             {props.type !== "album" &&
                                 <div className="list-image">
                                     <Link to={"/album/" + item.album.id}>
-                                        <img src={item.album.images[0].url} alt={item.name}/>
+                                        <img src={item.album.images[2].url} alt={item.name}/>
                                     </Link>
                                 </div>
                             }

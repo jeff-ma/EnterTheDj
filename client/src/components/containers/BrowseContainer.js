@@ -16,7 +16,7 @@ const BrowseContainer = (props) => {
     } else if (isLoading) {
         return <Loader/>;
     } else {
-        return <Browse {...props}/>;    
+        return <Browse {...props}/>;
     }
 };
 
