@@ -5,8 +5,12 @@
     max-width: 250px;
     z-index: 1051;
     .alert {
+        background-color: #ff4646;
+        border: none;
+        color: #ffffff;
         padding: 10px;
         button {
+            color: #ffffff;
             margin-left: 10px;
         }
     }
