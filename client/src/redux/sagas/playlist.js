@@ -55,7 +55,7 @@ export function* playlistRemoveTrackRequest({playlistId, trackUri}) {
         const playlist = yield select((state) => state.playlist.playlist);
         playlist.tracks.items = playlist.tracks.items.filter((item) => item.uri !== trackUri);
         // if tracks already have audio analysis update playlist or else get tracks extras
-        if (playlist.tracks.items[0].audioAnalysis && playlist.tracks.items[0].audioAnalysis !== "loading") {
+        if (playlist.tracks.items.length > 0 && playlist.tracks.items[0].audioAnalysis && playlist.tracks.items[0].audioAnalysis !== "loading") {
             yield put(playlistActions.getPlaylistSuccess({...playlist}));
         } else {
             yield put(getTracksExtras(playlist.tracks.items, "playlist"));

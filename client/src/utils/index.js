@@ -294,9 +294,9 @@ export const createPlaylist = (name, description) => {
 Get a List of Current User's Playlists
 https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlist/
  */
-export const getSavedPlaylists = () => {
+export const getSavedPlaylists = (cancelToken) => {
   if (accessToken) {
-    return axios.get(`https://api.spotify.com/v1/me/playlists`, { headers }).then(response => response.data);
+    return axios.get(`https://api.spotify.com/v1/me/playlists`, {headers, cancelToken}).then(response => response.data);
   } else {
     return null;
   }

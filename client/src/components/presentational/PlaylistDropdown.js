@@ -1,39 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Cookies} from 'react-cookie';
-import PropTypes from 'prop-types';
-import {setTrackIndex} from '../../redux/actions/tracksList';
-import {playlistAddTrackRequest, playlistRemoveTrackRequest} from '../../redux/actions/playlist';
-import {getSavedPlaylists} from '../../utils';
-import playlist1 from '../../images/playlist1.svg';
+import React from "react";
+import {connect} from "react-redux";
+import {Cookies} from "react-cookie";
+import PropTypes from "prop-types";
+import {setTrackIndex} from "../../redux/actions/tracksList";
+import {playlistAddTrackRequest, playlistRemoveTrackRequest} from "../../redux/actions/playlist";
+import playlistIcon from "../../images/playlist-icon.svg";
 
-const PlaylistDropdown = (props) => {
+const PlaylistDropdown = ({dropDirection, track, trackIndex, setTrackIndex, playlists, playlistRemoveTrack, playlistAddTrack}) => {
     const cookies = new Cookies();
     const accessToken = cookies.get("access_token");
-    const {track, trackIndex} = props;    
     const paths = window.location.pathname.split("/");
-    const [playlists, setPlaylists] = useState();
-    const changeTrackIndex = () => {
-        if (trackIndex) {
-            props.setTrackIndex(trackIndex);
-        }
-    };
     const removeTrack = (playlistId, trackUri) => {
         // close track modal
         document.getElementById("track-modal-close").click();
-        props.playlistRemoveTrack(playlistId, trackUri);
+        playlistRemoveTrack(playlistId, trackUri);
     }
-    useEffect(() => {
-        async function fetchData() {
-            const response = await getSavedPlaylists();
-            setPlaylists(response);
-        }
-        fetchData();
-    }, []);
     if (accessToken) {
         return (
-            <div className={"dropdown option-box " + props.dropDirection}>
-                <img className="option-icon dropdown-toggle" src={playlist1} alt="add to playlist" data-toggle="dropdown"/>
+            <div className={"dropdown option-box " + dropDirection}>
+                <img className="option-icon dropdown-toggle" src={playlistIcon} alt="add to playlist" data-toggle="dropdown"/>
                 <div className="dropdown-menu">
                     {paths[1] === "playlist" &&
                         <React.Fragment>
@@ -41,13 +26,12 @@ const PlaylistDropdown = (props) => {
                             <hr/>
                         </React.Fragment>
                     }
-                    <a href="#createPlaylistModal" className="dropdown-item" data-toggle="modal" onClick={changeTrackIndex}>Create playlist</a>
-                    {/* <a href="#createPlaylistModal" className="dropdown-item" data-toggle="modal">Create playlist</a> */}
+                    <a href="#createPlaylistModal" className="dropdown-item" data-toggle="modal" onClick={() => setTrackIndex(trackIndex)}>Create playlist</a>
                     <hr/>
                     <p>Add to playlist</p>
                     {playlists && playlists.items && 
                         playlists.items.map((playlist) => 
-                        <div className="dropdown-item" key={playlist.id} onClick={() => props.playlistAddTrack(playlist.id, track.uri)}>{playlist.name}</div>)
+                        <div className="dropdown-item" key={playlist.id} onClick={() => playlistAddTrack(playlist.id, track.uri)}>{playlist.name}</div>)
                     }
                 </div>
             </div>

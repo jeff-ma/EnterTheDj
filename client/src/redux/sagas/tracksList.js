@@ -71,25 +71,27 @@ function* getTracksExtras({tracks, path}) {
 // set each track to loading
 try {
 console.log("path found " + path);
-    tracks.forEach((track, index) => {
-        track.lyrics = "loading";
-        track.audioAnalysis = "loading"; 
-        track.audioFeatures = "loading";
-    });
-    yield updateTracks(tracks, path);
-    // console.log("getting track extras...");
-    const lyrics = yield axios.post('/api/lyrics', {tracks});
-    tracks.forEach((track, index) => {
-        track.lyrics = lyrics.data[index].lyrics;
-    });
-    // console.log("update traks for lyrics");
-    yield updateTracks(tracks, path);
-    console.log("done lyrcis ");        
-    const audioData = yield axios.post('/api/audio_data', {tracks});
-    tracks.forEach((track, index) => {
-        track.audioAnalysis = audioData.data[index].audioAnalysis;
-        track.audioFeatures = audioData.data[index].audioFeatures; 
-    });
+    if (tracks.length > 0) {
+        tracks.forEach((track) => {
+            track.lyrics = "loading";
+            track.audioAnalysis = "loading"; 
+            track.audioFeatures = "loading";
+        });
+        yield updateTracks(tracks, path);
+        // console.log("getting track extras...");
+        const lyrics = yield axios.post('/api/lyrics', {tracks});
+        tracks.forEach((track, index) => {
+            track.lyrics = lyrics.data[index].lyrics;
+        });
+        // console.log("update traks for lyrics");
+        yield updateTracks(tracks, path);
+        console.log("done lyrcis ");        
+        const audioData = yield axios.post('/api/audio_data', {tracks});
+        tracks.forEach((track, index) => {
+            track.audioAnalysis = audioData.data[index].audioAnalysis;
+            track.audioFeatures = audioData.data[index].audioFeatures; 
+        });
+    }
     yield updateTracks(tracks, path);
     // console.log("done audio data ");
     } catch (error) {
