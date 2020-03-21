@@ -1,9 +1,9 @@
-import React, {useLayoutEffect} from 'react';
-import {connect} from 'react-redux';
-import {getAlbumRequest, removeAlbumRequest, saveAlbumRequest} from '../../redux/actions/album';
-import NotFound from '../presentational/NotFound';
-import Loader from '../presentational/Loader';
-import Collection from '../presentational/Collection';
+import React, {useLayoutEffect} from "react";
+import {connect} from "react-redux";
+import {getAlbumRequest, removeAlbumRequest, saveAlbumRequest} from "../../redux/actions/album";
+import NotFound from "../presentational/NotFound";
+import Loader from "../presentational/Loader";
+import Collection from "../presentational/Collection";
 
 const AlbumContainer = ({album, isLoading, error, getAlbum, removeAlbum, saveAlbum, match}) => {
     const {albumId} = match.params;

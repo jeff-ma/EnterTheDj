@@ -1,10 +1,14 @@
 .loader {
     width: 100%;
-    height: 90vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(18, 18, 22);
     blockquote {
         font-size: 1.2rem;
         animation: fade 2s ease-in-out;
@@ -82,9 +86,6 @@
 
 @media screen and (min-width: 576px) {
     .loader {
-      background-position: calc(50% + 160px) calc(50% + 60px);
-    }
-    .loader-box {
-        left: calc(50% + 90px);
+        left: 110px;
     }
 }

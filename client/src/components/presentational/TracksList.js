@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import {Cookies} from "react-cookie";
 import axios from "axios";
 import PropTypes from "prop-types";
-import {setTrackIndex} from "../../redux/actions/tracksList";
 import {saveTrackRequest, removeTrackRequest} from "../../redux/actions/tracksList";
 import {updatePlayer} from "../../redux/actions/player";
 import {formatDuration, getSavedPlaylists} from "../../utils";
@@ -17,9 +16,10 @@ import heartOutline from "../../images/heart-outline.svg";
 import heartSolid from "../../images/heart-solid.svg";
 import more from "../../images/more.svg";
 
-const TracksList = ({tracks, type, trackIndex, setTrackIndex, removeTrack, saveTrack, updatePlayer}) => {
+const TracksList = ({tracks, type, removeTrack, saveTrack, updatePlayer}) => {
     const cookies = new Cookies();
     const accessToken = cookies.get("access_token");
+    const [trackIndex, setTrackIndex] = useState(0);
     const [savedPlaylists, setSavedPlaylists] = useState();
     useEffect(() => {
         const source = axios.CancelToken.source();
@@ -80,7 +80,7 @@ const TracksList = ({tracks, type, trackIndex, setTrackIndex, removeTrack, saveT
                                 </div>
                                 {accessToken && 
                                     <React.Fragment>
-                                        <PlaylistDropdown dropDirection="dropleft" playlists={savedPlaylists} trackIndex={index} track={item}/>
+                                        <PlaylistDropdown dropDirection="dropleft" playlists={savedPlaylists} track={item} onClick={() => setTrackIndex(index)}/>
                                         <div className="option-box">
                                             <img className="option-icon" src={heartIcon} alt="like" onClick={()=> updateTrack(item.id, accessToken)}/>
                                         </div>
@@ -107,20 +107,15 @@ const TracksList = ({tracks, type, trackIndex, setTrackIndex, removeTrack, saveT
 TracksList.propTypes = {
     removeTrack: PropTypes.func.isRequired,
     saveTrack: PropTypes.func.isRequired,
-    setTrackIndex: PropTypes.func.isRequired,
-    trackIndex: PropTypes.number,
     tracks: PropTypes.object.isRequired,
     type: PropTypes.string,
     updatePlayer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => state.tracksList;
-
 const mapDispatchToProps = (dispatch) => ({
-    setTrackIndex: (trackIndex) => dispatch(setTrackIndex(trackIndex)),
     saveTrack: (trackId) => dispatch(saveTrackRequest(trackId)),
     removeTrack: (trackId) => dispatch(removeTrackRequest(trackId)),
     updatePlayer: (audioId, audioType) => dispatch(updatePlayer(audioId, audioType))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TracksList);
+export default connect(null, mapDispatchToProps)(TracksList);

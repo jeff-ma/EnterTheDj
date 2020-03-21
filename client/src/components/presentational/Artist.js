@@ -126,8 +126,8 @@ Artist.propTypes = {
     relatedArtists: PropTypes.object,
     singles: PropTypes.object,
     topTracks: PropTypes.object,
-    removeArtist: PropTypes.func.isRequired,
-    saveArtist: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
+    save: PropTypes.func.isRequired,
 };
 
 export default Artist;

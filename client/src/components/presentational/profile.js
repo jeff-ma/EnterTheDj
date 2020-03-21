@@ -1,5 +1,4 @@
 import React from 'react';
-// import { PropTypes } from 'prop-types';
 import {Cookies} from 'react-cookie';
 import Login from './Login';
 import '../../styles/profile.scss';

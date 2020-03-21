@@ -1,6 +1,6 @@
 import React, {useLayoutEffect} from "react";
-import { connect } from "react-redux";
-import { getArtistRequest } from "../../redux/actions/artist";
+import {connect} from "react-redux";
+import {getArtistRequest} from "../../redux/actions/artist";
 import {removeArtistRequest, saveArtistRequest} from "../../redux/actions/artist";
 import Artist from "../presentational/Artist";
 import Loader from "../presentational/Loader";

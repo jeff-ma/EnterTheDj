@@ -24,7 +24,6 @@ const Top = (props) => {
     );
 };
 
-
 Top.propTypes = {
     artists: PropTypes.object.isRequired,
     tracks: PropTypes.object.isRequired,

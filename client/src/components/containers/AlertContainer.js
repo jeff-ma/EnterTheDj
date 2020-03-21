@@ -1,7 +1,7 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {removeAlert} from '../../redux/actions/alert';
-import Alert from '../presentational/Alert';
+import React from "react";
+import {connect} from "react-redux";
+import {removeAlert} from "../../redux/actions/alert";
+import Alert from "../presentational/Alert";
 
 const AlertContainer = ({alerts, removeAlert}) => {
     return (

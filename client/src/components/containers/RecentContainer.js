@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, {useLayoutEffect} from "react";
 import {connect} from "react-redux";
 import {Cookies} from "react-cookie";
 import {getRecentRequest} from "../../redux/actions/recent";

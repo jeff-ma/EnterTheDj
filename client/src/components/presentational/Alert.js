@@ -3,7 +3,7 @@ import "../../styles/alert.scss";
 
 const Alert = ({children, removeAlert}) => {
     useLayoutEffect(() => {
-        const timeout = setTimeout(removeAlert, 5000);
+        const timeout = setTimeout(removeAlert, 3000);
         return () => clearTimeout(timeout);
     },[removeAlert]);
     return(

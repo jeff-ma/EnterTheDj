@@ -1,9 +1,9 @@
-import React, {useLayoutEffect} from 'react';
-import {connect} from 'react-redux';
-import {getShowRequest, removeShowRequest, saveShowRequest} from '../../redux/actions/show';
+import React, {useLayoutEffect} from "react";
+import {connect} from "react-redux";
+import {getShowRequest, removeShowRequest, saveShowRequest} from "../../redux/actions/show";
 import NotFound from "../presentational/NotFound";
-import Loader from '../presentational/Loader';
-import Collection from '../presentational/Collection';
+import Loader from "../presentational/Loader";
+import Collection from "../presentational/Collection";
 
 const ShowContainer = ({isLoading, getShow, show, removeShow, saveShow, match, error}) => {
     const {showId} = match.params;

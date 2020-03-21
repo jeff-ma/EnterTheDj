@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {getSearchRequest} from "../../redux/actions/search";
 import NotFound from "../presentational/NotFound";
@@ -8,7 +8,7 @@ import Search from "../presentational/Search";
 const SearchContainer = (props) => {
     const {q} = props.match.params;
     const {isLoading, search, error} = props;    
-    useLayoutEffect(() => {
+    useEffect(() => {
         search(q);
     }, [q, search]);
     if (error) {

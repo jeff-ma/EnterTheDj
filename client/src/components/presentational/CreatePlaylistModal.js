@@ -1,13 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {connect} from 'react-redux';
-import {useHistory} from 'react-router-dom';
-import {setTrackIndex} from '../../redux/actions/tracksList';
-// import {playlistAddTrackRequest} from '../../redux/actions/playlist';
-import PropTypes from 'prop-types';
-import {playlistAddTrack, createPlaylist, uploadPlaylistImage} from '../../utils';
-import '../../styles/createPlaylistModal.scss';
+import React, {useEffect, useRef, useState} from "react";
+import {useHistory} from "react-router-dom";
+import PropTypes from "prop-types";
+import {playlistAddTrack, createPlaylist, uploadPlaylistImage} from "../../utils";
+import "../../styles/createPlaylistModal.scss";
 
-const CreatePlaylistModal = (props) => {
+const CreatePlaylistModal = ({track}) => {
   const history = useHistory();
   const [base64Image, setBase64Image] = useState();
   const [errors, setErrors] = useState({image: "", name: ""});
@@ -17,37 +14,9 @@ const CreatePlaylistModal = (props) => {
   const closeButton = useRef();
   const name = useRef();
   const description = useRef();
-
-  // if (props.track) {
-  //   const createPlaylistModal = document.getElementById("createPlaylistModal");
-  //   console.log(createPlaylistModal);
-  //   if (createPlaylistModal) {
-  //   const observer = new MutationObserver((mutations, observer) => {
-  //     console.log(mutations);
-  //     mutations.forEach(mutation => {
-  //       console.log(mutation);
-  //     }); 
-  //   });
-  //   console.log("observer ready to go");
-  //   console.log(observer);
-  //   observer.observe(createPlaylistModal, {attributes: true, childList: true, subtree: true});
-  // }
-  // }
-  useEffect(()=> {
-      const observer = new MutationObserver((mutations, observer) => {
-        const trackModal = document.getElementById("track-modal"); 
-        if (createPlaylistModal.current.classList.contains("show")) {
-          trackModal.classList.add("darken");
-        } else {
-          trackModal.classList.remove("darken");
-        }
-      });
-      observer.observe(createPlaylistModal.current, {attributes: true});
-  }, []);
-
-  const fileUpload = async (e) => {
+  const fileUpload = async (event) => {
     try {
-      const imageFile = e.target.files[0];
+      const imageFile = event.target.files[0];
       if (imageFile && imageFile.type === "image/jpeg") {
         const reader = new FileReader();
         reader.onloadend = async () => {
@@ -74,18 +43,13 @@ const CreatePlaylistModal = (props) => {
       console.log(error);
     }
   };
-
   const handleCreate = async () => {
     if (name.current.value) {
       setErrors({...errors, name: ""});
       setIsLoading(true);
-      console.log("about to add playlist track");
       const playlist = await createPlaylist(name.current.value, description.current.value);
-      const s = await playlistAddTrack(playlist.id, props.track.uri);
-      console.log(s);
-      console.log("playlist track added!");
+      await playlistAddTrack(playlist.id, track.uri);
       if(base64Image) {
-        console.log("adding image");
         await uploadPlaylistImage(playlist.id, base64Image);
       }
       setTimeout(() => {
@@ -100,7 +64,17 @@ const CreatePlaylistModal = (props) => {
       setErrors({...errors, name: "Please provide a name."});
     }
   };
-
+  useEffect(()=> {
+    const observer = new MutationObserver(() => {
+      const trackModal = document.getElementById("track-modal");
+      if (createPlaylistModal.current.classList.contains("show")) {
+        trackModal.classList.add("darken");
+      } else {
+        trackModal.classList.remove("darken");
+      }
+    });
+    observer.observe(createPlaylistModal.current, {attributes: true});
+  }, []);
   return (
     <div id="createPlaylistModal" className="modal fade" ref={createPlaylistModal}>
       <div className="modal-dialog modal-xl">
@@ -151,17 +125,8 @@ const CreatePlaylistModal = (props) => {
   );
 };
 
-const mapStateToProps = (state) => state.tracksList;
-
-const mapDispatchToProps = (dispatch) => ({
-  setTrackIndex: (trackIndex) => dispatch(setTrackIndex(trackIndex)),
-  // playlistAddTrack: (trackId, trackUri) => dispatch(playlistAddTrackRequest(trackId, trackUri)),
-});
-
 CreatePlaylistModal.propTypes = {
-  setTrackIndex: PropTypes.func,
   track: PropTypes.object,
-  trackIndex: PropTypes.number
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePlaylistModal);
+export default CreatePlaylistModal;

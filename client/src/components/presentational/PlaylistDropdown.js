@@ -2,11 +2,10 @@ import React from "react";
 import {connect} from "react-redux";
 import {Cookies} from "react-cookie";
 import PropTypes from "prop-types";
-import {setTrackIndex} from "../../redux/actions/tracksList";
 import {playlistAddTrackRequest, playlistRemoveTrackRequest} from "../../redux/actions/playlist";
 import playlistIcon from "../../images/playlist-icon.svg";
 
-const PlaylistDropdown = ({dropDirection, track, trackIndex, setTrackIndex, playlists, playlistRemoveTrack, playlistAddTrack}) => {
+const PlaylistDropdown = ({dropDirection, track, playlists, playlistRemoveTrack, playlistAddTrack}) => {
     const cookies = new Cookies();
     const accessToken = cookies.get("access_token");
     const paths = window.location.pathname.split("/");
@@ -14,7 +13,7 @@ const PlaylistDropdown = ({dropDirection, track, trackIndex, setTrackIndex, play
         // close track modal
         document.getElementById("track-modal-close").click();
         playlistRemoveTrack(playlistId, trackUri);
-    }
+    };
     if (accessToken) {
         return (
             <div className={"dropdown option-box " + dropDirection}>
@@ -26,7 +25,7 @@ const PlaylistDropdown = ({dropDirection, track, trackIndex, setTrackIndex, play
                             <hr/>
                         </React.Fragment>
                     }
-                    <a href="#createPlaylistModal" className="dropdown-item" data-toggle="modal" onClick={() => setTrackIndex(trackIndex)}>Create playlist</a>
+                    <a href="#createPlaylistModal" className="dropdown-item" data-toggle="modal">Create playlist</a>
                     <hr/>
                     <p>Add to playlist</p>
                     {playlists && playlists.items && 
@@ -42,17 +41,15 @@ const PlaylistDropdown = ({dropDirection, track, trackIndex, setTrackIndex, play
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    setTrackIndex: (trackIndex) => dispatch(setTrackIndex(trackIndex)),
     playlistAddTrack: (trackId, trackUri) => dispatch(playlistAddTrackRequest(trackId, trackUri)),
     playlistRemoveTrack: (trackId, trackUri) => dispatch(playlistRemoveTrackRequest(trackId, trackUri)),
 });
 
 PlaylistDropdown.propTypes = {
-    dropDirection: PropTypes.string,
-    playlistAddTrack: PropTypes.func,
-    playlistRemoveTrack: PropTypes.func,
-    setTrackIndex: PropTypes.func,
-    track: PropTypes.object
+    dropDirection: PropTypes.string.isRequired,
+    playlistAddTrack: PropTypes.func.isRequired,
+    playlistRemoveTrack: PropTypes.func.isRequired,
+    track: PropTypes.object.isRequired
 };
 
 export default connect(null, mapDispatchToProps)(PlaylistDropdown);
