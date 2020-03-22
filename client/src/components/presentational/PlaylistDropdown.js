@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Cookies} from "react-cookie";
 import PropTypes from "prop-types";
 import {playlistAddTrackRequest, playlistRemoveTrackRequest} from "../../redux/actions/playlist";
-import playlistIcon from "../../images/playlist-icon.svg";
+import playlistMenu from "../../images/playlist-menu.svg";
 
 const PlaylistDropdown = ({dropDirection, track, playlists, playlistRemoveTrack, playlistAddTrack}) => {
     const cookies = new Cookies();
@@ -17,7 +17,7 @@ const PlaylistDropdown = ({dropDirection, track, playlists, playlistRemoveTrack,
     if (accessToken) {
         return (
             <div className={"dropdown option-box " + dropDirection}>
-                <img className="option-icon dropdown-toggle" src={playlistIcon} alt="add to playlist" data-toggle="dropdown"/>
+                <img className="option-icon dropdown-toggle" src={playlistMenu} alt="add to playlist" data-toggle="dropdown"/>
                 <div className="dropdown-menu">
                     {paths[1] === "playlist" &&
                         <React.Fragment>

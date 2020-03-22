@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {updatePlayer} from "../../redux/actions/player";
 import {formatDate, formatDuration} from "../../utils";
 import ipod from "../../images/ipod.svg";
-import infoIcon from "../../images/info-icon.svg";
+import info from "../../images/info.svg";
 import "../../styles/episodeList.scss";
 
 const EpisodesList = ({episodes, updatePlayer}) => (
@@ -20,7 +20,7 @@ const EpisodesList = ({episodes, updatePlayer}) => (
                 </div>
                 <div className="track-duration">{formatDuration(item.duration_ms)}</div>
                 <div className="dropdown dropleft float-right">
-                    <img className="option-icon dropdown-toggle" src={infoIcon} alt="like" data-toggle="dropdown"/>
+                    <img className="option-icon dropdown-toggle" src={info} alt="like" data-toggle="dropdown"/>
                     <div className="dropdown-menu">
                         <div className="dropdown-item-text">
                             <p>{item.name}</p>
