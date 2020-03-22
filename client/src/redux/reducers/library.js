@@ -2,7 +2,7 @@ import {
     GET_LIBRARY_REQUEST,
     GET_LIBRARY_SUCCESS,
     GET_LIBRARY_FAILURE,
-} from '../actions/library';
+} from "../actions/library";
 
 const initialState = {
     albums: {},
@@ -16,7 +16,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch(action.type) {
         case GET_LIBRARY_REQUEST: 
-            return {...state, isLoading: action.isLoading};
+            return {...state, isLoading: action.isLoading, error: action.error};
         case GET_LIBRARY_SUCCESS:
             return {
                 ...state,
@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
                 tracks: action.data.tracks
             };
         case GET_LIBRARY_FAILURE:
-            return {...state, isLoading: false, error: action.error};
+            return {...state, isLoading: action.isLoading, error: action.error};
         default: 
             return state;
     }

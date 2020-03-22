@@ -39,15 +39,6 @@ const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtis
             <hr/>
             {view === undefined &&
                 <React.Fragment>
-                    <section>
-                        <div className="section-header">
-                            <h2 className="section-title">
-                                <Link to={`/artist/${artistId}/top_tracks`}>Top Tracks <i className="fas fa-chevron-right"></i></Link>
-                            </h2>
-                            <Link className="view-button" to={`/artist/${artistId}/top_tracks`}>View more</Link>
-                        </div>                
-                        <TracksList tracks={{items: topTracks.items.slice(0, 3)}} />
-                    </section>
                     {latest &&
                         <section>
                             <div className="section-header">
@@ -58,8 +49,8 @@ const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtis
                             </div>
                             <div>
                                 <Link to={`/album/${latest.id}`}>
-                                    <img src={latestImage} alt={artist.name} height="200"/>
-                                    <h3>{latest.name}</h3>                    
+                                    <img src={latestImage} alt={artist.name} height="250"/>
+                                    <p>{latest.name}</p>                    
                                 </Link>
                             </div>
                             <div>
@@ -67,6 +58,15 @@ const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtis
                             </div>
                         </section>
                     }
+                    <section>
+                        <div className="section-header">
+                            <h2 className="section-title">
+                                <Link to={`/artist/${artistId}/top_tracks`}>Top Tracks <i className="fas fa-chevron-right"></i></Link>
+                            </h2>
+                            <Link className="view-button" to={`/artist/${artistId}/top_tracks`}>View more</Link>
+                        </div>                
+                        <TracksList tracks={{items: topTracks.items.slice(0, 3)}} />
+                    </section>
                     <section>
                         <div className="section-header">
                             <h2 className="section-title">

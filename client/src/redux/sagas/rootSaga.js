@@ -1,41 +1,32 @@
-import { all } from 'redux-saga/effects';
-// import { watchBrowseSaga } from './browse';
-import { watchHomeSaga } from './home';
-// import { watchLoginSaga } from './login';
-import { watchArtistRequest } from './artist';
-// import { watchAlbumRequest, watchLyricsRequest } from './album';
-import album from './album';
-import browse from './browse';
-import category from './category';
-// import login from './login';
-import search from './search';
-import playlists from './playlists';
-import playlist from './playlist';
-import show from './show';
-import library from './library';
-import top from './top';
-import recent from './recent';
-import tracksList from './tracksList';
+import {all} from "redux-saga/effects";
+import album from "./album";
+import artist from "./artist";
+import browse from "./browse";
+import category from "./category";
+import home from "./home";
+import library from "./library";
+import playlist from "./playlist";
+import playlists from "./playlists";
+import recent from "./recent";
+import search from "./search";
+import show from "./show";
+import top from "./top";
+import tracksList from "./tracksList";
 
 export default function* rootSaga() {
     yield all([
-        // watchBrowseSaga(),
-        watchHomeSaga(),
-        // watchLoginSaga(),
-        // login(),
-        search(),
-        watchArtistRequest(),
-        // watchAlbumRequest(),
-        // watchLyricsRequest(),
         album(),
+        artist(),
         browse(),
         category(),
-        playlists(),
-        playlist(),
-        show(),
+        home(),
         library(),
-        top(),
+        playlist(),
+        playlists(),
         recent(),
+        search(),
+        show(),
+        top(),
         tracksList()
     ]);
-}
+};

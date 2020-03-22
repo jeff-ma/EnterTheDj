@@ -1,10 +1,10 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import * as categoryActions from '../actions/category';
-import axios from 'axios';
+import {put, takeLatest} from "redux-saga/effects";
+import * as categoryActions from "../actions/category";
+import {getCategory} from "../../utils";
 
-export function* getCategoryRequest({ categoryId, query }) {
+export function* getCategoryRequest({categoryId, query}) {
     try {
-        const data = yield axios('/api/category/' + categoryId + query).then(response => response.data);
+        const {data} = yield getCategory(categoryId, query);
         yield put(categoryActions.getCategorySuccess(data));
     } catch(error) {
         console.log(error);

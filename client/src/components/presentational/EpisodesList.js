@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {updatePlayer} from "../../redux/actions/player";
-import {formatDuration} from "../../utils";
+import {formatDate, formatDuration} from "../../utils";
 import ipod from "../../images/ipod.svg";
 import infoIcon from "../../images/info-icon.svg";
 import "../../styles/episodeList.scss";
@@ -16,7 +16,7 @@ const EpisodesList = ({episodes, updatePlayer}) => (
                 </div>
                 <div className="episode-details" onClick={() => updatePlayer(item.id, "episode")}>
                     <div className="tile-track">{item.name}</div>
-                    <div className="track-artist">{item.release_date}</div>
+                    <div className="track-artist">{formatDate(item.release_date)}</div>
                 </div>
                 <div className="track-duration">{formatDuration(item.duration_ms)}</div>
                 <div className="dropdown dropleft float-right">
@@ -24,7 +24,7 @@ const EpisodesList = ({episodes, updatePlayer}) => (
                     <div className="dropdown-menu">
                         <div className="dropdown-item-text">
                             <p>{item.name}</p>
-                            <p>{item.release_date}</p>
+                            <p>{formatDate(item.release_date)}</p>
                             <p>{formatDuration(item.duration_ms)}</p>
                         </div>
                         <hr/>

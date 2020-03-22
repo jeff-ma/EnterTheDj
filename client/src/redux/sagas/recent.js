@@ -1,7 +1,7 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import * as recentActions from '../actions/recent';
-import {getTracksExtras} from '../actions/tracksList';
-import {getRecent} from '../../utils';
+import {put, takeLatest} from "redux-saga/effects";
+import * as recentActions from "../actions/recent";
+import {getTracksExtras} from "../actions/tracksList";
+import {getRecent} from "../../utils";
 
 export function* getRecentRequest() {
     try {

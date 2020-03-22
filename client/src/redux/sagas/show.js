@@ -1,11 +1,11 @@
-import { put, select, takeEvery, takeLatest} from 'redux-saga/effects';
-import * as showActions from '../actions/show';
-import axios from 'axios';
-import {removeShow, saveShow} from '../../utils';
+import {put, select, takeEvery, takeLatest} from "redux-saga/effects";
+import * as showActions from "../actions/show";
+import {addAlert} from "../actions/alert";
+import {getShow, removeShow, saveShow} from "../../utils";
 
-export function* getShowRequest({ showId }) {
+export function* getShowRequest({showId}) {
     try {
-        const data = yield axios('/api/show/' + showId).then((response) => response.data);
+        const {data} = yield getShow(showId);
         yield put(showActions.getShowSuccess(data));
     } catch (error) {
         console.log(error);
@@ -21,7 +21,7 @@ export function* removeShowRequest({showId}) {
         yield put(showActions.getShowSuccess(show))
     } catch (error) {
         console.log(error);
-        yield put(showActions.getShowFailure(error));
+        yield put(addAlert("Unable to remove show"));
     }
 };
 
@@ -33,7 +33,7 @@ export function* saveShowRequest({showId}) {
         yield put(showActions.getShowSuccess(show));
     } catch (error) {
         console.log(error);
-        yield put(showActions.getShowFailure(error));
+        yield put(addAlert("Unable to save show"));
     }
 };
 

@@ -1,4 +1,7 @@
-import {ADD_ALERT, REMOVE_ALERT} from '../actions/alert';
+import {
+    ADD_ALERT, 
+    REMOVE_ALERT
+} from "../actions/alert";
 
 const initialState = {
     alerts: []

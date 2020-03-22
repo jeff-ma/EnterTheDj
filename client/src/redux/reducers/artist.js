@@ -2,7 +2,7 @@ import {
     GET_ARTIST_REQUEST,
     GET_ARTIST_SUCCESS,
     GET_ARTIST_FAILURE
-} from '../actions/artist';
+} from "../actions/artist";
 
 const initialState = {
     artist: {},
@@ -21,7 +21,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch(action.type) {
         case GET_ARTIST_REQUEST:
-            return {...state, isLoading: action.isLoading};
+            return {...state, isLoading: action.isLoading, error: action.error};
         case GET_ARTIST_SUCCESS: 
             return {
                 ...state,

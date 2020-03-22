@@ -1,7 +1,7 @@
-import {put, takeLatest} from 'redux-saga/effects';
-import * as topActions from '../actions/top';
-import {getTracksExtras} from '../actions/tracksList';
-import {getTop} from '../../utils';
+import {put, takeLatest} from "redux-saga/effects";
+import * as topActions from "../actions/top";
+import {getTracksExtras} from "../actions/tracksList";
+import {getTop} from "../../utils";
 
 export function* getTopRequest() {
     try {

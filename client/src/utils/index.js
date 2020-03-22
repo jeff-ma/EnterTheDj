@@ -13,33 +13,28 @@ const headers = {
 Get an Album
  */
 export const getAlbum = async (albumId) => {
-  const {data} = await axios.get(`/api/album/${albumId}`);
-  return data;
+  return axios(`/api/album/${albumId}`);
 };
-
 
 /* 
 Get an Artist
  */
 export const getArtist = async (artistId) => {
-  const {data} = await axios.get(`/api/artist/${artistId}`);
-  return data;
+  return axios(`/api/artist/${artistId}`);
 };
 
 /* 
 Browse a List of Categories
  */
-export const getBrowse = async () => {
-  const {data} = await axios.get("/api/browse");
-  return data;
+export const getBrowse = async (query) => {
+  return axios(`/api/browse${query}`);
 };
 
 /* 
 Get a Category
  */
-export const getCategory = async (categoryId) => {
-  const {data} = await axios.get(`/api/categoryId/${categoryId}`);
-  return data;
+export const getCategory = async (categoryId, query) => {
+  return axios(`/api/category/${categoryId}${query}`);
 };
 
 /* 
@@ -118,11 +113,10 @@ export const removePlaylist = async (playlistId) => {
 };
 
 /* 
-Get Home page albums/podcasts
+Get Home page albums/playlists/podcasts
  */
 export const getHome = async () => {
-  const {data} = await axios.get("/api/home");
-  return data;
+  return axios("/api/home");
 };
 
 /* 
@@ -165,7 +159,8 @@ export const removeAlbum = (albumId) => {
   } else {
     return null;
   }
-}
+};
+
 /* 
 Remove User's Saved Tracks
 https://developer.spotify.com/documentation/web-api/reference/library/remove-tracks-user/
@@ -180,7 +175,7 @@ export const removeTrack = (trackId) => {
   } else {
     return null;
   }
-}
+};
 
 /* 
 Save Albums for Current User
@@ -230,6 +225,7 @@ export const getTop = async () => {
     return null;
   }
 };
+
 /* 
 Get Current User's Recently Played Tracks
 https://developer.spotify.com/documentation/web-api/reference/player/get-recently-played/
@@ -242,35 +238,16 @@ export const getRecent = async () => {
   return data;
 };
 
-/* 
-Add Tracks to a Playlist 
-https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
- */
-// export const addTrackToPlaylist = (playlistId, trackUri) => {
-//   if (accessToken) {
-//     // return axios({method: "post", url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`}, headers);
-//     return axios({
-//       method: "post",
-//       url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
-//       headers
-//     });
-//   } else {
-//     return null;
-//   }
-// };
-
 export const playlistAddTrack = async (playlistId, trackUri) => {
   if (accessToken) {
-    // return axios({method: "post", url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`}, headers);
     // only add track if not in playlist
     const {data} = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, {headers});
-      if (!data.tracks.items.some((item) => item.track.uri === trackUri)) {
-        return axios({
-            method: "post",
-            url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
-            headers
-        });
-        // yield put(addAlert("Track added to playlist"));
+    if (!data.tracks.items.some((item) => item.track.uri === trackUri)) {
+      return axios({
+          method: "post",
+          url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
+          headers
+      });
     }
     return null;
   } else {
@@ -306,7 +283,14 @@ export const getSavedPlaylists = (cancelToken) => {
 Get a Playlist
  */
 export const getPlaylist = (playlistId) => {
-  return axios.get(`/api/playlist/${playlistId}`).then((response) => response.data);
+  return axios(`/api/playlist/${playlistId}`);
+};
+
+/* 
+Get featured and user playlists
+ */
+export const getPlaylists = () => {
+  return axios("/api/playlists");
 };
 
 /* 
@@ -323,7 +307,6 @@ export const playlistRemoveTrack = (playlistId, trackUri) => {
         tracks: [{uri: trackUri}]
       }
     });
-    // return axios.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`, {headers, data: {tracks: [{uri: trackUri}]}}).then(response => response.data);
   } else {
     return null;
   }
@@ -339,6 +322,13 @@ export const uploadPlaylistImage = (playlistId, image) => {
   } else {
     return null;
   }
+};
+
+/* 
+Get a show
+ */
+export const getShow = (showId) => {
+  return axios(`/api/show/${showId}`);
 };
 
 /* 
@@ -388,13 +378,12 @@ export const getSavedShows = async () => {
 };
 
 export const addIsSavedToTracks = async (tracks) => {
-  // spotify only allows checking up to 50 track ids at one time
   let total = 0;
   let savedTracksCheck = [];
+  // spotify only allows checking up to 50 track ids at one time
   while (total < tracks.length) {
       const trackIds = tracks.slice(total, total + 50).map((track) => track.id);
       const {data} = await axios.get("https://api.spotify.com/v1/me/tracks/contains?ids=" + trackIds.join(","), {headers})
-      // const response = await spotifyApiCall(checkUserSavedTracksUrl + trackIds.join(","), accessToken);
       savedTracksCheck = savedTracksCheck.concat(data);
       total = total + 50;
   }
@@ -403,67 +392,39 @@ export const addIsSavedToTracks = async (tracks) => {
   });
 };
 
-// export const getTracksExtras = async (tracks) => {
-// // set each track to loading
-//   tracks.forEach((track, index) => {
-//       track.lyrics = "loading";
-//       track.audioAnalysis = "loading"; 
-//       track.audioFeatures = "loading";
-//   });
-//   yield updateTracks(tracks);
-//   // console.log("getting track extras...");
-//   const lyrics = yield axios.post('/api/lyrics', {tracks});
-//   tracks.forEach((track, index) => {
-//       track.lyrics = lyrics.data[index].lyrics;
-//   });
-//   // console.log("update traks for lyrics");
-//   yield updateTracks(tracks);
-//   console.log("done lyrcis ");        
-//   const audioData = yield axios.post('/api/audio_data', {tracks});
-//   tracks.forEach((track, index) => {
-//       track.audioAnalysis = audioData.data[index].audioAnalysis;
-//       track.audioFeatures = audioData.data[index].audioFeatures; 
-//   });
-//   yield updateTracks(tracks);
-//   // console.log("done audio data ");
-// };
-
-// export const token = getAccessToken();
-
-
-// Get the query params off the window's URL
-export const getHashParams = () => {
-  const hashParams = {};
-  let e;
-  const r = /([^&;=]+)=?([^&;]*)/g;
-  const q = window.location.hash.substring(1);
-  while ((e = r.exec(q))) {
-    hashParams[e[1]] = decodeURIComponent(e[2]);
-  }
-  return hashParams;
-};
-
 // Format milliseconds into MM:SS
-export const formatDuration = ms => {
+export const formatDuration = (ms) => {
   const minutes = Math.floor(ms / 60000);
   const seconds = ((ms % 60000) / 1000).toFixed(0);
   return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 };
 
-// Format milliseconds into X minutes and Y seconds
-export const formatDurationForHumans = millis => {
-  const minutes = Math.floor(millis / 60000);
-  const seconds = ((millis % 60000) / 1000).toFixed(0);
-  return `${minutes} Mins ${seconds} Secs`;
+// Format date to local string
+export const formatDate = (date) => {
+  const YYYYMMDD = date.split("-");
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  const year = YYYYMMDD[0];
+  const month = months[parseInt(YYYYMMDD[1] - 1)];
+  const day = YYYYMMDD[2];
+  return `${month} ${day}, ${year}`;
 };
 
-// Get year from YYYY-MM-DD
-export const getYear = date => date.split('-')[0];
-
 // Transform Pitch Class Notation to string
-export const parsePitchClass = note => {
+export const parsePitchClass = (note) => {
   let key = note;
-
   switch (note) {
     case 0:
       key = 'C';
@@ -504,7 +465,6 @@ export const parsePitchClass = note => {
     default:
       return null;
   }
-
   return key;
 };
 

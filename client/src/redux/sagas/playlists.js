@@ -1,10 +1,10 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import * as playlistsActions  from '../actions/playlists';
-import axios from 'axios';
+import {put, takeLatest} from "redux-saga/effects";
+import * as playlistsActions  from "../actions/playlists";
+import {getPlaylists} from "../../utils";
 
 export function* getPlaylistsRequest() {
     try {
-        const data = yield axios.get('/api/playlists/').then(response => response.data);
+        const {data} = yield getPlaylists();
         yield put(playlistsActions.getPlaylistsSuccess(data));
     } catch(error) {
         yield put(playlistsActions.getPlaylistsFailure(error));

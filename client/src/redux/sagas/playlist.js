@@ -1,16 +1,16 @@
-import { put, select, takeEvery, takeLatest } from 'redux-saga/effects';
-import * as playlistActions  from '../actions/playlist';
-import { getTracksExtras } from '../actions/tracksList';
-import {addAlert} from '../actions/alert';
-import {removePlaylist, savePlaylist, playlistRemoveTrack, playlistAddTrack} from '../../utils';
-import axios from 'axios';
+import {put, select, takeEvery, takeLatest} from "redux-saga/effects";
+import * as playlistActions  from "../actions/playlist";
+import {getTracksExtras} from "../actions/tracksList";
+import {addAlert} from "../actions/alert";
+import {getPlaylist, removePlaylist, savePlaylist, playlistRemoveTrack, playlistAddTrack} from "../../utils";
 
 export function* getPlaylistRequest({playlistId}) {
     try {
-        const data = yield axios('/api/playlist/' + playlistId).then((response => response.data));
+        const {data} = yield getPlaylist(playlistId);
         yield put(playlistActions.getPlaylistSuccess(data));
         yield put(getTracksExtras(data.tracks.items, "playlist"));
     } catch(error) {
+        console.log(error);
         yield put(playlistActions.getPlaylistFailure(error));
     }
 };
@@ -23,7 +23,7 @@ export function* removePlaylistRequest({ playlistId}) {
         yield put(playlistActions.getPlaylistSuccess(playlist));
     } catch(error) {
         console.log(error);
-        yield put(playlistActions.getPlaylistFailure(error));
+        yield put(addAlert("Unable to remove playlist"));
     }
 };
 
@@ -35,21 +35,12 @@ export function* savePlaylistRequest({ playlistId}) {
         yield put(playlistActions.getPlaylistSuccess(playlist));
     } catch(error) {
         console.log(error);
-        yield put(playlistActions.getPlaylistFailure(error));
+        yield put(addAlert("Unable to save playlist"));
     }
 };
 
 export function* playlistRemoveTrackRequest({playlistId, trackUri}) {
     try {
-        // yield axios({
-        //     method: "delete",
-        //     url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
-        //     headers: {'Authorization': 'Bearer ' + accessToken},
-        //     data: {
-        //         tracks: [{uri: trackUri}]
-        //     },
-        //     timeout: 20000
-        // });
         yield playlistRemoveTrack(playlistId, trackUri);
         yield put(addAlert("Track removed from playlist"));
         const playlist = yield select((state) => state.playlist.playlist);
@@ -62,25 +53,17 @@ export function* playlistRemoveTrackRequest({playlistId, trackUri}) {
         }
     } catch(error) {
         console.log(error);
+        yield put(addAlert("Unable to remove track"));
     }
 };
 
 export function* playlistAddTrackRequest({playlistId, trackUri}) {
     try {
-        // only add track if not in playlist
-        // const playlist = yield axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, {headers: {'Authorization': 'Bearer ' + accessToken}}).then(response => response.data);
-        // if (playlist.tracks.items.length > 0 && !playlist.tracks.items.some((item) => item.track.uri === trackUri)) {
-            // yield axios({
-            //     method: "post",
-            //     url: encodeURI(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`),
-            //     headers: {'Authorization': 'Bearer ' + accessToken},
-            //     timeout: 30000
-            // });
-            yield playlistAddTrack(playlistId, trackUri);
-            yield put(addAlert("Track added to playlist"));
-        // }
+        yield playlistAddTrack(playlistId, trackUri);
+        yield put(addAlert("Track added to playlist"));
     } catch(error) {
         console.log(error);
+        yield put(addAlert("Unable to add track"));
     }
 };
 

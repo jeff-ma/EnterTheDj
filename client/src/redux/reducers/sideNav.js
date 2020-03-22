@@ -1,4 +1,7 @@
-import { CLOSE_NAV, TOGGLE_NAV } from '../actions/sideNav';
+import {
+    CLOSE_NAV,
+    TOGGLE_NAV
+} from "../actions/sideNav";
 
 const initialState = {
     isNavActive: false

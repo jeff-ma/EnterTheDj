@@ -1,13 +1,12 @@
-import { put, select, takeEvery, takeLatest } from 'redux-saga/effects';
-import * as albumActions from '../actions/album';
-import {getTracksExtras} from '../actions/tracksList';
-import {addAlert} from '../actions/alert';
-import {removeAlbum, saveAlbum} from "../../utils";
-import axios from 'axios';
+import {put, select, takeEvery, takeLatest} from "redux-saga/effects";
+import * as albumActions from "../actions/album";
+import {getTracksExtras} from "../actions/tracksList";
+import {addAlert} from "../actions/alert";
+import {getAlbum, removeAlbum, saveAlbum} from "../../utils";
 
-export function* getAlbumRequest({ albumId }) {
+export function* getAlbumRequest({albumId}) {
     try {
-        const data = yield axios('/api/album/' + albumId).then((response) => response.data);
+        const {data} = yield getAlbum(albumId);
         yield put(albumActions.getAlbumSuccess(data));
         yield put(getTracksExtras(data.tracks.items, "album"));
     } catch(error) {
@@ -17,21 +16,18 @@ export function* getAlbumRequest({ albumId }) {
 };
 
 export function* removeAlbumRequest({albumId}) {  
-    console.log("removing album...");
     try {
         const {album} = yield select((state) => state.album);
         yield removeAlbum(albumId);
         album.isSaved = false;
         yield put(albumActions.getAlbumSuccess(album));
-        console.log("done ");
     } catch(error) {
         console.log(error);
         yield put(addAlert("Unable to remove album"));
-        // yield put(libraryActions.removeAlbumFailure(error));
     }
 };
 
-export function* saveAlbumRequest({ albumId}) {  
+export function* saveAlbumRequest({albumId}) {  
     console.log("saveing album...");
     try {
         const {album} = yield select((state) => state.album);
@@ -42,7 +38,6 @@ export function* saveAlbumRequest({ albumId}) {
     } catch(error) {
         console.log(error);
         yield put(addAlert("Unable to save album"));
-        // yield put(libraryActions.saveAlbumFailure(error));
     }
 };
 
