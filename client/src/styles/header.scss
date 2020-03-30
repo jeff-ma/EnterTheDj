@@ -68,10 +68,10 @@ header {
 
         input {
             padding: 6px 0 6px 30px;
-            width: 100%;
   
             &:focus {
-                border-bottom-color: #FFFFFF;
+                outline: 0;
+                box-shadow: none!important;
             }
 
             &::-webkit-search-cancel-button { 

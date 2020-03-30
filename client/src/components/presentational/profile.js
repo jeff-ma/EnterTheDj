@@ -43,7 +43,7 @@ const Profile = (props) => {
             </div>
         );  
     } else {
-        return <Login><p>Please log in to view your profile.</p></Login>;
+        return (<Login><p>Please log in to view your profile.</p></Login>);
     }
 }
 

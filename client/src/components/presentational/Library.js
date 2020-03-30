@@ -16,7 +16,7 @@ const Library = (props) => {
     ));
     return (
         <section className="container">
-            <div className="library-header">
+            <div className="section-header">
                 <h2 className="section-title">Your Library</h2>
                 <div>{viewButtons}</div>
             </div>

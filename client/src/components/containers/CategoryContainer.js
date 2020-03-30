@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {getCategoryRequest} from "../../redux/actions/category";
 import NotFound from "../presentational/NotFound";
 import Loader from "../presentational/Loader";
-import Category from "../presentational/Category";
+import Browse from "../presentational/Browse";
 
 const CategoryContainer = (props) => {
     const {isLoading, getCategory, error} = props;
@@ -17,7 +17,7 @@ const CategoryContainer = (props) => {
     } else if (isLoading) {
         return <Loader/>;
     } else {
-        return <Category {...props}/>;
+        return <Browse {...props}/>;
     }
 };
 

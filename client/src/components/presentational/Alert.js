@@ -1,7 +1,7 @@
-import React, {useLayoutEffect} from "react";
+import React, {useEffect} from "react";
 
 const Alert = ({children, removeAlert}) => {
-    useLayoutEffect(() => {
+    useEffect(() => {
         const timeout = setTimeout(removeAlert, 3000);
         return () => clearTimeout(timeout);
     },[removeAlert]);

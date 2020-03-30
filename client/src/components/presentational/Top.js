@@ -12,7 +12,7 @@ const Top = (props) => {
     const viewButtons = topViews.map((topView, index) => <Link key={index} className={view === topView ? "view-button active" : "view-button"} to={`/top/${topView}`}><span>{topView}</span></Link>);
     return (
         <section className="container">
-            <div className="top-header">
+            <div className="section-header">
                 <h2 className="section-title">Top Most Played</h2>
                 <div>{viewButtons}</div>
             </div>

@@ -1,6 +1,6 @@
-import React from 'react';
-import {randomQuote} from '../../utils';
-import bruceReady from '../../images/bruce-ready.png';
+import React from "react";
+import {randomQuote} from "../../utils";
+import bruceReady from "../../images/bruce-ready.png";
 
 export default () => (
     <div className="not-found">

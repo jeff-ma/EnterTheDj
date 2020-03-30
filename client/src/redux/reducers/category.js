@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
         case GET_CATEGORY_REQUEST:
             return {...state, isLoading: action.isLoading, query: action.query, error: action.error};
         case GET_CATEGORY_SUCCESS: 
-            return {...state, isLoading: action.isLoading, playlists: action.data};
+            return {...state, isLoading: action.isLoading, data: action.data};
         case GET_CATEGORY_FAILURE:
             return {...state, isLoading: action.isLoading, error: action.error};
         default:

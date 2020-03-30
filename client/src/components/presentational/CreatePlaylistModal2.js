@@ -80,36 +80,34 @@ const CreatePlaylistModal = ({track}) => {
         <div className="modal-content">
           <div className="modal-header">
             <h3 className="modal-title">Create new playlist</h3>
-            <button type="button" className="close modal-close" data-dismiss="modal" ref={closeButton}>&times;</button>
+            <button type="button" className="close track-modal-close" data-dismiss="modal" ref={closeButton}>&times;</button>
           </div>
           <div className="modal-body">
             <div className="create-playlist-content">
-              <div className="input-group">
-                <div className="image-preview-box" style={{backgroundImage: `url(${imageUrl})`}}>
-                  <label htmlFor="preview-image-file">
-                    {!imageUrl && 
-                      <React.Fragment>
-                        <i className="fas fa-file-upload"></i>
-                        <div>Upload jpeg image</div>
-                        <div>(Optional)</div>
-                      </React.Fragment>                
-                    }
-                  </label>
-                  <input id="preview-image-file" className={errors.image ? "form-control is-invalid" : ""} type="file" onChange={fileUpload}/>
-                  <span className="error">{errors.image}</span>
-                </div>
+              <div className="image-preview-box" style={{backgroundImage: `url(${imageUrl})`}}>
+                <label htmlFor="preview-image-file">
+                  {!imageUrl && 
+                    <React.Fragment>
+                      <i className="fas fa-file-upload"></i>
+                      <div>Upload jpeg image</div>
+                      <div>(Optional)</div>
+                    </React.Fragment>                
+                  }
+                </label>
+                <input id="preview-image-file" className={errors.image ? "form-control is-invalid" : ""} type="file" onChange={fileUpload}/>
+                <div className="invalid-feedback">{errors.image}</div>
               </div>
               <div>
-                <div className="input-group">
+                <div className="form-group">
                   <label htmlFor="playlist-name">Name</label>
-                  <input id="playlist-name" type="text" ref={name} placeholder="Required"/>
-                  <span className="error">
+                  <input id="playlist-name" type="text" className={errors.name ? "form-control is-invalid" : "form-control"} ref={name} placeholder="Required"/>
+                  <div className="invalid-feedback">
                     {errors.name}
-                  </span>
+                  </div>
                 </div>
-                <div className="input-group">
+                <div className="form-group">
                   <label htmlFor="playlist-description">Description</label>
-                  <input id="playlist-description" type="text" ref={description} placeholder="(Optional)"/>
+                  <input id="playlist-description" type="text" className="form-control" ref={description} placeholder="(Optional)"/>
                 </div>
                 {isLoading && 
                   <p className="loading">Creating playlist <span>.</span> <span>.</span> <span>.</span></p>

@@ -9,7 +9,7 @@ const SideNav = ({closeNav, isNavActive}) => {
     const cookies = new Cookies();
     const accessToken = cookies.get("access_token");
     return (
-        <nav id="side-nav" className={isNavActive ? "active" : ""}>
+        <nav className={isNavActive ? "active" : ""}>
             <ul>
                 <li><NavLink to="/" onClick={closeNav} exact={true}><i className="fas fa-home"></i> Home</NavLink></li>
                 <li><NavLink to="/browse" onClick={closeNav}><i className="far fa-eye"></i> Browse</NavLink></li>

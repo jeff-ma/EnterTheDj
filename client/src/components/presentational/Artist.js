@@ -25,7 +25,7 @@ const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtis
         latest.tracks.items = latest.tracks.items.slice(0,5);
     }
     return (
-        <div id="main-wrapper" className="container">
+        <div className="container">
             <CatalogHeader action={artistAction} catalog={artist}>
                 <h2>{artist.name}</h2>
                 <p className="light-gray-text">{artist.popularity} popularity</p>

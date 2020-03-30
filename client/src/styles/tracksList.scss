@@ -40,8 +40,8 @@
         white-space: nowrap;
 
         div {
-            text-overflow: ellipsis;
             overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         @include responsive(sm-md) {

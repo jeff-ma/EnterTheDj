@@ -13,7 +13,7 @@ const Collection = ({collection, remove, save}) => {
         artistThumbnail = collection.artists[0].images[collection.artists[0].images.length - 1].url;
     } 
     return (
-        <div id="main-wrapper" className="container">
+        <div className="container">
             <CatalogHeader action={collectionAction} catalog={collection}>
                 {collection.type === "album" &&
                     <React.Fragment>
