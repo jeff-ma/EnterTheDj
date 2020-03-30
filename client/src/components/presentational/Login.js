@@ -42,7 +42,7 @@ const Login = ({allCookies, children}) => {
                             </ul>
                         </React.Fragment>
                     }
-                    <a className="login-link" href={spotifyAuthorizeUrl}>
+                    <a className="login-link button-outline" href={spotifyAuthorizeUrl}>
                         Log in with Spotify
                         &nbsp;
                         <i className="fab fa-spotify"></i>

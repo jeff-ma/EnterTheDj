@@ -10,7 +10,6 @@ import {formatDuration, getSavedPlaylists} from "../../utils";
 import CreatePlaylistModal from "./CreatePlaylistModal";
 import TrackModal from "./TrackModal";
 import PlaylistDropdown from "./PlaylistDropdown";
-import "../../styles/tracksList.scss";
 import ipod from "../../images/ipod.svg";
 import heartOutline from "../../images/heart-outline.svg";
 import heartSolid from "../../images/heart-solid.svg";
@@ -44,51 +43,44 @@ const TracksList = ({tracks, type, removeTrack, saveTrack, updatePlayer}) => {
         }
         return (
             <React.Fragment>
-                <ul className="list-container">
+                <ul className="tracks-list-container">
                     {tracks.items.map((item, index) => {
                         const heartIcon = item.isSaved ? heartSolid : heartOutline;
                         const updateTrack = item.isSaved ? removeTrack : saveTrack;
                         return (
-                            <li className={type === "album" ? "album-list-item" : "list-item"} key={index}>
-                                <div className="player-icon-box">
-                                    <img src={ipod} height="20" alt="player" onClick={() => updatePlayer(item.id, "track")}/>
+                            <li className={type === "album" ? "album-track-item" : "playlist-track-item"} key={index}>
+                                <div>
+                                    <img className="icon" src={ipod} alt="player" onClick={() => updatePlayer(item.id, "track")}/>
                                 </div>
                                 {type !== "album" &&
-                                    <div className="list-image">
+                                    <div>
                                         <Link to={"/album/" + item.album.id}>
-                                            <img src={item.album.images[2].url} alt={item.name}/>
+                                            <img className="album-thumbnail" src={item.album.images[2].url} alt={item.name}/>
                                         </Link>
                                     </div>
                                 }
-                                <div className="list-details">
+                                <div className="track-details">
                                     {type === "album" ? 
-                                        <React.Fragment>
-                                            <div>{item.name}</div>
-                                            <div>{formatDuration(item.duration_ms)}</div>
-                                        </React.Fragment>
+                                        <div>{item.name}</div>
                                         :
-                                        <React.Fragment>
-                                            <div className="track-name">
-                                                <Link to={"/album/" + item.album.id} className="track-link">
-                                                    <div className="tile-track">{item.name}</div>
-                                                    <div className="track-artist">{item.artists[0].name} &middot; {item.album.name}</div>
-                                                </Link>
-                                            </div>
-                                            <div className="track-duration">{formatDuration(item.duration_ms)}</div>
-                                        </React.Fragment>
+                                        <div>
+                                            <div><Link to={"/album/" + item.album.id}>{item.name}</Link></div>
+                                            <div className="track-artist">{item.artists[0].name} &middot; {item.album.name}</div>
+                                        </div>
                                     }
+                                    <div>{formatDuration(item.duration_ms)}</div>
                                 </div>
                                 {accessToken && 
                                     <React.Fragment>
                                         <PlaylistDropdown dropDirection="dropleft" playlists={savedPlaylists} track={item} onClick={() => setTrackIndex(index)}/>
                                         <div className="option-box">
-                                            <img className="option-icon" src={heartIcon} alt="like" onClick={()=> updateTrack(item.id, accessToken)}/>
+                                            <img className="icon" src={heartIcon} alt="like" onClick={()=> updateTrack(item.id, accessToken)}/>
                                         </div>
                                     </React.Fragment>
                                 }
                                 <div>
                                     <a href="#track-modal" data-toggle="modal" onClick={() => setTrackIndex(index)}>
-                                        <img className="option-icon" src={more} alt="add to playlist"/>
+                                        <img className="icon" src={more} alt="add to playlist"/>
                                     </a> 
                                 </div>
                             </li>

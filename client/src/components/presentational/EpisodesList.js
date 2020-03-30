@@ -11,7 +11,7 @@ const EpisodesList = ({episodes, updatePlayer}) => (
         {episodes.items.map((item, index) => (
             <li key={index} className="show-list-item">
                 <div>
-                    <img className="player-icon" src={ipod} alt="player" onClick={() => updatePlayer(item.id, "episode")}/>
+                    <img className="icon" src={ipod} alt="player" onClick={() => updatePlayer(item.id, "episode")}/>
                 </div>
                 <div className="episode-details">
                     <p>{item.name}</p>
@@ -19,7 +19,7 @@ const EpisodesList = ({episodes, updatePlayer}) => (
                 </div>
                 <div>{formatDuration(item.duration_ms)}</div>
                 <div className="dropdown dropleft float-right">
-                    <img className="option-icon dropdown-toggle" src={info} alt="like" data-toggle="dropdown"/>
+                    <img className="icon dropdown-toggle" src={info} alt="like" data-toggle="dropdown"/>
                     <div className="dropdown-menu">
                         <div className="dropdown-item-text">
                             <p className="white-text">{item.name}</p>

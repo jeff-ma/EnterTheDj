@@ -1,187 +1,64 @@
-.list-container {
-    margin-top: 40px;
+@mixin list-grid {
+    align-items: center;
+    display: grid;
+    grid-gap: 20px;
+    list-style-type: none;
+}
+
+.tracks-list-container {
     margin-bottom: 40px;
+    margin-top: 40px;
     padding: 0;
 
-    .album-list-item {
-        align-items: center;
-        display: grid;
+    .album-track-item {
+        @include list-grid;
         grid-template-columns: max-content 1fr max-content max-content;
-        // grid-template-columns: 1fr max-content max-content;
-        grid-gap: 20px;
-        height: 80px;
-        list-style-type: none;
-        // margin-bottom: 30px;
+        height: 60px;
 
-        .list-details {
-            // display: grid;
-            // grid-template-columns: auto 50px;
-            overflow: hidden;
-            white-space: nowrap;
-            div {
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
+        @include responsive(md) {
+            grid-template-columns: max-content 1fr max-content max-content max-content;
         }
-        .playlist-icon {
-            cursor: pointer;
-            height: 20px;
-            width: auto;
-            // // &:last-child {
-            //     margin-left: 5px;
-            // }
-        }
-        .list-image {
-            img {
-                height: 100%;
-                width: 100%;
-            }
-        }
-        .option-icon {
-            cursor: pointer;
-            height: 20px;
-            width: auto;
-        }
-        .list-player-icon {
-            font-size: 20px;
-            // margin: 25px 0;
-        }
-        // > :nth-last-child(2), > :nth-last-child(3) {
-        //     display: none;
-        // }
     }
 
-    .list-item {
-        align-items: center;
-        display: grid;
+    .playlist-track-item {
+        @include list-grid;
         grid-template-columns: max-content 70px 1fr max-content;
-        // grid-template-columns: 70px 1fr max-content;
-        grid-gap: 20px;
-        height: 70px;
-        list-style-type: none;
-        margin-bottom: 30px;
-        // .list-image img {
-        //     height: 100%;
-        //     width: 100%;
-        // }
-        .list-details {
-            // display: grid;
-            // grid-template-columns: auto 50px;
+        height: 100px;
+
+        @include responsive(md) {
+            grid-template-columns: max-content 70px 1fr max-content max-content max-content;
+        }
+    }
+
+    .album-thumbnail {
+        height: 100%;
+        width: 100%;
+    }
+
+    .track-details {
+        overflow: hidden;
+        white-space: nowrap;
+
+        div {
+            text-overflow: ellipsis;
             overflow: hidden;
-            white-space: nowrap;
-            div {
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
-            // .track-link {
-            //     color: #FFFFFF;
-            // }
-        }
-        .list-image {
-            img {
-                height: 100%;
-                width: 100%;
-            }
-        }
-        // .heart-icon, 
-        // .playlist-icon {
-        //     display: none;
-        // }
-        .option-icon {
-            cursor: pointer;
-            height: 20px;
-            width: auto;
-        }
-        .list-player-icon {
-            font-size: 20px;
-            // margin: 25px 0;
         }
 
-        // .tile {
-        //     // text-align: right;
-        //     // .track-duration {
-        //     //     display: inline-block;
-        //     //     width: 40px;
-        //     // }
-        // }
-        // > :nth-last-child(2), > :nth-last-child(3) {
-        //     display: none;
-        // }
-        
+        @include responsive(sm-md) {
+            align-items: center;
+            display: grid;
+            grid-template-columns: auto 50px;
+        }
+    }
+
+    .track-artist {
+        color: $light-gray;
     }
 
     .option-box {
         display: none;
-    }
 
-    .player-icon-box {
-        // display: flex;
-        // align-items: center;
-    }
-    .track-artist {
-        color: #a6b2d1;
-    }
-    .track-duration {
-        align-items: center;
-        display: flex;
-    }
-    .track-name, .player-icon-box {
-        cursor: pointer;
-        &:hover {
-            // color: rgb(239,84,102);
-            color: #ff4646;
-            .track-artist {
-                color: #ff4646;
-            }
-        }
-    }
-
-}
-
-.option-icon {
-    cursor: pointer;
-    height: 20px;
-    width: auto;
-}
-
-@media screen and (min-width: 701px) {
-    // .list-item {
-    //     grid-template-columns: 50px 1fr max-content 40px;    
-    // }
-    .list-container {
-        .album-list-item {
-                height: 54px;
-        }
-    }
-    .list-details {
-        display: grid;
-        grid-template-columns: auto 50px;
-    }
-}
-
-@media screen and (min-width:811px) {
-    .list-container {
-        .list-item {
-            grid-template-columns: max-content 70px 1fr max-content max-content max-content;
-            // grid-template-columns: 70px 1fr max-content max-content max-content;
-            // .heart-icon, .playlist-icon {
-            //     cursor: pointer;
-            //     display: unset;
-            //     height: 20px;
-            //     width: auto;
-            // }
-            // > :nth-last-child(2), > :nth-last-child(3) {
-            //     display: block;
-            // }
-        }
-        .album-list-item {
-            grid-template-columns: max-content 1fr max-content max-content max-content;
-            // grid-template-columns: 1fr max-content max-content max-content;
-            // > :nth-last-child(2), > :nth-last-child(3) {
-            //     display: block;
-            // }
-        }
-        .option-box {
+        @include responsive(md) {
             display: block;
         }
     }

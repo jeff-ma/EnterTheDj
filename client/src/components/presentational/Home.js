@@ -60,14 +60,14 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
                         hide: false
                     }}
                 >
-                    {latestAlbums.map((album, index) => 
+                    {latestAlbums.map((latestAlbum, index) => 
                         <div key={index}>
-                            <img className="swiper-slide-image" src={album.images[0].url} alt={album.name}/>
+                            <img className="swiper-slide-image" src={latestAlbum.images[0].url} alt={latestAlbum.name}/>
                             <div className="swiper-slide-caption">
                                 <h3>Latest</h3>
-                                <Link to={`/album/${album.id}`}>
-                                    <h4>{album.name}</h4>
-                                    <h5>{album.artists[0].name}</h5>
+                                <Link to={`/album/${latestAlbum.id}`}>
+                                    <h4>{latestAlbum.name}</h4>
+                                    <h5>{latestAlbum.artists[0].name}</h5>
                                 </Link>
                             </div>
                         </div>

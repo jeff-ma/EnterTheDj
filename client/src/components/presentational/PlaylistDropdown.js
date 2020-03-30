@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import {playlistAddTrackRequest, playlistRemoveTrackRequest} from "../../redux/actions/playlist";
 import playlistMenu from "../../images/playlist-menu.svg";
 
-const PlaylistDropdown = ({dropDirection, track, playlists, playlistRemoveTrack, playlistAddTrack}) => {
+const PlaylistDropdown = ({dropDirection, track, playlist, playlists, playlistRemoveTrack, playlistAddTrack}) => {
     const cookies = new Cookies();
     const accessToken = cookies.get("access_token");
     const paths = window.location.pathname.split("/");
@@ -17,9 +17,9 @@ const PlaylistDropdown = ({dropDirection, track, playlists, playlistRemoveTrack,
     if (accessToken) {
         return (
             <div className={"dropdown option-box " + dropDirection}>
-                <img className="option-icon dropdown-toggle" src={playlistMenu} alt="add to playlist" data-toggle="dropdown"/>
+                <img className="icon dropdown-toggle" src={playlistMenu} alt="add to playlist" data-toggle="dropdown"/>
                 <div className="dropdown-menu">
-                    {paths[1] === "playlist" &&
+                    {paths[1] === "playlist" && playlist.isSaved &&
                         <React.Fragment>
                             <div className="dropdown-item" onClick={() => removeTrack(paths[2], track.uri)}>
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="56.311 -86.198 266.97 244.377" xmlSpace="preserve">
@@ -43,18 +43,17 @@ const PlaylistDropdown = ({dropDirection, track, playlists, playlistRemoveTrack,
                         Create playlist
                     </a>
                     <hr/>
-                    {/* <div className="dropdown-item-text">Add to playlist</div> */}
-                        {playlists && playlists.items && 
-                            playlists.items.map((playlist) => 
-                            <div className="dropdown-item" key={playlist.id} onClick={() => playlistAddTrack(playlist.id, track.uri)}>
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="344.104 99.402 271.793 249.2" xmlSpace="preserve">
-                                    <path d="M577.256,278.602v-38.641h-31.359v38.641h-38.641v31.359h38.641v38.641h31.359v-38.641h38.641v-31.359 H577.256L577.256,278.602z M577.063,99.402H344.104v31.36h232.959V99.402z M577.063,189.002H344.104v31.359h232.959V189.002z M344.104,309.961H487.84v-31.359H344.104V309.961z"/>
-                                </svg>
-                                &nbsp;
-                                {playlist.name}
-                            </div>
-                            )
-                        }
+                    {playlists && playlists.items && 
+                        playlists.items.map((item) => 
+                        <div className="dropdown-item" key={item.id} onClick={() => playlistAddTrack(item.id, track.uri)}>
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="344.104 99.402 271.793 249.2" xmlSpace="preserve">
+                                <path d="M577.256,278.602v-38.641h-31.359v38.641h-38.641v31.359h38.641v38.641h31.359v-38.641h38.641v-31.359 H577.256L577.256,278.602z M577.063,99.402H344.104v31.36h232.959V99.402z M577.063,189.002H344.104v31.359h232.959V189.002z M344.104,309.961H487.84v-31.359H344.104V309.961z"/>
+                            </svg>
+                            &nbsp;
+                            {item.name}
+                        </div>
+                        )
+                    }
                 </div>
             </div>
         );
@@ -63,16 +62,20 @@ const PlaylistDropdown = ({dropDirection, track, playlists, playlistRemoveTrack,
     }
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    playlistAddTrack: (trackId, trackUri) => dispatch(playlistAddTrackRequest(trackId, trackUri)),
-    playlistRemoveTrack: (trackId, trackUri) => dispatch(playlistRemoveTrackRequest(trackId, trackUri)),
-});
-
 PlaylistDropdown.propTypes = {
     dropDirection: PropTypes.string.isRequired,
+    playlist: PropTypes.object,
+    playlists: PropTypes.object,
     playlistAddTrack: PropTypes.func.isRequired,
     playlistRemoveTrack: PropTypes.func.isRequired,
     track: PropTypes.object.isRequired
 };
 
-export default connect(null, mapDispatchToProps)(PlaylistDropdown);
+const mapStateToProps = (state) => state.playlist;
+
+const mapDispatchToProps = (dispatch) => ({
+    playlistAddTrack: (trackId, trackUri) => dispatch(playlistAddTrackRequest(trackId, trackUri)),
+    playlistRemoveTrack: (trackId, trackUri) => dispatch(playlistRemoveTrackRequest(trackId, trackUri)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistDropdown);

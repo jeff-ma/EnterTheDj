@@ -161,7 +161,7 @@ const TrackModal = ({track, playlists, removeTrack, saveTrack, allCookies}) => {
                                     <React.Fragment>
                                         <PlaylistDropdown dropDirection="dropright" playlists={playlists} track={track}/>
                                         <div className="option-box">
-                                            <img className="option-icon" src={heartIcon} alt="like" onClick={()=> updateTrack(track.id)} height="20"/>
+                                            <img className="icon" src={heartIcon} alt="like" onClick={()=> updateTrack(track.id)} height="20"/>
                                         </div>
                                     </React.Fragment>
                                 }
