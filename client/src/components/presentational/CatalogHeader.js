@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {withCookies} from "react-cookie";
-import "../../styles/catalogHeader.scss";
 import noImage from "../../images/no-image.jpg";
 
 const CatalogHeader = ({action, catalog, children, allCookies}) => {
@@ -10,27 +9,27 @@ const CatalogHeader = ({action, catalog, children, allCookies}) => {
     const imageClass = catalog.type === "artist" ? "rounded-circle" : "";
     const heartIcon = catalog.isSaved ? "fas fa-heart" : "far fa-heart";
     return (
-        <section>
-            <div className="catalog-details-grid">
+        <section className="catalog-header">
+            <div className="catalog-details">
                 <div className="catalog-cover">
-                    <img className={imageClass} src={image} alt="test"/>
-                    <div className="catalog-button-grid hide-up-to-md">
+                    <img className={imageClass} src={image} alt={catalog.name}/>
+                    <div className="catalog-button-grid show-md-up">
                         {accessToken && 
                             <button className="button-outline" onClick={() => action(catalog.id)}>
                                 <i className={heartIcon}></i>
                             </button>
                         }
-                        <a href={catalog.external_urls.spotify} className="button-outline button-spotify" target="_blank" rel="noopener noreferrer">                            
+                        <a href={catalog.external_urls.spotify} className="button-outline button-spotify" target="_blank" rel="noopener noreferrer">
                             <i className="fab fa-spotify"></i>
-                        </a>                        
-                    </div> 
+                        </a>
+                    </div>
                 </div>
                 <div className="catalog-info">
                     {children}
                 </div>
             </div>
             <div className="catalog-button-grid hide-md-up">
-                {accessToken && 
+                {accessToken &&
                     <button className="button-outline" onClick={() => action(catalog.id)}>
                         <i className={heartIcon}></i>
                     </button>
@@ -42,7 +41,6 @@ const CatalogHeader = ({action, catalog, children, allCookies}) => {
         </section>
     );
 };
-
 
 CatalogHeader.propTypes = {
     action: PropTypes.func,

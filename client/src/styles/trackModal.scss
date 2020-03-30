@@ -1,103 +1,94 @@
-.modal-header, .modal-body {
-    padding-left: 30px;
-    padding-right: 30px;
-}
-
-.modal-header {
-    border-bottom-color: rgba(166, 178, 209, 0.3);
-    .track-modal-close {
-        color: #FFFFFF;
-        opacity: 1;
-        text-shadow: none;
-        &:hover {
-            color: #FFFFFF;
-            opacity: 1 !important;
-        }
-        &:focus {
-            border: 0;
-        }
-    }
-}
-
-.modal-body {
-    padding-bottom: 40px;
-}
-
 #track-modal {
     .modal-dialog {
-        max-width: 800px;
-    }
-}
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 90%;
+        min-width: 300px;
 
-// .modal-content {
-//     min-height: calc(100vh - 3.5rem);
-// }
+        .modal-header {
+            border-bottom-color: rgba(166, 178, 209, 0.3);
+            padding-left: 30px;
+            padding-right: 30px;
 
-.audio-analysis-grid {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    grid-row-gap: 20px;
-    text-align: center;
-    // grid-template-columns: repeat(5, minmax(100px 150px));
-}
+            .button-grid {
+                display: grid;
+                font-size: 24px;
+                grid-gap: 30px;
+                grid-template-columns: repeat(3, max-content);
+                min-height: 40px;
+            }
 
-.chart-container {
-    display: relative;
-    min-height: 300px;
-    // width: 600px;
-    // width: 100%;
-    margin: 30px auto;
-    // margin-left: auto;
-    // margin-right: auto;
-}
+            #track-modal-close {
+                color: #FFFFFF;
+                opacity: 1;
+                text-shadow: none;
 
-#track-button-grid {
-    display: grid;
-    font-size: 24px;
-    grid-template-columns: repeat(3, max-content);
-    // grid-template-columns: max-content;
-    grid-gap: 30px;
-    margin-top: 20px;
-    margin-bottom: 20px;     
-    min-height: 40px;
-    .fa-spotify {
-        color: #1DB954;
-      }
-    i {
-        margin: auto 0;
-    }  
-}
-
-.loading {
-    animation: blink 1.5s ease-in-out infinite;
-    span {
-        animation-name: blink;
-        animation-duration: 1.5s;
-        animation-iteration-count: infinite;
-        animation-fill-mode: both;
-        &:nth-child(2) {
-            animation-delay: 0.2s;
+                &:focus {
+                    border: 0;
+                }
+            }
         }
-        &:nth-child(3) {
-            animation-delay: 0.4s;
+
+        .modal-body {
+            padding: 0 30px 40px 30px;
+
+            .audio-analysis-grid {
+                display: grid;
+                grid-row-gap: 20px;
+                grid-template-columns: repeat(2, auto);
+                text-align: center;
+                
+                @include responsive(sm) {
+                    grid-template-columns: repeat(5, auto);    
+                }
+            }
+            
+            .chart-container {
+                display: relative;
+                margin: 30px auto;
+                min-height: 300px;
+            }
+
+            .loading {
+                animation: blink 1.5s ease-in-out infinite;
+
+                span {
+                    animation-duration: 1.5s;
+                    animation-iteration-count: infinite;
+                    animation-fill-mode: both;
+                    animation-name: blink;
+
+                    &:nth-child(2) {
+                        animation-delay: 0.2s;
+                    }
+
+                    &:nth-child(3) {
+                        animation-delay: 0.4s;
+                    }
+                }
+
+                @keyframes blink {
+                    0% {
+                        opacity: 0.2;
+                    }
+
+                    50% {
+                        opacity: 1;
+                    }
+                    
+                    100% {
+                        opacity: 0.2;
+                    }
+                }
+            }
+        }
+
+        @include responsive(md) {
+            max-width: 700px;
+        }
+
+        @include responsive(lg) {
+            max-width: 800px;
         }
     }
 }
-
-@keyframes blink {
-    0% {
-        opacity: 0.2;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.2;
-    }
-}
-
-@media screen and (min-width: 576px) {
-    .audio-analysis-grid {
-        grid-template-columns: repeat(5, auto);    
-    }
-} 

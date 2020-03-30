@@ -21,7 +21,8 @@ import Search from './components/containers/SearchContainer';
 import Show from './components/containers/ShowContainer';
 import SideNav from './components/presentational/SideNav';
 import Top from './components/containers/TopContainer';
-import './styles/App.scss';
+// import './styles/App.scss';
+import './app.scss';
 
 const usePrevious = (location) => {
   const ref = useRef();
@@ -43,7 +44,7 @@ const App = (props) => {
     <Header/>
     <Alert/>
     <SideNav/>
-    <main id="app" className="container-fluid">
+    <main>
       <Switch>
         <Route path="/" exact component={Home}/>
         <Route path="/album/:albumId" exact component={Album}/>

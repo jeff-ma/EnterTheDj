@@ -1,91 +1,30 @@
-// #login-container {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-// }
-#login-card {
-    min-height: 550px;
-    width: 320px;
-    background-color: rgb(33, 39, 55);
-    color: #FFFFFF;
-    // background-image: url("/images/bruce-lee-dj.png"), linear-gradient(rgba(236,24,13,1), rgba(244,13,13,1)); 
-    // background-color: #ff0000;
-    // background-position: right;
-    // background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    box-shadow: 0 0 20px 5px rgba(0,0,0,0.5);
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    top: 80px;
-    button {
-        color: #FFFFFF;
-        border-color: #FFFFFF;
-    }
-
-    div > img {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    div {
-        text-align: center;
-    }
-    h2 {
-        text-align: center;
-    }
-    section {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .card-filter {
-        height: 100%;
-        width: 100%;
-        // position: absolute;
-        // background-color: rgba(255,255,255,0.8);
-    }
-}
-.fa-spotify {
-    color: #1DB954;
-}
-
-#need-to-login {
-    // min-height: 600px;
-    height: 100vh;
-    position: relative;    
-    width: 100%;
+.login {
     background-attachment: fixed;
-    // background-color: #FFFFFF;
     background-image: url("../images/bruce.png");
-    // background-image: linear-gradient(135deg, rgb(27, 32, 45) 0%, rgb(22, 28, 37) 100%);
+    background-position: center calc(50% + 60px);
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: center calc(50% + 60px);
-    z-index: 20;
-    top: 0;
-    left: 0;
+    height: 100vh;
+    position: relative;
 
-    button {
-        color: #FFFFFF;
-        border: solid 1px #FFFFFF;
+    .login-message {
+        left: 50%;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        
+        ul {
+            text-align: left;
+        }
+
+        .login-link {
+            @include button-outline;
+            min-width: 170px;
+        }
     }
-  }
 
-  #need-to-login-message {
-      position: absolute;
-      margin: auto;
-      top: 50%;
-      left:50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      ul {
-          text-align: left;
-      }
-  }
-
-  @media screen and (min-width: 576px) {
-    #need-to-login {
-      background-position: calc(50% + 160px) calc(50% + 60px);
+    @include responsive(sm) {
+        background-position: calc(50% + 160px) calc(50% + 60px);
     }
 }

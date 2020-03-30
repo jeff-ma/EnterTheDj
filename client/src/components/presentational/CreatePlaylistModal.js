@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {playlistAddTrack, createPlaylist, uploadPlaylistImage} from "../../utils";
-import "../../styles/createPlaylistModal.scss";
 
 const CreatePlaylistModal = ({track}) => {
   const history = useHistory();
@@ -95,20 +94,20 @@ const CreatePlaylistModal = ({track}) => {
                     </React.Fragment>                
                   }
                 </label>
-                <input id="preview-image-file" className={errors.image ? "form-control is-invalid" : ""} type="file" onChange={(e) => fileUpload(e)}/>
+                <input id="preview-image-file" className={errors.image ? "form-control is-invalid" : ""} type="file" onChange={fileUpload}/>
                 <div className="invalid-feedback">{errors.image}</div>
               </div>
               <div>
                 <div className="form-group">
                   <label htmlFor="playlist-name">Name</label>
-                  <input type="text" className={errors.name ? "form-control is-invalid" : "form-control"} id="playlist-name" ref={name} placeholder="Required"/>
+                  <input id="playlist-name" type="text" className={errors.name ? "form-control is-invalid" : "form-control"} ref={name} placeholder="Required"/>
                   <div className="invalid-feedback">
                     {errors.name}
                   </div>
                 </div>
                 <div className="form-group">
                   <label htmlFor="playlist-description">Description</label>
-                  <input type="text" className="form-control" id="playlist-description" ref={description} placeholder="(Optional)"/>
+                  <input id="playlist-description" type="text" className="form-control" ref={description} placeholder="(Optional)"/>
                 </div>
                 {isLoading && 
                   <p className="loading">Creating playlist <span>.</span> <span>.</span> <span>.</span></p>
@@ -117,7 +116,7 @@ const CreatePlaylistModal = ({track}) => {
             </div>
           </div>
           <div className="modal-footer">
-            <button id="create" type="button" className="button-outline" disabled={isLoading} onClick={() => handleCreate()}>Create</button>
+            <button id="create" type="button" className="button-outline" disabled={isLoading} onClick={handleCreate}>Create</button>
           </div>
         </div>
       </div>

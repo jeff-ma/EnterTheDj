@@ -1,7 +1,6 @@
-import React from 'react';
-import {Redirect} from 'react-router-dom';
-import { withCookies } from 'react-cookie';
-import '../../styles/login.scss';
+import React from "react";
+import {Redirect} from "react-router-dom";
+import {withCookies} from "react-cookie";
 
 const Login = ({allCookies, children}) => {
     const accessToken = allCookies.access_token;
@@ -29,8 +28,8 @@ const Login = ({allCookies, children}) => {
         return <Redirect to="/" />;
     } else {
         return (
-            <div id="need-to-login">
-                <div id="need-to-login-message">
+            <div className="login">
+                <div className="login-message">
                     {children ? 
                         children
                         :
@@ -43,8 +42,10 @@ const Login = ({allCookies, children}) => {
                             </ul>
                         </React.Fragment>
                     }
-                    <a id="login-link" href={spotifyAuthorizeUrl}>
-                        <button type="button" className="btn">Log in with Spotify <i className="fab fa-spotify"></i></button>
+                    <a className="login-link" href={spotifyAuthorizeUrl}>
+                        Log in with Spotify
+                        &nbsp;
+                        <i className="fab fa-spotify"></i>
                     </a>
                 </div> 
             </div>

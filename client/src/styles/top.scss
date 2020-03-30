@@ -1,35 +1,13 @@
-#top-header {
-    #view-buttons {
-        margin-top: 40px;
-        margin-bottom: 40px;
+.top-header {
+    .view-button {
+        @include view-button;
     }
-    .top-view-button {
-        background-color: transparent;
-        border: 0;
-        color: #a6b2d1;
-        padding: 10px;
-        // font-weight: bold;
-        text-transform: capitalize;
-        &.active {
-            span {
-                color: #FFFFFF;
-                border-bottom: 2px solid #ffffff;
-            }
-        }
-        &:focus {
-            outline: none;
-        }
-    }
-}
-
-@media screen and (min-width: 701px) {
-    #top-header {
+    
+    @include responsive(md) {
+        align-items: center;
         display: flex;
         flex-direction: row;
-        align-items: center;
         justify-content: space-between;
-    }
-    #view-buttons {
-        margin: 0;
+        margin-bottom: -40px;
     }
 }

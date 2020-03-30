@@ -5,7 +5,6 @@ import {commafyNumber} from "../../utils";
 import CatalogHeader from "./CatalogHeader";
 import Tiles from "./Tiles";
 import TracksList from "./TracksList";
-import "../../styles/artist.scss";
 import noImage from "../../images/no-image.jpg";
 
 const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtists, singles, topTracks, match, remove, save}) => {
@@ -29,14 +28,14 @@ const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtis
         <div id="main-wrapper" className="container">
             <CatalogHeader action={artistAction} catalog={artist}>
                 <h2>{artist.name}</h2>
-                <p className="tile-artist">{artist.popularity} popularity</p>
-                <p className="tile-artist">{artist.monthlyListeners} monthly listeners</p>                    
-                <p className="tile-artist">{commafyNumber(artist.followers.total)} followers</p>
+                <p className="light-gray-text">{artist.popularity} popularity</p>
+                <p className="light-gray-text">{artist.monthlyListeners} monthly listeners</p>                    
+                <p className="light-gray-text">{commafyNumber(artist.followers.total)} followers</p>
             </CatalogHeader>
             <div className="view-buttons">
                 {viewButtons}
             </div>
-            <hr/>
+            <hr className="spaced-out"/>
             {view === undefined &&
                 <React.Fragment>
                     {latest &&
@@ -49,7 +48,7 @@ const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtis
                             </div>
                             <div>
                                 <Link to={`/album/${latest.id}`}>
-                                    <img src={latestImage} alt={artist.name} height="250"/>
+                                    <img className="latest-cover" src={latestImage} alt={artist.name}/>
                                     <p>{latest.name}</p>                    
                                 </Link>
                             </div>

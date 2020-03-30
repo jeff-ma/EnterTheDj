@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
 import {updatePlayer} from "../../redux/actions/player";
-import "../../styles/player.scss";
 
 const Player = ({audioId, audioType}) => {
     if (audioId && audioType) {

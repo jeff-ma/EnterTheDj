@@ -3,12 +3,10 @@ import PropTypes from "prop-types";
 import TracksList from "./TracksList";
 
 const Recent = ({tracks}) => (
-    <div id="main-wrapper" className="container">
-        <div id="recent-header">
-            <h2 className="section-title">Recently Played</h2>
-        </div>
+    <section className="container">
+        <h2 className="section-title">Recently Played</h2>
         <TracksList tracks={tracks}/>
-    </div>
+    </section>
 );
 
 Recent.propTypes = {

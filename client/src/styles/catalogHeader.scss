@@ -1,90 +1,63 @@
-.catalog-details-grid {
+section.catalog-header {
     margin-top: 40px;
-    text-align: center;
-}
-.catalog-button-grid {
-    display: grid;
-    font-size: 24px;
-    grid-template-columns: repeat(2, max-content);
-    justify-content: center;
-    grid-gap: 30px;
-    margin-top: 20px;
-    // margin-bottom: 20px;     
-    min-height: 40px;
-    .fa-spotify {
-        color: #1DB954;
-      }
-    i {
-        margin: auto 0;
-    }  
-}
-.button-outline {
-    color: #FFFFFF;
-    border: 1px solid #FFFFFF;
-    border-radius: 4px;
-    background-color: transparent;
-    font-size: 20px;
-    width: 80px;
-    height: 40px;
-}
 
-  .button-spotify {
-    display: flex;
-    align-items: center;      
-    justify-content: center;
-}
+    .catalog-details {
+        text-align: center;
 
-.album-artist-thumbnail {
-    height: 30px;
-    width: 30px;
-    // border-radius: 50%;
-}
+        .catalog-cover {
+            img {
+                height: 250px;
+                object-fit: cover;
+                width: 250px;
+            }
 
+            .show-md-up {
+                display: none;
 
-.catalog-cover {
-    // height: 200px;
-    width: 250px;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    img {
-        height: 250px;
-        width: 250px;
-        // position: absolute;
-        object-fit: cover;
-        // border-radius: 50%;
-    }
-}
-
-.artist-view-button {
-    background-color: transparent;
-    border: 0;
-    color: #a6b2d1;
-    padding: 10px;
-    // font-weight: bold;
-    text-transform: capitalize;
-    &.active {
-        span {
-            color: #FFFFFF;
-            border-bottom: 2px solid #ffffff;
+                @include responsive(md) {
+                    display: grid;
+                }
+            }
         }
     }
-    &:focus {
-        outline: none;
-    }
-}
 
-@media screen and (min-width: 768px) {
-    .catalog-details-grid {
-        display: grid;
-        grid-template-columns: max-content auto;
-        grid-gap: 30px;
-        // margin-top: 40px;
-        .catalog-info {
-            text-align: left;
-        }
-    }
     .catalog-button-grid {
-        justify-content: left;
+        display: grid;
+        font-size: 24px;
+        grid-gap: 30px;
+        grid-template-columns: repeat(2, max-content);
+        justify-content: center;
+        margin-top: 20px;
+        min-height: 40px;
+        
+        .fa-spotify {
+            color: #1DB954;
+        }
+
+        @include responsive(md) {
+            justify-content: left;
+        }
+    }
+    
+    .button-spotify {
+        align-items: center;      
+        display: flex;
+        justify-content: center;
+    }
+
+    @include responsive(md) {
+        .catalog-details {
+            display: grid;
+            grid-template-columns: max-content auto;
+            grid-gap: 30px;
+    
+            .catalog-info {
+                text-align: left;
+            }
+        }
+
+        .hide-md-up {
+            display: none;
+        }
     }
 }

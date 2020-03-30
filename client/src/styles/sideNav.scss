@@ -1,77 +1,43 @@
-// @import 'fonts';
-
-#side-nav {
-    color: #ffffff;
-    // display: none;
+nav {
+    background-color: rgb(25, 25, 34);
     font-size: 20px;
     height: 100%;
-    // width: 180px;
-    width: 220px;
-    // background:rgb(21,27,36);
-    background: rgb(25, 25, 34);
-    position: fixed;
-    // left: -180px;
     left: -220px;
-    top: 60px;
     padding-top: 40px;
+    position: fixed;
+    top: 60px;
+    transition: 0.5s;
+    width: 220px;
     z-index: 22;
-    // transition: 0.5s;
-        &.active {
-            left: 0;
-        }
-        .side-nav-link {
-            // color: #697391;
-            // color: #92929D;
-            color: #FFFFFF;
-            height: 100%;
-            display: block;
-            padding: 5px 0;
-            // color: rgb(108, 117, 125);
-            
-            &.active {
-                // border-left: 3px solid #dd1021;
-                // border-left: 3px solid #ffffff;
-                border-left: 6px solid #ff4646;
-                color: #ff4646;
-                .far, .fas {
-                    padding-left: 24px;
-                }
-                &:hover {
-                    color: #ff4646;
-                }
-            }
-        }
-        .side-nav-link:hover {
-            // color:#aeb3ca;
-            // transition-duration: .5s;
-            color: #ff4646;
-            text-decoration: none;
-        }
-        // .side-nav-link.active {
-        //     color: #ffffff;
-        // }
-        ul {
-            line-height: 38px;
-            padding: 0px; 
-            .side-nav-item {
-                // display: flex;
-                // flex-direction: row;
-                // align-items: center;
-                // height: 40px;
-                // font-size: 16px;
-                list-style-type: none;
-                // margin-bottom: 15px;
-                .fas, .far {
-                    padding-left: 30px;
-                    padding-right: 10px;
-                }
-            }
-        }
-}
 
-@media screen and (min-width: 576px) {
-    #side-nav {
-        // display: block;
+    &.active {
+        left: 0;
+    }
+
+    a.active {
+        border-left: 6px solid $red;
+        color: $red;
+        
+        .far, .fas {
+            padding-left: 24px;
+        }
+    }
+
+    ul {
+        line-height: 3rem;
+        padding: 0px; 
+
+        li {
+            list-style-type: none;
+
+            .far, .fas {
+                padding-left: 30px;
+                padding-right: 10px;
+            }
+        }
+    }
+
+    @include responsive(sm) {
         left: 0;
     }
 }

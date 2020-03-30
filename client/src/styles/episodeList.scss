@@ -1,39 +1,54 @@
-.dropdown-menu {
-    border: none;
-    z-index: 90;
+.episodes-list-container {
+    padding: 0;
+
+    .show-list-item {
+        align-items: center;
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: max-content 1fr max-content max-content;
+        height: 80px;
+
+        p {
+            margin: 0;
+        }
+
+        .option-icon, .player-icon {
+            cursor: pointer;
+            height: 20px;
+            width: 20px;
+        }
+
+        .episode-details {
+            overflow: hidden;
+            white-space: nowrap;
+
+            p:nth-child(2) {
+                color: $light-gray;
+            }
+
+            * {
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
     
-.dropdown-item-text {
-    color: #a6b2d1;
-    width: 80vw;
-    p {
-        margin: 0;
-        padding: 0;
-        &:first-child {
-            color: #ffffff;
+        .dropdown-menu {
+            background-color: $dark-gray;
+            border: none;
+        
+            .dropdown-item-text {
+                color: $light-gray;
+                width: 80vw;
+                
+                @include responsive(sm) {
+                    width: 400px;
+                }
+            }
+            
+            .episode-description {
+                height: 250px;
+                overflow: auto;
+            } 
         }
     }
-
-}
-}
-.episode-description {
-    color: #a6b2d1;
-    height: 250px;
-    overflow: auto;
-}
-
-.episode-details {
-    overflow: hidden;
-    white-space: nowrap;
-    * {
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-}
-
-@media screen and (min-width: 576px) {
-    .dropdown-menu {    
-    .dropdown-item-text {
-        width: 400px;
-    }
-}
 }

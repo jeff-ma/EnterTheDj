@@ -1,5 +1,4 @@
 import React, {useLayoutEffect} from "react";
-import "../../styles/alert.scss";
 
 const Alert = ({children, removeAlert}) => {
     useLayoutEffect(() => {

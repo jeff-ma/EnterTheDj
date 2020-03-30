@@ -1,56 +1,57 @@
 #createPlaylistModal {   
-    padding-right: 0 !important;
-    .modal-header, .modal-footer {
-        border: none;
-    }
-
     .modal-dialog {
         background-color: #151b24;
-    // max-width: 90%;
-    }
-    input {
-        background-color: transparent;
-        border-top: 0;
-        border-left: 0;
-        border-right: 0;
-        border-radius: 0;
-    }
-    #preview-image-file {
-        display: none;
-    }
-    .image-preview-box {
-        // background-color: #697391;
-        background-position: center;
-        // background-attachment: fixed;
-        background-size: cover;
-        border: 1px solid #ffffff;
-        margin-bottom: 40px;
-        height: 200px;
-        width: 200px;
-        .fas {
-            // display: block;
-            font-size: 70px;
+        
+        .modal-header, .modal-footer {
+            border: none;
         }
-        img {
-            height: 100%;
-            width: 100%;
-        }
-        label {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-            cursor: pointer;
-        }
-    }
-}
 
-@media screen and (min-width: 576px) {
-    .create-playlist-content {
-        display: grid;
-        grid-template-columns: max-content auto;
-        grid-gap: 30px;
+        .create-playlist-content {
+            input {
+                background-color: transparent;
+                border-top: 0;
+                border-left: 0;
+                border-right: 0;
+                border-radius: 0;
+            }
+        
+            #preview-image-file {
+                display: none;
+            }
+        
+            .image-preview-box {
+                background-position: center;
+                background-size: cover;
+                border: 1px solid #ffffff;
+                height: 200px;
+                margin-bottom: 40px;
+                width: 200px;
+        
+                .fas {
+                    font-size: 70px;
+                }
+        
+                img {
+                    height: 100%;
+                    width: 100%;
+                }
+        
+                label {
+                    align-items: center;
+                    cursor: pointer;
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    justify-content: center;
+                    width: 100%;
+                }
+            }
+            
+            @include responsive(sm) {
+                display: grid;
+                grid-template-columns: max-content auto;
+                grid-gap: 30px;
+            }
+        }
     }
 }

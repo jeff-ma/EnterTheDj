@@ -5,7 +5,7 @@ import Alert from "../presentational/Alert";
 
 const AlertContainer = ({alerts, removeAlert}) => {
     return (
-        <div id="alert-container">
+        <div className="alert-container">
             {alerts.map(alert => (
                 <Alert key={alert.id} removeAlert={() => removeAlert(alert.id)}>
                     <span>{alert.message}</span>

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import Tiles from "./Tiles";
 import TracksList from "./TracksList";
-import "../../styles/top.scss";
 
 const Top = (props) => {
     const topViews = ["artists", "tracks"];
@@ -12,15 +11,13 @@ const Top = (props) => {
     const path = view.slice(0,-1);
     const viewButtons = topViews.map((topView, index) => <Link key={index} className={view === topView ? "view-button active" : "view-button"} to={`/top/${topView}`}><span>{topView}</span></Link>);
     return (
-        <div id="main-wrapper" className="container">
-            <div id="top-header">
+        <section className="container">
+            <div className="top-header">
                 <h2 className="section-title">Top Most Played</h2>
-                <div id="view-buttons">
-                    {viewButtons}
-                </div>
+                <div>{viewButtons}</div>
             </div>
             {view === "tracks" ? <TracksList tracks={data}/> : <Tiles data={data} path={path}/>}
-        </div>
+        </section>
     );
 };
 

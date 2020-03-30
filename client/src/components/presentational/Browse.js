@@ -7,7 +7,7 @@ import Tiles from "./Tiles";
 const Browse = ({categories, query}) => {
     const {page} = queryString.parse(query);
     return (
-        <div id="main-wrapper" className="container">
+        <div className="container">
             <section> 
                 <h2 className="section-title">Browse</h2>
                 <Tiles data={categories} path="category"/>

@@ -1,14 +1,16 @@
-#alert-container {
+.alert-container {
+    max-width: 250px;
     position: fixed;
     top: 20px;
     right: 20px;
-    max-width: 250px;
-    z-index: 1051;
+    z-index: 99;
+    
     .alert {
         background-color: #ff4646;
         border: none;
         color: #ffffff;
         padding: 10px;
+
         button {
             color: #ffffff;
             margin-left: 10px;

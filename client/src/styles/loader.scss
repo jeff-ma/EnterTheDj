@@ -1,91 +1,104 @@
 .loader {
-    width: 100%;
+    background-color: rgb(18, 18, 22);
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    left: 0;
     position: fixed;
     top: 0;
-    left: 0;
-    background-color: rgb(18, 18, 22);
-    blockquote {
-        font-size: 1.2rem;
-        animation: fade 2s ease-in-out;
-        animation-iteration-count: infinite;
-        width: 300px;
-        &.quote {
-            font-style: italic;
-            text-align: left;
-        }
-        &.signature {
-            text-align: right;
-        }
-    }
-}
+    width: 100%;
+    
+    .loader-wrapper {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        left: 50%;
+        position: relative;
+        top: 50%;
+        transform: translate(-50%, -50%);
 
-.equalizer {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    overflow: hidden;
-    width: 140px;
-    min-width: 140px;
-    height: 80px;
-    margin: 0 auto;
-    z-index: 21;
-    div {
-        width: 15px;
-        height: 5px;
-        margin: 0 2px;
-        background-color: #ffffff;
-        animation-name: equalize;
-        animation-duration: 350ms;
-        animation-direction: alternate;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-delay: var(--n);
-        &:nth-child(1) {
-            --n: 275ms;
-        }
-        &:nth-child(2) {
-            --n: 605ms;
-        }
-        &:nth-child(3) {
-            --n: 375ms;
-        }
-        &:nth-child(4) {
-            --n: 15ms;
-        }
-        &:nth-child(5) {
-            --n: 165ms;
-        }
-    }
-}
+        .equalizer {
+            align-items: flex-end;
+            display: flex;
+            height: 80px;
+            justify-content: center;
+            overflow: hidden;
 
-@keyframes equalize {
-    from {
-        height: 1px;
-    }
-    to {
-        height: 100%;
-    }
-}
+            div {
+                animation-delay: var(--n);
+                animation-direction: alternate;
+                animation-duration: 350ms;
+                animation-iteration-count: infinite;
+                animation-name: equalize;
+                animation-timing-function: linear;
+                background-color: #ffffff;
+                height: 5px;
+                margin: 0 2px;
+                width: 15px;
 
-@keyframes fade {
-    0% {
-        opacity: 0.2;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.2;
-    }
-}
+                &:nth-child(1) {
+                    --n: 275ms;
+                }
 
-@media screen and (min-width: 576px) {
-    .loader {
-        left: 110px;
+                &:nth-child(2) {
+                    --n: 605ms;
+                }
+
+                &:nth-child(3) {
+                    --n: 375ms;
+                }
+
+                &:nth-child(4) {
+                    --n: 15ms;
+                }
+
+                &:nth-child(5) {
+                    --n: 165ms;
+                }
+
+                @keyframes equalize {
+                    from {
+                        height: 1px;
+                    }
+
+                    to {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+
+        blockquote {
+            animation: fade 2s ease-in-out;
+            animation-iteration-count: infinite;
+            font-size: 20px;
+            width: 300px;
+
+            &.quote {
+                font-style: italic;
+                text-align: left;
+            }
+
+            &.signature {
+                text-align: right;
+            }
+
+            @keyframes fade {
+                0% {
+                    opacity: 0.2;
+                }
+
+                50% {
+                    opacity: 1;
+                }
+                
+                100% {
+                    opacity: 0.2;
+                }
+            }
+        }   
+
+        @include responsive(sm) {
+            left: calc(50% + 110px);
+        }
     }
 }

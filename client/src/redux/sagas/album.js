@@ -28,13 +28,11 @@ export function* removeAlbumRequest({albumId}) {
 };
 
 export function* saveAlbumRequest({albumId}) {  
-    console.log("saveing album...");
     try {
         const {album} = yield select((state) => state.album);
         yield saveAlbum(albumId);
         album.isSaved = true;
         yield put(albumActions.getAlbumSuccess(album));
-        console.log("done ");
     } catch(error) {
         console.log(error);
         yield put(addAlert("Unable to save album"));

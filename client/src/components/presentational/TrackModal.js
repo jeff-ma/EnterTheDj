@@ -1,14 +1,14 @@
-import React from "react";
+import React, {useRef} from "react";
 import Chart from "chart.js";
 import {withCookies} from "react-cookie";
 import PropTypes from "prop-types";
 import {formatDuration, parsePitchClass} from "../../utils";
 import PlaylistDropdown from "./PlaylistDropdown";
-import "../../styles/trackModal.scss";
 import heartOutline from "../../images/heart-outline.svg";
 import heartSolid from "../../images/heart-solid.svg";
 
 const TrackModal = ({track, playlists, removeTrack, saveTrack, allCookies}) => {
+    const canvas = useRef();
     const accessToken = allCookies.access_token;
     let data;
     let audioAnalysis = (<div><p>No audio data found</p></div>); 
@@ -24,12 +24,11 @@ const TrackModal = ({track, playlists, removeTrack, saveTrack, allCookies}) => {
         "speechiness",
         "valence",
     ];
-    const ctx = document.getElementById("chart");
     if (track.audioFeatures && track.audioFeatures !== "loading") {
         data = labels.map((label) => track.audioFeatures[label]);
     }
-    if (ctx) {
-        new Chart(ctx, {
+    if (canvas.current) {
+        new Chart(canvas.current, {
             type: "horizontalBar",
             data: {
                 labels: labels,
@@ -157,7 +156,7 @@ const TrackModal = ({track, playlists, removeTrack, saveTrack, allCookies}) => {
                         <div>
                             <h3 className="modal-title">{track.name}</h3>
                             <h4>{track.artists[0].name}</h4>
-                            <div id="track-button-grid">
+                            <div className="button-grid">
                                 {accessToken && 
                                     <React.Fragment>
                                         <PlaylistDropdown dropDirection="dropright" playlists={playlists} track={track}/>
@@ -176,15 +175,15 @@ const TrackModal = ({track, playlists, removeTrack, saveTrack, allCookies}) => {
                         </div>
                     </div>
                     <div className="modal-body"> 
-                        <section className="section-title"> 
-                            <h2>Audio analysis</h2>
+                        <section> 
+                            <h2 className="section-title">Audio analysis</h2>
                         </section>
                         {audioAnalysis}
                         <div className={data ? "chart-container": "d-none"}>
-                            <canvas id="chart"></canvas>
+                            <canvas id="chart" ref={canvas}></canvas>
                         </div>
-                        <section className="section-title">
-                            <h3>Lyrics</h3>
+                        <section>
+                            <h3 className="section-title">Lyrics</h3>
                         </section>
                         {lyrics}
                     </div>

@@ -1,56 +1,44 @@
-@import 'fonts';
-
 footer {
-    color: #ffffff;
     background-color: #000000;
-    // padding-top: 80px;
-    // padding-bottom: 80px;
-    // margin-top: 40px;
-    padding: 80px 0 80px 0;
-    #footer-section {
-        padding-left: 15px;
-    }
+    padding: 80px 0;
 
-    #bruce-lee-dj,
-    #bruce-lee-signature {
-        display: block;
-        margin: 30px auto;
-        // margin-left: auto;
-        // margin-right: auto;
-    }
+    section {
+        &:first-child {
+            h3 {
+                text-align: center;
+                font-family: CHINESETAKEAWAY;
+            }
+        }
 
-    // #credits {
-    //     align-items: flex-start;
-    //     display: flex;
-    //     justify-content: space-between;
-    //     p {
-    //         margin: 0;
-    //     }
-    // }
-
-    #footer-heading {
-        text-align: center;
-        font-family: CHINESETAKEAWAY;
+        @include responsive(md) {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr 1fr;
+        }
     }
 
     #bruce-lee-dj {
+        display: block;
         height: 160px;
-        margin-bottom: 10px;
+        margin: 30px auto 10px auto;
+
+        @include responsive(md-lg) {
+            height: 200px;
+        }
     }
 
     #bruce-lee-signature {
+        display: block;
         height: 50px;
+        margin: 30px auto;
     }
 
-    #footer-nav {
+    ul {
         list-style: none;
         padding-left: 0;
-
-        a {
-            color: #FFFFFF;
-
-            &:hover {
-                color: #a5a5a5;
+    
+        li {
+            p:first-child {
+                margin: 0;
             }
         }
     }
@@ -60,39 +48,7 @@ footer {
         margin-bottom: 2rem;
     }
 
-    #copyright {
-        margin-bottom: 0; 
-    }
-    // #player {
-    //     position: fixed;
-    //     bottom: 0;
-    //     z-index: 90;
-    //     width: 100%;
-    //     height: 80px;
-    //     border-style: none;
-    // }
-}
-
-@media screen and (min-width: 576px) {
-    footer {
+    @include responsive(sm) {
         padding-left: 220px;
-        // padding-left: 180px;
-    }
-    
-}
-
-@media screen and (min-width:768px) {
-    #footer-section {
-        display: grid;
-        grid-template-columns: 1.25fr 1fr 1fr;
-        padding-left: 0;
-    }
-}
-
-@media screen and (min-width: 992px) {
-    footer {
-        #bruce-lee-dj {
-            height: 200px;
-        }
     }
 }
