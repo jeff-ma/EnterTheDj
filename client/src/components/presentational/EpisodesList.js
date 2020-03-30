@@ -22,7 +22,7 @@ const EpisodesList = ({episodes, updatePlayer}) => (
                     <img className="icon dropdown-toggle" src={info} alt="like" data-toggle="dropdown"/>
                     <div className="dropdown-menu">
                         <div className="dropdown-item-text">
-                            <p className="white-text">{item.name}</p>
+                            <p className="text-white">{item.name}</p>
                             <p>{formatDate(item.release_date)}</p>
                             <p>{formatDuration(item.duration_ms)}</p>
                         </div>

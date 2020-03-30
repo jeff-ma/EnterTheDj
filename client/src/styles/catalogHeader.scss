@@ -29,10 +29,6 @@ section.catalog-header {
         justify-content: center;
         margin-top: 20px;
         min-height: 40px;
-        
-        .fa-spotify {
-            color: #1DB954;
-        }
 
         @include responsive(md) {
             justify-content: left;

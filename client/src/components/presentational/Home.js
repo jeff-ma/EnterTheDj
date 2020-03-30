@@ -13,7 +13,7 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
             811: {
                 slidesPerView: 4,
             },
-            1021: {
+            1051: {
                 slidesPerView: 5,
             },
             1200: {

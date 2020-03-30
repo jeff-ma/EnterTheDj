@@ -1,47 +1,8 @@
-/* 
-colors 
-
-fonts
-breakpoint screen sizes
-*/
-
-$white: #ffffff;
-$light-gray: rgb(146, 146, 157);
-$dark-gray: rgb(35, 35, 45);
-$red: #ff4646;
 $black: #000000;
-
-@mixin button-outline {
-  background-color: transparent;
-  border: 1px solid #ffffff;
-  border-radius: 4px;
-  color: #ffffff;
-  display: inline-block;
-  line-height: 40px;
-  height: 40px;
-  // min-width: 80px;
-  // vertical-align: middle;
-}
-
-@mixin view-button {
-  background-color: transparent;
-  border: 0;
-  color: $light-gray;
-  padding: 10px;
-  text-transform: capitalize;
-  &:hover {
-    color: #ffffff;
-  }
-  &.active {
-      span {
-          color: $white;
-          border-bottom: 2px solid #ffffff;
-      }
-  }
-  &:focus {
-      outline: none;
-  }
-}
+$dark-gray: rgb(35, 35, 45);
+$light-gray: rgb(146, 146, 157);
+$red: #ff4646;
+$white: #ffffff;
 
 @mixin responsive($breakpoint) {
     @if $breakpoint == sm {
@@ -49,32 +10,38 @@ $black: #000000;
             @content;
         }
     }
+
     @if $breakpoint == sm-md{
         @media screen and (min-width: 701px) {
             @content;
         }
     }
+    
     @if $breakpoint == md {
         @media screen and (min-width: 811px) { 
             @content;
         }
     }
+    
     @if $breakpoint == md-lg {
         @media screen and (min-width: 992px) {
             @content;
         }
     }
+    
     @if $breakpoint == lg {
-        @media screen and (min-width: 1021px) {
+        @media screen and (min-width: 1051px) {
             @content;
         }
     }
+    
     @if $breakpoint == xl {
         @media screen and (min-width: 1200px) {
             @content;
         }
     }
 }
+
 html {
     min-width: 320px;
 }
@@ -89,180 +56,124 @@ body {
 main {
   min-height: 100vh;
   padding-top: 60px;
-  // padding-left: 220px;
-  // padding-bottom: 60px;
 
-  // #main-wrapper {
-  //   padding-bottom: 40px;
-  //   max-width: 1240px;
-  // }
   @include responsive(sm) {
       padding-left: 220px;
   }
 }
   
   
-  a {
-    color: #FFFFFF;
-  }
-  a:hover {
+a {
+  color: #FFFFFF;
+
+  &:hover {
     color: #ff4646;
     text-decoration: none;
   }
+}
   
-  hr {
-    // background-color: #a6b2d1;
-    margin: 5px 0;
-    background-color: rgba(166,178,209,0.3);
-  }
+hr {
+  background-color: $light-gray;
+  margin: 5px 0;
 
-  hr.spaced-out {
+  &.spaced-out {
     margin: 40px 0;
   }
+}
   
-  input {
-    background-color: transparent;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 1px solid #ffffff;
-    color: #FFFFFF;
-    &.form-control, &.form-control:focus{
-    color: #ffffff;
+input {
+  background-color: transparent;
+  border-bottom: 1px solid #ffffff;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  color: #FFFFFF;
+  display: block;
+  width: 100%;
+
+  &.form-control, &.form-control:focus {
     box-shadow: none;
-    }
+    color: #ffffff;
   }
-  
-  .section-title {
-    margin: 40px 0 40px 0;
-    text-transform: capitalize;
-    // margin-top: 40px;
-    // margin-bottom: 40px;
+}
+
+.button-outline {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  color: #ffffff;
+  display: inline-block;
+  // font-size: 20px;
+  line-height: 40px;
+  height: 40px;
+  min-width: 80px;
+  vertical-align: middle;
+}
+
+.container {
+  padding: 0 30px;
+  @include responsive(sm) {
+      padding: 0 45px;
   }
+}
+
+.darken {
+  filter: brightness(15%);
+}
+
+.fa-spotify {
+  color: #1DB954;
+}
+
+.icon {
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+}
+
+.modal-content {
+  background-color: rgb(21,27,36) !important;
+  border: 0;
+}
+
+.section-header {
+  margin: 40px 0;
   
-  .container {
-      padding: 0 30px;
-      @include responsive(sm) {
-          padding: 0 45px;
+  > h2 {
+      margin: 0;
+      text-transform: capitalize;
+  }
+
+  @include responsive(sm-md) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.section-title {
+  margin: 40px 0 40px 0;
+  text-transform: capitalize;
+}
+
+.view-button {
+  background-color: transparent;
+  border: 0;
+  color: $light-gray;
+  padding: 10px;
+  text-transform: capitalize;
+  display: inline-block;
+  &:hover {
+    color: #ffffff;
+  }
+  &.active {
+      span {
+          color: #FFFFFF;
+          border-bottom: 2px solid #ffffff;
       }
   }
-
-  .light-gray-text {
-    color: $light-gray;
+  &:focus {
+      outline: none;
   }
-
-  .white-text {
-    color: $white;
-  }
-
-  .button-outline {
-    background-color: transparent;
-    border: 1px solid #ffffff;
-    border-radius: 4px;
-    color: #ffffff;
-    display: inline-block;
-    // font-size: 20px;
-    line-height: 40px;
-    height: 40px;
-    min-width: 80px;
-    vertical-align: middle;
-  }
-
-  .option-icon {
-    cursor: pointer;
-    height: 20px;
-    width: 20px;
-  }
-
-  .tile-artist {
-    color: #a6b2d1;
-    a {
-      color: #a6b2d1;
-    }
-  }
-  
-  // .tile-title {
-  //   padding-top: 15px;
-  //   color: #ffffff;
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
-  //   a {
-  //     color: #FFFFFF;
-  //   }
-  // }
-  
-  // .tile-subtitle {
-  //   a {
-  //     color: #FFFFFF;
-  //   }
-  // }
-  
-  .tracks-wrapper {
-    background-color: transparent !important;
-  }
-  
-  .list-group {
-    background-color: transparent;
-  }
-  
-  .list-group-item {
-    background-color: transparent;
-    border-bottom-color: #a5a5a5;
-  }
-  
-  .fa-spotify {
-    color: #1DB954;
 }
-  // #pagination-container {
-  //   position: absolute;
-  //   bottom: 10px;
-  // }
-  
-  #track-modal {
-    padding-right: 0 !important;
-  }
-  
-  .modal-content {
-    background-color: rgb(21,27,36) !important;
-    border: 0;
-  }
-  
-  .view-button {
-    background-color: transparent;
-    border: 0;
-    color: $light-gray;
-    padding: 10px;
-    text-transform: capitalize;
-    display: inline-block;
-    &:hover {
-      color: #ffffff;
-    }
-    &.active {
-        span {
-            color: #FFFFFF;
-            border-bottom: 2px solid #ffffff;
-        }
-    }
-    &:focus {
-        outline: none;
-    }
-  }
-  .section-header {
-    margin: 40px 0;
-    > h2 {
-        margin: 0;
-        text-transform: capitalize;
-    }
-  }
-  .darken {
-    filter: brightness(15%);
-  }
-  
-  @include responsive(sm-md) {
-    .section-header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-  }

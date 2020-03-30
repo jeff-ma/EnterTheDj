@@ -8,11 +8,11 @@
     .alert {
         background-color: #ff4646;
         border: none;
-        color: #ffffff;
+        color: $white;
         padding: 10px;
 
         button {
-            color: #ffffff;
+            color: $white;
             margin-left: 10px;
         }
     }
