@@ -95,7 +95,7 @@ const CreatePlaylistModal = ({track}) => {
                       </React.Fragment>                
                     }
                   </label>
-                  <input id="preview-image-file" className={errors.image ? "form-control is-invalid" : ""} type="file" onChange={fileUpload}/>
+                  <input id="preview-image-file" type="file" onChange={fileUpload}/>
                   <span className="error">{errors.image}</span>
                 </div>
               </div>
