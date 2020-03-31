@@ -1,22 +1,22 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const fs = require('fs');
-const querystring = require('querystring');
-const axios = require('axios');
-const clientId = '2d6223f5a7d74315a03e819aee4e3934';
-const clientSecret = fs.readFileSync('clientSecret.txt', 'utf8');
-const tokenUrl = 'https://accounts.spotify.com/api/token';
+const fs = require("fs");
+const querystring = require("querystring");
+const axios = require("axios");
+const clientId = "2d6223f5a7d74315a03e819aee4e3934";
+const clientSecret = fs.readFileSync("clientSecret.txt", "utf8");
+const tokenUrl = "https://accounts.spotify.com/api/token";
 
 function requestSpotifyToken(code, redirectUri) {
     return axios({
-        method: 'post',
+        method: "post",
         url: tokenUrl,
         params: {
             client_id: clientId,
             client_secret: clientSecret,
             redirect_uri: redirectUri,
             code: code,
-            grant_type: 'authorization_code'
+            grant_type: "authorization_code"
         },
         headers: {
             "Content-Type" : "application/x-www-form-urlencoded"
@@ -25,17 +25,16 @@ function requestSpotifyToken(code, redirectUri) {
 }
 
 // spotify calls back this route after authenticating and gives the access token of the user logging in
-router.get('/authorize', async (req, res) => {
+router.get("/authorize", async (req, res) => {
     try {
-        const response = await requestSpotifyToken(req.query.code, req.query.state);
-        const { access_token, refresh_token } = response.data;
+        const {data} = await requestSpotifyToken(req.query.code, req.query.state);
+        const {access_token, refresh_token} = data;
         const user = await axios({
-            method: 'get',
-            url: 'https://api.spotify.com/v1/me',
-            headers: {'Authorization': 'Bearer ' + access_token}
+            method: "get",
+            url: "https://api.spotify.com/v1/me",
+            headers: {"Authorization": "Bearer " + access_token}
         });
-        // 3600000
-        if(user.data.images.length > 0){
+        if(user.data.images.length > 0) {
             res.cookie("image_url", user.data.images[0].url, {maxAge: 3600000});
         }
         if(user.data.product === "premium") {
@@ -59,47 +58,51 @@ router.get('/authorize', async (req, res) => {
     }
 });
 
-// spotify calls back this route after authenticating this apps account and gives a token that belongs to this app not the user
+// spotify calls back this route after authenticating the application and gives a token that belongs to the application not the user
 // this token is used for making spotify api calls for features not requiring user login
-router.get('/callback', async (req, res) => {
+router.get("/callback", async (req, res) => {
+    const redirectUri = req.query.state || `${req.protocol}://${req.headers.host}/callback`;
     try {
-        const response = await requestSpotifyToken(req.query.code, req.query.state);
-        fs.writeFileSync('accessToken.txt', response.data.access_token, 'utf8');
-        fs.writeFileSync('refreshToken.txt', response.data.refresh_token, 'utf8');
-        res.redirect('/');
+        const {data} = await requestSpotifyToken(req.query.code, redirectUri);
+        fs.writeFileSync("accessToken.txt", data.access_token, "utf8");
+        fs.writeFileSync("refreshToken.txt", data.refresh_token, "utf8");
+        res.redirect("/");
     } catch(error) {
+        console.log(error.response.data);
+
         res.send(error);
+        
     }
 });
 
 // application needs to get access token or refresh access token
-router.get('*', async (req, res, next) => {
+router.get("*", async (req, res, next) => {
     try {
         let accessToken;
         let refreshToken;
-        if(fs.existsSync('accessToken.txt')) {
-            accessToken = fs.readFileSync('accessToken.txt', 'utf8');
+        if(fs.existsSync("accessToken.txt")) {
+            accessToken = fs.readFileSync("accessToken.txt", "utf8");
         }
-        if(fs.existsSync('refreshToken.txt')) {
-            refreshToken = fs.readFileSync('refreshToken.txt', 'utf8');
+        if(fs.existsSync("refreshToken.txt")) {
+            refreshToken = fs.readFileSync("refreshToken.txt", "utf8");
         }
         if(accessToken && refreshToken) {
             const response = await axios({
-                method: 'post',
+                method: "post",
                 url: tokenUrl,
                 params: {
                     client_id: clientId,
                     client_secret: clientSecret,
                     refresh_token: refreshToken,
-                    grant_type: 'refresh_token'
+                    grant_type: "refresh_token"
                   },
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    "Content-Type": "application/x-www-form-urlencoded",
                 }
             });
             if(response.status === 200) {      
                 accessToken = response.data.access_token;
-                fs.writeFileSync('accessToken.txt', accessToken, 'utf8');
+                fs.writeFileSync("accessToken.txt", accessToken, "utf8");
                 next();
             } else {
                 return new Error("There was an error fetching data");
@@ -107,14 +110,14 @@ router.get('*', async (req, res, next) => {
         } else {
             // redirect to spotify login
             const query = querystring.stringify({
-                response_type: 'code',
+                response_type: "code",
                 client_id: clientId,
-                redirect_uri: "http://localhost:3001/callback"
+                redirect_uri: `${req.protocol}://${req.headers.host}/callback`
             });
             res.redirect(`https://accounts.spotify.com/authorize?${query}`);
         }
     } catch(error) {
-        console.log("error");
+        console.log(error.response.data);
         res.send(error);
     }
 });

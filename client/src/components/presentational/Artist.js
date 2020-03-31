@@ -64,7 +64,7 @@ const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtis
                             </h2>
                             <Link className="view-button" to={`/artist/${artistId}/top_tracks`}>View more</Link>
                         </div>                
-                        <TracksList tracks={{items: topTracks.items.slice(0, 3)}} />
+                        <TracksList tracks={{items: topTracks.items.slice(0, 3)}}/>
                     </section>
                     <section>
                         <div className="section-header">

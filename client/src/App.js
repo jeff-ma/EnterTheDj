@@ -33,7 +33,6 @@ const usePrevious = (location) => {
 };
 
 const App = (props) => {  
-  console.log(props);
   const previous = usePrevious(props.location);
   if (previous && (props.location.pathname + props.location.search !== previous.pathname + previous.search)) {
     window.scrollTo(0, 0);
@@ -49,19 +48,19 @@ const App = (props) => {
         <Route path="/" exact component={Home}/>
         <Route path="/album/:albumId" exact component={Album}/>
         <Route path="/artist/:artistId/:view?" exact component={Artist}/>
-        <Route path="/browse" exact component={Browse} />
-        <Route path="/category/:categoryId?" exact component={Category} />
+        <Route path="/browse" exact component={Browse}/>
+        <Route path="/category/:categoryId?" exact component={Category}/>
         <Route path="/library/:view?" exact component={Library}/>
-        <Route path="/login" exact component={Login} />
+        <Route path="/login" exact component={Login}/>
         <Route path="/logout" exact component={Logout}/>
         <Route path="/playlist/:playlistId" exact component={Playlist}/>
         <Route path="/playlists" component={Playlists}/>
         <Route path="/profile" exact component={Profile}/>
         <Route path="/recent" exact component={Recent}/>
         <Route path="/search/:q/:view?" exact component={Search}/>
-        <Route path="/show/:showId?" exact component={Show} />
+        <Route path="/show/:showId?" exact component={Show}/>
         <Route path="/top/:view?" exact component={Top}/>
-        <Route component={NotFound}/>
+        {/* <Route component={NotFound}/> */}
       </Switch>
     </main>
     <Player/>

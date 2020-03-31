@@ -1,14 +1,10 @@
-const http = require("http");
-const https = require("https");
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const api = require('./routes/api');
 const authorize = require('./routes/authorize');
-const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3001;
 
