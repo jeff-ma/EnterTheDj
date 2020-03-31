@@ -60,7 +60,7 @@ const App = (props) => {
         <Route path="/search/:q/:view?" exact component={Search}/>
         <Route path="/show/:showId?" exact component={Show}/>
         <Route path="/top/:view?" exact component={Top}/>
-        {/* <Route component={NotFound}/> */}
+        <Route component={NotFound}/>
       </Switch>
     </main>
     <Player/>
