@@ -21,7 +21,6 @@ import Search from './components/containers/SearchContainer';
 import Show from './components/containers/ShowContainer';
 import SideNav from './components/presentational/SideNav';
 import Top from './components/containers/TopContainer';
-// import './styles/App.scss';
 import './app.scss';
 
 const usePrevious = (location) => {

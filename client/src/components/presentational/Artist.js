@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {commafyNumber} from "../../utils";
+import {commafyNumber, formatDate} from "../../utils";
 import CatalogHeader from "./CatalogHeader";
 import Tiles from "./Tiles";
 import TracksList from "./TracksList";
@@ -28,33 +28,30 @@ const Artist = ({artist, albums, appearsOn, bio, latest, playlists, relatedArtis
         <div className="container">
             <CatalogHeader action={artistAction} catalog={artist}>
                 <h2>{artist.name}</h2>
-                <p className="light-gray-text">{artist.popularity} popularity</p>
-                <p className="light-gray-text">{artist.monthlyListeners} monthly listeners</p>                    
-                <p className="light-gray-text">{commafyNumber(artist.followers.total)} followers</p>
+                <p>{artist.popularity} Popularity</p>
+                <p>{artist.monthlyListeners} Monthly Listeners</p>                    
+                <p>{commafyNumber(artist.followers.total)} Followers</p>
             </CatalogHeader>
             <div className="view-buttons">
                 {viewButtons}
             </div>
-            <hr className="spaced-out"/>
+            <hr/>
             {view === undefined &&
                 <React.Fragment>
                     {latest &&
                         <section>
-                            <div className="section-header">
-                                <h2 className="section-title">
-                                    <Link to={`/album/${latest.id}`}>Latest Release <i className="fas fa-chevron-right"></i></Link>
-                                </h2>
-                                <Link className="view-button" to={`/album/${latest.id}`}>View more</Link>
-                            </div>
-                            <div>
-                                <Link to={`/album/${latest.id}`}>
-                                    <img className="latest-cover" src={latestImage} alt={artist.name}/>
-                                    <p>{latest.name}</p>                    
+                            <h2 className="section-title">Latest Release</h2>
+                            <div className="latest-album">
+                                <Link className="latest-album-link" to={`/album/${latest.id}`}>
+                                    <img className="latest-album-image" src={latestImage} alt={artist.name}/>
                                 </Link>
+                                <div>
+                                    <h4><Link className="latest-album-link" to={`/album/${latest.id}`}>{latest.name}</Link></h4>
+                                    <p>{formatDate(latest.release_date)}</p>
+                                    <p>{latest.tracks.total} {latest.tracks.total > 1 ? "Tracks" : "Track"}</p>
+                                </div>
                             </div>
-                            <div>
-                                <TracksList tracks={latest.tracks} type="album"/>
-                            </div>
+                            <TracksList tracks={latest.tracks} type="album"/>
                         </section>
                     }
                     <section>

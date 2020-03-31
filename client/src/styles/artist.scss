@@ -1,0 +1,17 @@
+.latest-album {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -50px;
+
+    p {
+        color: $light-gray;
+    }
+}
+
+.latest-album-image {
+    height: 200px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    width: 200px;
+
+}

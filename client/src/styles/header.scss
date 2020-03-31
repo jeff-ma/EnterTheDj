@@ -22,7 +22,7 @@ header {
         }
 
         .navbar-bar {
-            background-color: #ffffff;
+            background-color: $white;
             border-radius: 2px;
             display: block;
             height: 4px;
@@ -105,7 +105,7 @@ header {
         }
 
         i {
-            color: #ffffff;
+            color: $white;
             font-size: 24px;
         }
     }

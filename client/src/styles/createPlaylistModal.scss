@@ -7,7 +7,7 @@
         }
 
         .modal-close {
-            color: #FFFFFF;
+            color: $white;
             opacity: 1;
             text-shadow: none;
 
@@ -24,7 +24,7 @@
             .image-preview-box {
                 background-position: center;
                 background-size: cover;
-                border: 1px solid #ffffff;
+                border: 1px solid $white;
                 height: 200px;
                 margin-bottom: 40px;
                 width: 200px;

@@ -5,15 +5,15 @@
 
     .page-button {
         background-color: transparent;
-        border: solid 1px#ffffff;
+        border: solid 1px $white;
         border-radius: 4px;
-        color: #ffffff;
+        color: $white;
         height: 35px;
         margin: 0 4px;
         width: 35px;
         
         &.active {
-            background-color: #FFFFFF;
+            background-color: $white;
             color: rgb(18, 18, 22);
         }
     }

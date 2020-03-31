@@ -1,4 +1,5 @@
 section.catalog-header {
+    margin-bottom: 20px;
     margin-top: 40px;
 
     .catalog-details {
@@ -17,6 +18,12 @@ section.catalog-header {
                 @include responsive(md) {
                     display: grid;
                 }
+            }
+        }
+
+        .catalog-info {
+            p {
+                color: $light-gray;
             }
         }
     }
