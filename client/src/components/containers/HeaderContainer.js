@@ -1,6 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import { toggleNav } from "../../redux/actions/sideNav";
+import {connect} from "react-redux";
+import {toggleNav} from "../../redux/actions/sideNav";
 import Header from "../presentational/Header";
 
 const HeaderContainer = (props) => (<Header {...props}/>);

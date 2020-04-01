@@ -12,7 +12,7 @@ const HomeContainer = (props) => {
     }, [getHome]);
     if (error) {
         return <NotFound/>;
-    } else if(isLoading) {
+    } else if (isLoading) {
         return <Loader/>;
     } else {
         return <Home {...props}/>;

@@ -47,7 +47,6 @@ const TracksList = ({tracks, type, removeTrack, saveTrack, updatePlayer}) => {
             <React.Fragment>
                 <ul className="tracks-list-container">
                     {tracks.items.map((item, index) => {
-                        let image = item.album.images && item.album.images[2] ? item.album.images[2].url : noImage;
                         const heartIcon = item.isSaved ? heartSolid : heartOutline;
                         const updateTrack = item.isSaved ? removeTrack : saveTrack;
                         return (
@@ -58,7 +57,7 @@ const TracksList = ({tracks, type, removeTrack, saveTrack, updatePlayer}) => {
                                 {type !== "album" &&
                                     <div>
                                         <Link to={"/album/" + item.album.id}>
-                                            <img className="album-thumbnail" src={image} alt={item.name}/>
+                                            <img className="album-thumbnail" src={item.album.images && item.album.images[2] ? item.album.images[2].url : noImage} alt={item.name}/>
                                         </Link>
                                     </div>
                                 }

@@ -1,12 +1,12 @@
-import axios from 'axios';
-import {Cookies} from 'react-cookie';
+import axios from "axios";
+import {Cookies} from "react-cookie";
 
 const cookies = new Cookies();
 const accessToken = cookies.get("access_token");
 const userId = cookies.get("id");
 const headers = {
-  'Authorization': `Bearer ${accessToken}`,
-  'Content-Type': 'application/json',
+  "Authorization": `Bearer ${accessToken}`,
+  "Content-Type": "application/json",
 };
 
 /* 
@@ -317,8 +317,8 @@ Upload a Custom Playlist Cover Image
 https://developer.spotify.com/documentation/web-api/reference/playlists/upload-custom-playlist-cover/
  */
 export const uploadPlaylistImage = (playlistId, image) => {
-  if(accessToken) {
-    return axios.put(`https://api.spotify.com/v1/playlists/${playlistId}/images`, image, {headers: {  'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'image/jpeg'}});
+  if (accessToken) {
+    return axios.put(`https://api.spotify.com/v1/playlists/${playlistId}/images`, image, {headers: {  "Authorization": `Bearer ${accessToken}`, "Content-Type": "image/jpeg"}});
   } else {
     return null;
   }
@@ -396,7 +396,7 @@ export const addIsSavedToTracks = async (tracks) => {
 export const formatDuration = (ms) => {
   const minutes = Math.floor(ms / 60000);
   const seconds = ((ms % 60000) / 1000).toFixed(0);
-  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
 
 // Format date to local string
@@ -427,40 +427,40 @@ export const parsePitchClass = (note) => {
   let key = note;
   switch (note) {
     case 0:
-      key = 'C';
+      key = "C";
       break;
     case 1:
-      key = 'D♭';
+      key = "D♭";
       break;
     case 2:
-      key = 'D';
+      key = "D";
       break;
     case 3:
-      key = 'E♭';
+      key = "E♭";
       break;
     case 4:
-      key = 'E';
+      key = "E";
       break;
     case 5:
-      key = 'F';
+      key = "F";
       break;
     case 6:
-      key = 'G♭';
+      key = "G♭";
       break;
     case 7:
-      key = 'G';
+      key = "G";
       break;
     case 8:
-      key = 'A♭';
+      key = "A♭";
       break;
     case 9:
-      key = 'A';
+      key = "A";
       break;
     case 10:
-      key = 'B♭';
+      key = "B♭";
       break;
     case 11:
-      key = 'B';
+      key = "B";
       break;
     default:
       return null;
@@ -468,7 +468,7 @@ export const parsePitchClass = (note) => {
   return key;
 };
 
-export const commafyNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+export const commafyNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 export const randomQuote = () => {
   const quotes = [

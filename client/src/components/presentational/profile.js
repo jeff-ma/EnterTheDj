@@ -7,7 +7,7 @@ import defaultProfile from "../../images/default-profile.jpg";
 const Profile = (props) => {
     const cookies = new Cookies();
     const displayName = cookies.get("display_name");
-    if (displayName) {    
+    if (displayName) {   
         const birthdate = cookies.get("birthdate");
         const imageUrl = cookies.get("image_url") || defaultProfile;
         return (

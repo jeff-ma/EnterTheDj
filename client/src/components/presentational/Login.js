@@ -23,7 +23,7 @@ const Login = ({allCookies, children}) => {
     ];
     const location = window.location.origin.replace(process.env.REACT_APP_PORT, process.env.REACT_APP_NODE_PORT);
     const spotifyAuthorizeUrl = encodeURI(`https://accounts.spotify.com/authorize?client_id=2d6223f5a7d74315a03e819aee4e3934&response_type=code&redirect_uri=${location}/authorize&state=${location}/authorize&scope=${spotifyScopes.join(" ")}&show_dialog=false`);
-    if(accessToken) {
+    if (accessToken) {
         // if user is already logged in redirect to home
         return <Redirect to="/"/>;
     } else {

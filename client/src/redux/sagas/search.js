@@ -3,7 +3,7 @@ import * as searchActions from "../actions/search";
 import {getTracksExtras} from "../actions/tracksList";
 import axios from "axios";
 
-export function* getSearchRequest({ query }) {
+export function* getSearchRequest({query}) {
     try {
         const {data} = yield axios("/api/search?q=" + query);
         yield put(searchActions.getSearchSuccess(data));

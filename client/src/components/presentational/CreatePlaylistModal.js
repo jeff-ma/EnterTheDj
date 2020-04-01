@@ -25,7 +25,7 @@ const CreatePlaylistModal = ({track}) => {
             if (this.height < 300 || this.width < 300) {
               setErrors({...errors, image: "Image too small. Must be larger than 300x300."});         
             } else {
-              if(imageUrl) {
+              if (imageUrl) {
                 URL.revokeObjectURL(imageUrl);
               }
               setImageUrl(URL.createObjectURL(imageFile));
@@ -48,7 +48,7 @@ const CreatePlaylistModal = ({track}) => {
       setIsLoading(true);
       const playlist = await createPlaylist(name.current.value, description.current.value);
       await playlistAddTrack(playlist.id, track.uri);
-      if(base64Image) {
+      if (base64Image) {
         await uploadPlaylistImage(playlist.id, base64Image);
       }
       setTimeout(() => {

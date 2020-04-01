@@ -13,7 +13,7 @@ const Header = ({isNavActive, toggleNav, history}) => {
     const handleSubmit = (event) => {
         const {value} = search.current;
         event.preventDefault();
-        if(value) {
+        if (value) {
             setIsSearchBarActive(false);
             history.push(`/search/${value}`);        
         }

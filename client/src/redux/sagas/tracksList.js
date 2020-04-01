@@ -85,7 +85,7 @@ export function* removeTrackRequest({trackId}) {
     }
 };
 
-export function* saveTrackRequest({ trackId}) {  
+export function* saveTrackRequest({trackId}) {  
     try {
         yield saveTrack(trackId);
         yield updateTrack(trackId);

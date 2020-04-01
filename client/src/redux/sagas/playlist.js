@@ -15,7 +15,7 @@ export function* getPlaylistRequest({playlistId}) {
     }
 };
 
-export function* removePlaylistRequest({ playlistId}) {  
+export function* removePlaylistRequest({playlistId}) {
     try {
         const {playlist} = yield select((state) => state.playlist);
         yield removePlaylist(playlistId);
@@ -27,7 +27,7 @@ export function* removePlaylistRequest({ playlistId}) {
     }
 };
 
-export function* savePlaylistRequest({ playlistId}) {  
+export function* savePlaylistRequest({playlistId}) {
     try {
         const {playlist} = yield select((state) => state.playlist);
         yield savePlaylist(playlistId);

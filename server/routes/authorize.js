@@ -3,17 +3,14 @@ const router = express.Router();
 const fs = require("fs");
 const querystring = require("querystring");
 const axios = require("axios");
-const clientId = "2d6223f5a7d74315a03e819aee4e3934";
-const clientSecret = fs.readFileSync("clientSecret.txt", "utf8");
-const tokenUrl = "https://accounts.spotify.com/api/token";
 
 function requestSpotifyToken(code, redirectUri) {
     return axios({
         method: "post",
-        url: tokenUrl,
+        url: "https://accounts.spotify.com/api/token",
         params: {
-            client_id: clientId,
-            client_secret: clientSecret,
+            client_id: process.env.CLIENT_ID,
+            client_secret: process.env.CLIENT_SECRET,
             redirect_uri: redirectUri,
             code: code,
             grant_type: "authorization_code"
@@ -28,29 +25,28 @@ function requestSpotifyToken(code, redirectUri) {
 router.get("/authorize", async (req, res) => {
     try {
         const {data} = await requestSpotifyToken(req.query.code, req.query.state);
-        const {access_token, refresh_token} = data;
         const user = await axios({
             method: "get",
             url: "https://api.spotify.com/v1/me",
-            headers: {"Authorization": "Bearer " + access_token}
+            headers: {"Authorization": `Bearer ${data.access_token}`}
         });
-        if(user.data.images.length > 0) {
+        if (user.data.images.length > 0) {
             res.cookie("image_url", user.data.images[0].url, {maxAge: 3600000});
         }
-        if(user.data.product === "premium") {
+        if (user.data.product === "premium") {
             res.cookie("product", "premium");
         } else {
             res.cookie("product", "free");
         }
+        res.cookie("access_token", data.access_token, {maxAge: 3600000, httpOnly: false});
         res.cookie("birthdate", user.data.birthdate, {maxAge: 3600000});
         res.cookie("country", user.data.country, {maxAge: 3600000});
         res.cookie("display_name", user.data.display_name, {maxAge: 3600000});
         res.cookie("email", user.data.email, {maxAge: 3600000});
-        res.cookie("spotify_url", user.data.external_urls.spotify, {maxAge: 3600000});
         res.cookie("followers", user.data.followers.total, {maxAge: 3600000}); 
         res.cookie("id", user.data.id, {maxAge: 3600000});
-        res.cookie("access_token", access_token, {maxAge: 3600000, httpOnly: false});
-        res.cookie("refresh_token", refresh_token, {maxAge: 3600000, httpOnly: false});
+        res.cookie("refresh_token", data.refresh_token, {maxAge: 3600000, httpOnly: false});
+        res.cookie("spotify_url", user.data.external_urls.spotify, {maxAge: 3600000});
         res.redirect("/");
     } catch(error) {
         console.log(error.response.data);
@@ -69,7 +65,6 @@ router.get("/callback", async (req, res) => {
         res.redirect("/");
     } catch(error) {
         console.log(error.response.data);
-
         res.send(error);
         
     }
@@ -80,19 +75,19 @@ router.get("*", async (req, res, next) => {
     try {
         let accessToken;
         let refreshToken;
-        if(fs.existsSync("accessToken.txt")) {
+        if (fs.existsSync("accessToken.txt")) {
             accessToken = fs.readFileSync("accessToken.txt", "utf8");
         }
-        if(fs.existsSync("refreshToken.txt")) {
+        if (fs.existsSync("refreshToken.txt")) {
             refreshToken = fs.readFileSync("refreshToken.txt", "utf8");
         }
-        if(accessToken && refreshToken) {
+        if (accessToken && refreshToken) {
             const response = await axios({
                 method: "post",
-                url: tokenUrl,
+                url: "https://accounts.spotify.com/api/token",
                 params: {
-                    client_id: clientId,
-                    client_secret: clientSecret,
+                    client_id: process.env.CLIENT_ID,
+                    client_secret: process.env.CLIENT_SECRET,
                     refresh_token: refreshToken,
                     grant_type: "refresh_token"
                   },
@@ -100,9 +95,8 @@ router.get("*", async (req, res, next) => {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
             });
-            if(response.status === 200) {      
-                accessToken = response.data.access_token;
-                fs.writeFileSync("accessToken.txt", accessToken, "utf8");
+            if (response.status === 200) {      
+                fs.writeFileSync("accessToken.txt", response.data.access_token, "utf8");
                 next();
             } else {
                 return new Error("There was an error fetching data");
@@ -111,7 +105,7 @@ router.get("*", async (req, res, next) => {
             // redirect to spotify login
             const query = querystring.stringify({
                 response_type: "code",
-                client_id: clientId,
+                client_id: process.env.CLIENT_ID,
                 redirect_uri: `${req.protocol}://${req.headers.host}/callback`
             });
             res.redirect(`https://accounts.spotify.com/authorize?${query}`);
