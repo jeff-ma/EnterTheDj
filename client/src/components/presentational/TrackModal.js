@@ -7,7 +7,7 @@ import PlaylistDropdown from "./PlaylistDropdown";
 import heartOutline from "../../images/heart-outline.svg";
 import heartSolid from "../../images/heart-solid.svg";
 
-const TrackModal = ({track, playlists, removeTrack, saveTrack, allCookies}) => {
+const TrackModal = ({id, track, playlists, removeTrack, saveTrack, allCookies}) => {
     const canvas = useRef();
     const accessToken = allCookies.access_token;
     let data;
@@ -149,7 +149,7 @@ const TrackModal = ({track, playlists, removeTrack, saveTrack, allCookies}) => {
         }
     }
     return (
-        <div id="track-modal" className="modal fade">
+        <div id={id} className="track-modal modal fade">
             <div className="modal-dialog modal-xl modal-dialog-scrollable">
                 <div className="modal-content">
                     <div className="modal-header">

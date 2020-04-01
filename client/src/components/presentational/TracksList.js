@@ -20,6 +20,7 @@ const TracksList = ({tracks, type, removeTrack, saveTrack, updatePlayer}) => {
     const accessToken = cookies.get("access_token");
     const [trackIndex, setTrackIndex] = useState(0);
     const [savedPlaylists, setSavedPlaylists] = useState();
+    const trackModalId = "modal" + Math.floor(Math.random() * 1000);
     useEffect(() => {
         const source = axios.CancelToken.source();
         const fetchData = async () => {
@@ -79,7 +80,7 @@ const TracksList = ({tracks, type, removeTrack, saveTrack, updatePlayer}) => {
                                     </React.Fragment>
                                 }
                                 <div>
-                                    <a href="#track-modal" data-toggle="modal" onClick={() => setTrackIndex(index)}>
+                                    <a href={`#${trackModalId}`} data-toggle="modal" onClick={() => setTrackIndex(index)}>
                                         <img className="icon" src={more} alt="add to playlist"/>
                                     </a> 
                                 </div>
@@ -87,7 +88,7 @@ const TracksList = ({tracks, type, removeTrack, saveTrack, updatePlayer}) => {
                         );
                     })}
                 </ul>
-                <TrackModal track={tracks.items[trackIndex]} playlists={savedPlaylists} removeTrack={removeTrack} saveTrack={saveTrack}/>
+                <TrackModal id={trackModalId} track={tracks.items[trackIndex]} playlists={savedPlaylists} removeTrack={removeTrack} saveTrack={saveTrack}/>
                 <CreatePlaylistModal track={tracks.items[trackIndex]}/>     
             </React.Fragment>
         );
