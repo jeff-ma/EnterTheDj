@@ -65,11 +65,15 @@ const CreatePlaylistModal = ({track}) => {
   };
   useEffect(()=> {
     const observer = new MutationObserver(() => {
-      const trackModal = document.getElementById("track-modal");
+      const trackModals = document.querySelectorAll(".track-modal");
       if (createPlaylistModal.current.classList.contains("show")) {
-        trackModal.classList.add("darken");
+        trackModals.forEach((trackModal) => {
+          trackModal.classList.add("darken");
+        });
       } else {
-        trackModal.classList.remove("darken");
+        trackModals.forEach((trackModal) => {
+          trackModal.classList.remove("darken");
+        });
       }
     });
     observer.observe(createPlaylistModal.current, {attributes: true});
