@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 const fs = require("fs");
 const cheerio = require("cheerio");
-const timeout = 30000;
+const timeout = 20000;
 
 function spotifyApiCall(url, token, method = "get") {
     if (token || fs.existsSync("accessToken.txt")) {
