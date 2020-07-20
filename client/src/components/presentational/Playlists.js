@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Tiles from "./Tiles";
 
 const Playlists = ({featuredPlaylists, playlists}) => (
-    <div className="container-fluid">
+    <div className="container">
         {playlists &&
             <section>
                 <h2 className="section-title">Your Playlists</h2>
