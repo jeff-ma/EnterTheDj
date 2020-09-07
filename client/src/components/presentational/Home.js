@@ -119,7 +119,7 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
                     <h2 className="section-title">Featured Playlists</h2>
                     <Swiper {...swiperParams}>
                         {featuredPlaylists.map((featuredPlaylist, index) =>
-                            swiperTile(index, `/playlist/${featuredPlaylist.id}`, featuredPlaylist.images.length > 0 && featuredPlaylist.images[0].url, featuredPlaylist.name, featuredPlaylist.owner.display_name)
+                            swiperTile(index, `/playlist/${featuredPlaylist.id}`, featuredPlaylist.images.length > 0 && featuredPlaylist.images[0].url, featuredPlaylist.name, featuredPlaylist.owner && featuredPlaylist.owner.display_name || "Spotify")
                         )}
                     </Swiper> 
                 </section>
