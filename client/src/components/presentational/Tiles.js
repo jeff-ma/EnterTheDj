@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import noImage from "../../images/no-image.jpg";
 
 const Tiles = ({data, path}) => {
-    if (data && data.total > 0) {
+    if (data && data.items && data.items.length > 0) {
         return (
             <div className="tiles-grid">
                 {data.items.map((item, index) => {
