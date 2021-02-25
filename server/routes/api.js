@@ -112,7 +112,7 @@ router.get("/artist/:artistId", async (req, res) => {
             spotifyApiCall(`/artists/${artistId}/related-artists?limit=50`),
             spotifyApiCall(`/artists/${artistId}/albums?include_groups=appears_on&country=US&limit=50`),
             spotifyApiCall(`/artists/${artistId}/top-tracks?country=us`),
-            axios(`https://open.spotify.com/artist/${artistId}/about`),
+            axios(`https://open.spotify.com/artist/${artistId}`),
         ]);
         const artist = responses[0].data;
         const albums = responses[1].data;
