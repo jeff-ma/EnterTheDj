@@ -236,15 +236,15 @@ router.post("/lyrics", async (req, res) => {
                 timeout: timeout
             });
             track.lyrics = null;
-            if(data.response.hits.length > 0 && track.artists[0].name.toLowerCase() === data.response.hits[0].result.primary_artist.name.toLowerCase()) {
-                // scrape genuis webpage for lyrics
+            if (data.response.hits.length > 0 && track.artists[0].name.toLowerCase() === data.response.hits[0].result.primary_artist.name.toLowerCase()) {
                 const geniusLyricsPage = await axios(data.response.hits[0].result.url);
                 const $ = cheerio.load(geniusLyricsPage.data);
-                $(".lyrics a").each((index, element) => {
+                // remove hyperlinks
+                $("a").each((index, element) => {
                     const html = $(element).html();
                     $(element).replaceWith(html);
                 });
-                track.lyrics = $(".lyrics").html();
+                track.lyrics = $("main > div:nth-child(2) > div:nth-child(3)").html();
             }
             return track;
         });
