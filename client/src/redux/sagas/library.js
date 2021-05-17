@@ -2,11 +2,10 @@ import {put, takeLatest} from "redux-saga/effects";
 import * as libraryActions from "../actions/library";
 import {getTracksExtras} from "../actions/tracksList";
 import {getSavedAlbums, getSavedTracks, getSavedPlaylists, getSavedArtists, getSavedShows, addIsSavedToTracks} from "../../utils";
-import axios from "axios";
 
 export function* getLibraryRequest() {
     try {
-        const responses = yield axios.all([
+        const responses = yield Promise.all([
             getSavedAlbums(),
             getSavedTracks(),
             getSavedPlaylists(),

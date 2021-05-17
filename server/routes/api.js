@@ -51,7 +51,7 @@ router.post("/audio_data", async (req, res) => {
             total = total + 100;
         }
         const promises = tracks.map((track) => spotifyApiCall("/audio-analysis/" + track.id));
-        const responses = await axios.all(promises);
+        let responses = await Promise.all(promises);
         tracks.forEach((track, index) => {
             // add audio features and audio analysis to each track
             track.audioAnalysis = responses[index].data;
@@ -105,7 +105,7 @@ router.get("/artist/:artistId", async (req, res) => {
         let latest;
         const {artistId} = req.params;
         const accessToken = req.cookies.access_token;
-        const responses = await axios.all([
+        const responses = await Promise.all([
             spotifyApiCall(`/artists/${artistId}`),
             spotifyApiCall(`/artists/${artistId}/albums?include_groups=album&country=US&limit=50`),
             spotifyApiCall(`/artists/${artistId}/albums?include_groups=single&country=US&limit=50`),
@@ -187,7 +187,7 @@ router.get("/category/:categoryId", async (req, res) => {
     const {limit = 20, page = 1} = req.query;
     const offset = (page - 1) * limit;
     try {
-        const responses = await axios.all([
+        const responses = await Promise.all([
             spotifyApiCall(`/browse/categories/${req.params.categoryId}`),
             spotifyApiCall(`/browse/categories/${req.params.categoryId}/playlists?offset=${offset}&limit=${limit}`)
         ]);
@@ -203,7 +203,7 @@ router.get("/home", async (req, res) => {
     try {
         const genres = await spotifyApiCall("/recommendations/available-genre-seeds");
         const randomGenres = () => genres.data.genres.sort(() => 0.5 - Math.random()).slice(0,5);
-        const responses = await axios.all([
+        const responses = await Promise.all([
             spotifyApiCall("/browse/new-releases?limit=50"),
             spotifyApiCall("/playlists/4LZtDy62wDvQ4o8JB4UrcR"),
             spotifyApiCall(`/recommendations?seed_genres=${randomGenres().join()}`),
@@ -285,7 +285,7 @@ router.get("/playlists", async (req, res) => {
     try {
         const accessToken = req.cookies.access_token;
         if (accessToken) {
-             const responses = await axios.all([
+             const responses = await Promise.all([
                 spotifyApiCall("/browse/featured-playlists", accessToken),
                 spotifyApiCall("/me/playlists", accessToken)             
             ]);
