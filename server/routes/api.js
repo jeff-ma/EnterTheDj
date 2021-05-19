@@ -44,6 +44,7 @@ router.post("/audio_data", async (req, res) => {
         let total = 0;
         let audioFeatures = [];
         // spotify allows max of 100 track ids for each audio features api call
+        // sometimes spotify api calls fail because of rate limiting
         while (total < tracks.length) {
             const trackIds = tracks.slice(total, total + 100).map((track) => track.id);
             const {data} = await spotifyApiCall("/audio-features?ids=" + trackIds.join(","));
@@ -59,6 +60,11 @@ router.post("/audio_data", async (req, res) => {
         });
         res.send(tracks);
     } catch(error) {
+        // api call failed set audio data properties to null
+        tracks.forEach((track) => {
+            track.audioAnalysis = null;
+            track.audioFeatures = null;
+        });
         res.send(tracks);
     }
 });

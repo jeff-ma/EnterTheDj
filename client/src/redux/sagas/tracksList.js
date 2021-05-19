@@ -60,11 +60,15 @@ function* getTracksExtras({tracks, path}) {
                 track.lyrics = lyrics.data[index].lyrics;
             });
             yield updateTracks(tracks, path);
-            const audioData = yield axios.post("/api/audio_data", {tracks});
-            tracks.forEach((track, index) => {
-                track.audioAnalysis = audioData.data[index].audioAnalysis;
-                track.audioFeatures = audioData.data[index].audioFeatures; 
-            });
+            // spotify allows max of 100 track ids for each audio features api call
+            let total = 0;
+            while (total < tracks.length) {
+                const tracksSlice = tracks.slice(total, total + 100);
+                const audioData = yield axios.post("/api/audio_data", {tracks: tracksSlice});
+                tracks.splice(total, audioData.data.length, ...audioData.data);
+                total = total + 100;
+                yield updateTracks(tracks, path);
+            }
         }
         yield updateTracks(tracks, path);
     } catch (error) {
