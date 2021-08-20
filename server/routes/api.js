@@ -250,7 +250,9 @@ router.post("/lyrics", async (req, res) => {
                     const html = $(element).html();
                     $(element).replaceWith(html);
                 });
-                track.lyrics = $("#lyrics-root > div:first-child").html();
+                // remove social media links
+                $("#lyrics-root").children().last().remove();
+                track.lyrics = $("#lyrics-root").html();
             }
             return track;
         });
