@@ -125,3 +125,7 @@ client/build
 
 # notes
 notes.txt
+
+# private keys
+*.pem
+*.key
