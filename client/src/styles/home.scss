@@ -1,4 +1,18 @@
 .new-release-hero {
+    align-items: center;
+    background-image: url("../images/bruce-listen.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: center;
+    h1 {
+        font-size: 24px;
+    }
+    h2 {
+        font-size: 16px;
+    }
     .swiper-container {
         height: 300px;
 
@@ -40,6 +54,23 @@
 
         @include responsive(lg) {
             height: calc(100vh - 60px);
+        }
+    }
+    @include responsive(sm) {
+        height: 400px;
+        h1 {
+            font-size: 32px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+    }
+    @include responsive(md-lg) {
+        h1 {
+            font-size: 40px;
+        }
+        h2 {
+            font-size: 24px;
         }
     }
 }
