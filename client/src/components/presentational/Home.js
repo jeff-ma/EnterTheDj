@@ -44,35 +44,9 @@ const Home = ({latestAlbums, newAlbums, mostPopular, turnItUp, bruceLeePicks, to
     ); 
     return (
         <React.Fragment>
-            <div className="new-release-hero">               
-                <Swiper 
-                    autoplay={{
-                        delay: 5000,
-                        disableOnInteraction: false
-                    }}
-                    loop={true}
-                    navigation={{
-                        nextEl: ".swiper-button-next",
-                        prevEl: ".swiper-button-prev"
-                    }}
-                    scrollbar={{
-                        el: ".swiper-scrollbar",
-                        hide: false
-                    }}
-                >
-                    {latestAlbums.map((latestAlbum, index) => 
-                        <div key={index}>
-                            <img className="swiper-slide-image" src={latestAlbum.images[0].url} alt={latestAlbum.name}/>
-                            <div className="swiper-slide-caption">
-                                <h3>Latest</h3>
-                                <Link to={`/album/${latestAlbum.id}`}>
-                                    <h4>{latestAlbum.name}</h4>
-                                    <h5>{latestAlbum.artists[0].name}</h5>
-                                </Link>
-                            </div>
-                        </div>
-                    )}
-                </Swiper>
+            <div className="new-release-hero">
+                <h1>Music | Podcasts | Wisdom</h1>
+                <h2>Create and listen to a playlist of fury</h2>
             </div>
             <div className="container">
                 <section>
