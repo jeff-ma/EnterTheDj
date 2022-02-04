@@ -138,16 +138,16 @@ router.get("/artist/:artistId", async (req, res) => {
                 $(element).replaceWith(html);
             }
         });
+        // spotfy periodically updates its artist pages so parsing page may also need periodic changes
+        let bio = "";
         // get the bio paragraphs text
-        let bio = $(".bio-primary span").html() + $(".bio-secondary span").first().html();
-        // remove first paragraph of bio secondary because its exactly same as bio primary paragraph
-        $(".bio-secondary").first().remove();
-        // remove the outer span tag from each bio secondary paragraph
-        $(".bio-secondary").each((index, element) => {
-            bio = bio + '<p class="bio-secondary">' + $(element).children().first().html() + "</p>";
-        });
-        if (bio) {
-            bio = '<p class="bio-primary">' + bio + "</p>";
+        let paragraphs = $("p");
+        if (paragraphs.length > 2) {
+            // filter out empty text
+            let text = paragraphs.eq(0).html().split(/\n/).filter((paragraph) => paragraph.length > 0);
+            // add paragraph tags
+            text = text.map((paragraph) => "<p>" + paragraph + "</p>");
+            bio = text.join("");
         }
         artist.monthlyListeners = $(".insights__column__number").first().html();
         // spotify puts most recent item in first index
